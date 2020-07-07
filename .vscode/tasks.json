@@ -30,6 +30,9 @@
             "type": "shell",
             "group": "none",
             "command": "docker-compose --file containers/development/api/docker-compose.yml run --rm update",
+            "windows": {
+                "command": "docker-compose --file containers\\development\\api\\docker-compose.yml run --rm update"
+            },
             "problemMatcher": []
         }
     ],
