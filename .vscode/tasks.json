@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Rebuild container",
+            "type": "shell",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "command": "docker-compose up --detach --build --force-recreate ${input:containerName}",
+            "problemMatcher": []
+        },
+        {
+            "label": "Start all containers",
+            "type": "shell",
+            "group": "none",
+            "command": "docker-compose up --detach",
+            "problemMatcher": []
+        },
+        {
+            "label": "Stop all containers",
+            "type": "shell",
+            "group": "none",
+            "command": "docker-compose down",
+            "problemMatcher": []
+        },
+        {
+            "label": "Update API package-lock.json",
+            "type": "shell",
+            "group": "none",
+            "command": "docker-compose --file containers/development/api/docker-compose.yml run --rm update",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "containerName",
+            "description": "Which docker container?",
+            "type": "pickString",
+            "default": "api",
+            "options": [
+                "api",
+                "fitnesse",
+                "info"
+            ]
+        }
+    ]
+}
