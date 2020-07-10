@@ -13,4 +13,4 @@ RUN apt-get update && \
     apt-get clean
 WORKDIR /home/fitnesse
 USER fitnesse
-CMD ["java", "-jar", "/home/fitnesse/fitnesse-standalone.jar", "-p", "8080"]
+CMD ["java", "-jar", "/home/fitnesse/fitnesse-standalone.jar", "-p", "8080", "-e", "0"]
