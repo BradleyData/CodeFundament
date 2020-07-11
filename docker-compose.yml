@@ -1,0 +1,49 @@
+version: '3.7'
+
+x-docker-volume:
+    &docker-volume
+    - /var/run/docker.sock:/var/run/docker.sock:ro
+
+services:
+    traefik:
+        image: traefik:v2.2.1
+        command:
+            - "--api.insecure=true"
+            - "--entrypoints.web.address=:80"
+            - "--log.level=WARN"
+            - "--providers.docker=true"
+            - "--providers.docker.defaultRule=Host(`${TRAEFIK_HOST}.${DOMAIN}`)"
+            - "--providers.docker.network=traefik"
+            - "--providers.docker.swarmMode=false"
+        networks:
+            - traefik
+        ports:
+            - "80:80"
+            - "8080:8080"
+        restart: always
+        volumes: *docker-volume
+    api:
+        build:
+            context: ./containers/development/api
+            target: dev
+        networks:
+            - traefik
+        volumes:
+            - ./volumes/api:/home/node/app
+    info:
+        build: ./containers/support/info
+        networks:
+            - traefik
+        volumes:
+            - ./volumes/api/output:/usr/local/apache2/htdocs/api
+    fitnesse:
+        build:
+            context: ./containers/support/fitnesse
+            args:
+                - fit_release=20200501
+        networks:
+            - traefik
+        volumes:
+            - ./volumes/fitnesse:/home/fitnesse/FitNesseRoot
+networks:
+    traefik:

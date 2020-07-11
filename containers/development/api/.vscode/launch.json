@@ -1,0 +1,15 @@
+{
+    "configurations": [
+        {
+            "name": "Debug Jest Tests",
+            "type": "node",
+            "request": "launch",
+            "program": "/home/node/node_modules/jest/bin/jest.js",
+            "args": [
+                "--runInBand"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "openOnSessionStart"
+        }
+    ]
+}

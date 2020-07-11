@@ -1,0 +1,10 @@
+{
+    "watch": [
+        "app/src"
+    ],
+    "ext": "ts",
+    "ignore": [
+        "app/src/**/*.test.js"
+    ],
+    "exec": "npm run compile"
+}
