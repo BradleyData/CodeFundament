@@ -1,3 +1,6 @@
 .env
 *.swp
 
+volumes/fitnesse/RerunLastFailures.wiki
+volumes/fitnesse/RecentChanges.wiki
+volumes/fitnesse/files

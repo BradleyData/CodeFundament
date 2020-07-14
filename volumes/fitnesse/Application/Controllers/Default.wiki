@@ -1,0 +1,19 @@
+---
+Test
+---
+| baseline: default controller |
+| url | verb | controller name? | controller version? | response code? | rows affected? | json? |
+| api.local.test | get | Default | 1 | 200 | 0 | {} |
+| api.local.test/ | | | | | | |
+| api.local.test/v0 | | | | | | |
+| api.local.test/nonexistant | | | | | | |
+| api.local.test/Default | | | | | | |
+| api.local.test/v1 | | | | | | |
+| api.local.test/v1/nonexistant | | | | | | |
+| api.local.test/v2 | | | 2 | | | |
+| api.local.test/v2/nonexistant | | | | | | |
+| api.local.test/v1000 | | | | | | |
+| api.local.test | delete | | 1 | 204 | | |
+| api.local.test/v2 | | | 2 | | | |
+| api.local.test | post | | 1 | 201 | | |
+| api.local.test/v2 | | | 2 | | | |
