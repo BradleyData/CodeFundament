@@ -1,5 +1,0 @@
----
-Suite
----
-!1 Test suite for Controllers
-!contents -R2 -g -p -f -h

@@ -1,6 +1,5 @@
 .env
 *.swp
 
-volumes/fitnesse/RerunLastFailures.wiki
-volumes/fitnesse/RecentChanges.wiki
-volumes/fitnesse/files
+volumes/api/output
+volumes/api/www

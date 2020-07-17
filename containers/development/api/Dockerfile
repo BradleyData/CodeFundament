@@ -1,4 +1,4 @@
-FROM node:13.12.0-buster-slim as base
+FROM node:14.5.0-buster-slim as base
 USER node
 EXPOSE 3000
 ENV NODE_ENV=production
@@ -14,7 +14,7 @@ FROM base as dev
 # Install screen and vim for ease of development.
 # Install procps because stryker requires ps to run.
 USER root
-RUN apt-get update && apt-get install -y procps screen vim
+RUN apt-get update && apt-get install --yes --no-install-recommends procps screen vim wget
 USER node
 RUN echo "shell '/bin/bash'" > /home/node/.screenrc
 # Done installing things.
@@ -26,10 +26,12 @@ COPY --chown=node:node .vscode .vscode/
 COPY --chown=node:node .eslintrc.json ./
 COPY --chown=node:node .prettierrc.json ./
 COPY --chown=node:node babel.config.json ./
+COPY --chown=node:node cucumber.js ./
+COPY --chown=node:node cucumberJson2Html.js ./
 COPY --chown=node:node jest.config.js ./
 COPY --chown=node:node stryker.conf.json ./
 COPY --chown=node:node typedoc.json ./
-CMD ["tsnd", "--transpileOnly", "app/src/index.ts"]
+CMD ["tsnd", "--transpile-only", "app/src/index.ts"]
 
 FROM dev as update
 WORKDIR /home/node

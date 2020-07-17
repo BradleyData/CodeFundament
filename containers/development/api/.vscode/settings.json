@@ -1,0 +1,11 @@
+{
+    "files.watcherExclude": {
+        "**/.cache/**": true,
+        "**/.config/**": true,
+        "**/.npm/**": true,
+        "**/.vscode/**": true,
+        "**/.vscode-server/**": true,
+        "**/node_modules/**": true
+    },
+    "javascript.implicitProjectConfig.experimentalDecorators": true
+}

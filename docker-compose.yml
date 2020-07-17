@@ -36,14 +36,5 @@ services:
             - traefik
         volumes:
             - ./volumes/api/output:/usr/local/apache2/htdocs/api
-    fitnesse:
-        build:
-            context: ./containers/support/fitnesse
-            args:
-                - fit_release=20200501
-        networks:
-            - traefik
-        volumes:
-            - ./volumes/fitnesse:/home/fitnesse/FitNesseRoot
 networks:
     traefik:
