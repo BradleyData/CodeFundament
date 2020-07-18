@@ -6,7 +6,6 @@
 
         "allowJs": false,
         "esModuleInterop": true,
-        "experimentalDecorators": true,
         "moduleResolution": "node",
         "noEmitOnError": true,
         "noUnusedLocals": true,
