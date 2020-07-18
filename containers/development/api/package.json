@@ -8,7 +8,7 @@
         "lint": "prettier --write app/src/* && eslint --fix app/src/* && echo 'All files passed!'",
         "unitTests": "jest --detectOpenHandles",
         "mutationTests": "stryker run",
-        "acceptanceTests": "cucumber-js && node cucumberJson2Html.js"
+        "acceptanceTests": "cucumber-js; node cucumberJson2Html.js"
     },
     "main": "app/www/index.js",
     "dependencies": {},
