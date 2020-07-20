@@ -5,7 +5,7 @@
     "scripts": {
         "compile": "babel app/src/ --out-dir app/www/ --extensions '.ts'",
         "document": "typedoc",
-        "lint": "prettier --write app/acceptanceTests/steps/** app/src/** && eslint --fix app/acceptanceTests/steps/** app/src/** && echo 'All files passed!'",
+        "lint": "prettier --write app/acceptanceTests/steps/** app/src/** && eslint --fix app/acceptanceTests/steps/**/** app/src/**/** && echo 'All files passed!'",
         "unitTests": "jest --reporters='default' --detectOpenHandles '/app/src/.*\\.test\\.ts$'",
         "mutationTests": "stryker run",
         "acceptanceTests": "mkdir app/output/acceptance; jest --detectOpenHandles --coverage=false '/app/acceptanceTests/steps/.*\\.test\\.ts$'; node cucumberHtmlReporter.mjs"
