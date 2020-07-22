@@ -27,6 +27,7 @@ jest.mock("http", () => {
                 onReq: jest.fn(),
                 onRes: {
                     end: jest.fn(),
+                    setHeader: jest.fn(),
                     write: jest.fn(),
                 },
             }
@@ -44,7 +45,31 @@ describe("Srvr", () => {
             expect(customFields.onEventName).toBe("request")
             // expect(mockLog).toBeCalledWith(customFields.onReq)
             // expect(customFields.onRes.write).toBeCalledWith(/^Default/)
-            expect(customFields.onRes.write).toBeCalled()
+            // expect(customFields.onRes.write).toBeCalled()
+            expect(customFields.onRes.setHeader).toBeCalledWith(
+                "Content-Type",
+                "application/json; charset=utf-8"
+            )
+            expect(customFields.onRes.setHeader).toBeCalledWith(
+                "Endpoint-Name",
+                expect.anything()
+            )
+            expect(customFields.onRes.setHeader).toBeCalledWith(
+                "Endpoint-Version",
+                expect.anything()
+            )
+            expect(customFields.onRes.setHeader).toBeCalledWith(
+                "Requested-Action",
+                expect.anything()
+            )
+            expect(customFields.onRes.setHeader).toBeCalledWith(
+                "Parameters-Sent",
+                expect.anything()
+            )
+            expect(customFields.onRes.setHeader).toBeCalledWith(
+                "Rows-Affected",
+                expect.anything()
+            )
             expect(customFields.onRes.end).toBeCalled()
             expect(srvr["server"].listen).toBeCalledWith("3000")
         })

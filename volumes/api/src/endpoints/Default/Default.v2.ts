@@ -1,4 +1,4 @@
-import Endpoint from "../Endpoint"
+import Endpoint from "../../Endpoint"
 
 export default class Default extends Endpoint {
     protected delete(): void {

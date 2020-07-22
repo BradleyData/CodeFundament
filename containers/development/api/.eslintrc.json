@@ -25,6 +25,7 @@
         // Possible Errors
         "no-await-in-loop": "error",
         "no-extra-parens": ["error", "all"],
+        "no-inner-declarations": ["off"],
         "no-loss-of-precision": "error",
         "no-promise-executor-return": "error",
         "no-template-curly-in-string": "error",
