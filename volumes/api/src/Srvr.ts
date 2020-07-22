@@ -1,4 +1,5 @@
-import Endpoint from "./Endpoint"
+import Endpoint from "./Endpoint" // eslint-disable-line no-unused-vars
+import EndpointFactory from "./EndpointFactory"
 import Fs from "fs"
 import Http from "http"
 
@@ -38,7 +39,6 @@ export default class Srvr {
                 }
 
                 function createEndpoint(): Endpoint {
-                    let SpecificEndpoint: any
                     let endpoint: Endpoint
 
                     try {
@@ -78,10 +78,7 @@ export default class Srvr {
                         if (version === 0)
                             throw new Error("Endpoint version undefined.")
 
-                        SpecificEndpoint = require(`./endpoints/${endpointPath}${endpointName}.v${version}`)
-                            .default
-
-                        endpoint = new SpecificEndpoint(
+                        endpoint = EndpointFactory.createEndpoint(
                             `${endpointPath}${endpointName}`,
                             version,
                             action,
@@ -92,24 +89,26 @@ export default class Srvr {
                             if (sansVersion.length === 0) 
                                 return 0
 
-                            if (sansVersion.length === 1)
+                            if (sansVersion.length === 1) 
                             {if (fileExists("", sansVersion[0])) 
                                 return 1}
+                            
 
                             for (
                                 let position = sansVersion.length - 1;
                                 position > 0;
                                 position--
-                            )
-                            {if (
-                                fileExists(
-                                    sansVersion
-                                        .slice(0, position)
-                                        .join("/"),
-                                    sansVersion[position]
+                            ) {
+                                if (
+                                    fileExists(
+                                        sansVersion
+                                            .slice(0, position)
+                                            .join("/"),
+                                        sansVersion[position]
+                                    )
                                 )
-                            )
-                                return position + 1}
+                                    return position + 1
+                            }
 
                             if (fileExists("", sansVersion[0])) 
                                 return 1
@@ -183,14 +182,15 @@ export default class Srvr {
                         }
                     } catch (error) {
                         logError(error)
-                        SpecificEndpoint = require("./endpoints/Invalid")
-                            .default
 
-                        endpoint = new SpecificEndpoint("", 1, action, "")
+                        const invalidVersion = -1
+                        endpoint = EndpointFactory.createEndpoint(
+                            "",
+                            invalidVersion,
+                            action,
+                            ""
+                        )
                     }
-
-                    if (!(endpoint instanceof Endpoint))
-                        throw new Error("Invalid endpoint.")
 
                     return endpoint
                 }

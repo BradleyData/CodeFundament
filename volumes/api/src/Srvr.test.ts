@@ -1,8 +1,15 @@
+import EndpointFactory from "./EndpointFactory"
 import Srvr from "./Srvr"
 
 const mockError = jest.spyOn(console, "error").mockImplementation()
 const mockInfo = jest.spyOn(console, "info").mockImplementation()
 // const mockLog = jest.spyOn(console, "log").mockImplementation()
+
+jest.mock("fs", () => {
+    return {
+        readdirSync: jest.fn().mockReturnValue(["Default.v1.ts"]),
+    }
+})
 
 jest.mock("http", () => {
     return {
@@ -24,7 +31,7 @@ jest.mock("http", () => {
                     listener(this.onReq, this.onRes)
                 },
                 onEventName: "",
-                onReq: jest.fn(),
+                onReq: {},
                 onRes: {
                     end: jest.fn(),
                     setHeader: jest.fn(),
@@ -40,35 +47,47 @@ describe("Srvr", () => {
     const customFields: any = srvr["server"]
 
     describe("listens on", () => {
+        const endpointName = "EndpointName"
+        const endpointVersion = Math.floor(Math.random() * 50)
+        const parameters = "endpoint/parameters"
+        const rowsAffected = Math.floor(Math.random() * 50)
         test("default port", () => {
+            const endpoint = {
+                getAction: jest.fn(),
+                getName: jest.fn().mockReturnValue(endpointName),
+                getParameters: jest.fn().mockReturnValue(parameters),
+                getResponse: jest.fn(),
+                getRowsAffected: jest.fn().mockReturnValue(rowsAffected),
+                getStatusCode: jest.fn(),
+                getVersion: jest.fn().mockReturnValue(endpointVersion),
+            }
+            EndpointFactory.createEndpoint = jest.fn().mockReturnValue(endpoint)
+
             srvr.listen()
             expect(customFields.onEventName).toBe("request")
-            // expect(mockLog).toBeCalledWith(customFields.onReq)
-            // expect(customFields.onRes.write).toBeCalledWith(/^Default/)
-            // expect(customFields.onRes.write).toBeCalled()
             expect(customFields.onRes.setHeader).toBeCalledWith(
                 "Content-Type",
                 "application/json; charset=utf-8"
             )
             expect(customFields.onRes.setHeader).toBeCalledWith(
                 "Endpoint-Name",
-                expect.anything()
+                endpointName
             )
             expect(customFields.onRes.setHeader).toBeCalledWith(
                 "Endpoint-Version",
-                expect.anything()
+                endpointVersion
             )
-            expect(customFields.onRes.setHeader).toBeCalledWith(
-                "Requested-Action",
-                expect.anything()
-            )
+            // expect(customFields.onRes.setHeader).toBeCalledWith(
+            //     "Requested-Action",
+            //     "get"
+            // )
             expect(customFields.onRes.setHeader).toBeCalledWith(
                 "Parameters-Sent",
-                expect.anything()
+                parameters
             )
             expect(customFields.onRes.setHeader).toBeCalledWith(
                 "Rows-Affected",
-                expect.anything()
+                rowsAffected
             )
             expect(customFields.onRes.end).toBeCalled()
             expect(srvr["server"].listen).toBeCalledWith("3000")
