@@ -46,9 +46,7 @@ export default class Srvr {
                             .split("/")
                             .filter((element) => element !== "")
 
-                        const hasVersion =
-                            urlElements.length > 0 &&
-                            /^v[0-9]+$/u.test(urlElements[0])
+                        const hasVersion = /^v[0-9]+$/u.test(urlElements[0])
 
                         const sansVersion = urlElements.slice(
                             hasVersion ? 1 : 0

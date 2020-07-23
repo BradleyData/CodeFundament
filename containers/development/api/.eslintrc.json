@@ -17,8 +17,7 @@
     "overrides": [{
         "files": ["*.test.ts"],
         "rules": {
-            "dot-notation": "off",
-            "no-magic-numbers": "off"
+            "dot-notation": "off"
         }
     }],
     "rules": {

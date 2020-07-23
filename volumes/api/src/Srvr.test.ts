@@ -1,5 +1,18 @@
 import EndpointFactory from "./EndpointFactory"
+import Fs from "fs"
 import Srvr from "./Srvr"
+
+const mockPath = `${process.cwd()}/app/src/endpoints/`
+const mockDirectory = "Directory/"
+const mockEndpoint = "Endpoint"
+const mockPathWithDirectory = `${mockPath}${mockDirectory}`
+const mockMinVersion = 1
+const mockMainVersion = 3
+const mockMinVersionWithDirectory = 2
+const mockMainVersionWithDirectory = 5
+const mockInvalidVersion = -1
+const mockDefaultEndpoint = "Default" // Changing this will break tests.
+const mockDefaultVersion = 1
 
 const mockError = jest.spyOn(console, "error").mockImplementation()
 const mockInfo = jest.spyOn(console, "info").mockImplementation()
@@ -7,9 +20,22 @@ const mockLog = jest.spyOn(console, "log").mockImplementation()
 
 jest.mock("fs", () => {
     return {
-        readdirSync: jest
-            .fn()
-            .mockReturnValue(["Default.v1.ts", "Default.v3.ts"]),
+        readdirSync: jest.fn().mockImplementation((filePath: any) => {
+            if (filePath === mockPath) {
+                return [
+                    `${mockDefaultEndpoint}.v${mockDefaultVersion}.ts`,
+                    `${mockEndpoint}.v${mockMinVersion}.ts`,
+                    `${mockEndpoint}.v${mockMainVersion}.ts`,
+                ]
+            }
+            if (filePath === mockPathWithDirectory) {
+                return [
+                    `${mockEndpoint}.v${mockMinVersionWithDirectory}.ts`,
+                    `${mockEndpoint}.v${mockMainVersionWithDirectory}.ts`,
+                ]
+            }
+            return []
+        }),
     }
 })
 
@@ -47,13 +73,15 @@ jest.mock("http", () => {
 describe("Srvr", () => {
     const srvr = new Srvr()
     const customFields: any = srvr["server"]
+    EndpointFactory.createEndpoint = jest.fn()
 
     describe("listens on", () => {
         test("default port", () => {
+            const maxRandomInt = 50
             const endpointName = "EndpointName"
-            const endpointVersion = Math.floor(Math.random() * 50)
+            const endpointVersion = Math.floor(Math.random() * maxRandomInt)
             const parameters = "endpoint/parameters"
-            const rowsAffected = Math.floor(Math.random() * 50)
+            const rowsAffected = Math.floor(Math.random() * maxRandomInt)
             const response = `{Version: ${endpointVersion}}`
             const statusCode = 404
             const action = "action"
@@ -71,8 +99,8 @@ describe("Srvr", () => {
             srvr.listen()
             expect(customFields.onEventName).toBe("request")
             expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                "Default",
-                3,
+                mockDefaultEndpoint,
+                mockDefaultVersion,
                 "get",
                 ""
             )
@@ -127,7 +155,7 @@ describe("Srvr", () => {
             expect(onExit).toBeCalledWith(0)
         })
 
-        it("has error", () => {
+        test("has error", () => {
             const err = new Error()
             customFields.closeError = err
 
@@ -137,51 +165,72 @@ describe("Srvr", () => {
         })
     })
 
+    describe("not given URL", () => {
+        test("and with no action", () => {
+            customFields.onReq.method = undefined // eslint-disable-line no-undefined
+
+            srvr.listen()
+            expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                expect.anything(),
+                expect.anything(),
+                "get",
+                expect.anything()
+            )
+        })
+    })
+
     describe("given URL", () => {
-        EndpointFactory.createEndpoint = jest.fn()
+        const parameters = "para/mete/rs"
 
         describe("with valid endpoint", () => {
-            const endpoint = "Default"
-            const parameters = "para/meters"
-            const method = "get"
-            customFields.onReq.method = method
-
-            test("no version", () => {
-                customFields.onReq.url = `/${endpoint}/${parameters}`
+            test("but no version", () => {
+                customFields.onReq.url = `/${mockEndpoint}/${parameters}`
 
                 srvr.listen()
                 expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                    endpoint,
-                    3,
-                    method,
+                    mockEndpoint,
+                    mockMainVersion,
+                    expect.any(String),
                     parameters
                 )
             })
 
-            test("valid version", () => {
-                const version = 1
-                customFields.onReq.url = `/v${version}/${endpoint}/${parameters}`
+            test("and valid version", () => {
+                customFields.onReq.url = `/v${mockMinVersion}/${mockEndpoint}/${parameters}`
 
                 srvr.listen()
+                expect(Fs.readdirSync).toBeCalledWith(
+                    `${mockPath}${mockEndpoint}/${parameters
+                        .split("/")
+                        .slice(0, -1) // eslint-disable-line no-magic-numbers
+                        .join("/")}`
+                )
+                expect(Fs.readdirSync).toBeCalledWith(
+                    `${mockPath}${mockEndpoint}`
+                )
+                expect(Fs.readdirSync).toBeCalledWith(`${mockPath}`)
                 expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                    endpoint,
-                    version,
-                    method,
+                    mockEndpoint,
+                    mockMinVersion,
+                    expect.any(String),
                     parameters
                 )
             })
 
-            test("version invalid", () => {
-                customFields.onReq.url = `/v0/${endpoint}/${parameters}`
+            test("and invalid version", () => {
+                customFields.onReq.method = "get"
+                customFields.onReq.url = `/v0/${mockEndpoint}/${parameters}`
 
                 srvr.listen()
                 expect(EndpointFactory.createEndpoint).toBeCalledWith(
                     "",
-                    -1,
-                    method,
+                    mockInvalidVersion,
+                    expect.any(String),
                     ""
                 )
-                expect(mockLog).toBeCalledWith(`action: ${method}`)
+                expect(mockLog).toBeCalledWith(
+                    `action: ${customFields.onReq.method}`
+                )
                 expect(mockLog).toBeCalledWith(`url: ${customFields.onReq.url}`)
                 expect(mockLog).toBeCalledWith(
                     expect.stringMatching(/^Error:/u)
@@ -194,7 +243,7 @@ describe("Srvr", () => {
                     .mockImplementation(() => {
                         throw true // eslint-disable-line no-throw-literal
                     })
-                customFields.onReq.url = `/v0/${endpoint}/${parameters}`
+                customFields.onReq.url = `/v0/${mockEndpoint}/${parameters}`
 
                 srvr.listen()
                 expect(mockLog).toBeCalledWith(
