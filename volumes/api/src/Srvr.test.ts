@@ -3,11 +3,13 @@ import Srvr from "./Srvr"
 
 const mockError = jest.spyOn(console, "error").mockImplementation()
 const mockInfo = jest.spyOn(console, "info").mockImplementation()
-// const mockLog = jest.spyOn(console, "log").mockImplementation()
+const mockLog = jest.spyOn(console, "log").mockImplementation()
 
 jest.mock("fs", () => {
     return {
-        readdirSync: jest.fn().mockReturnValue(["Default.v1.ts"]),
+        readdirSync: jest
+            .fn()
+            .mockReturnValue(["Default.v1.ts", "Default.v3.ts"]),
     }
 })
 
@@ -47,24 +49,34 @@ describe("Srvr", () => {
     const customFields: any = srvr["server"]
 
     describe("listens on", () => {
-        const endpointName = "EndpointName"
-        const endpointVersion = Math.floor(Math.random() * 50)
-        const parameters = "endpoint/parameters"
-        const rowsAffected = Math.floor(Math.random() * 50)
         test("default port", () => {
+            const endpointName = "EndpointName"
+            const endpointVersion = Math.floor(Math.random() * 50)
+            const parameters = "endpoint/parameters"
+            const rowsAffected = Math.floor(Math.random() * 50)
+            const response = `{Version: ${endpointVersion}}`
+            const statusCode = 404
+            const action = "action"
             const endpoint = {
-                getAction: jest.fn(),
+                getAction: jest.fn().mockReturnValue(action),
                 getName: jest.fn().mockReturnValue(endpointName),
                 getParameters: jest.fn().mockReturnValue(parameters),
-                getResponse: jest.fn(),
+                getResponse: jest.fn().mockReturnValue(response),
                 getRowsAffected: jest.fn().mockReturnValue(rowsAffected),
-                getStatusCode: jest.fn(),
+                getStatusCode: jest.fn().mockReturnValue(statusCode),
                 getVersion: jest.fn().mockReturnValue(endpointVersion),
             }
             EndpointFactory.createEndpoint = jest.fn().mockReturnValue(endpoint)
 
             srvr.listen()
             expect(customFields.onEventName).toBe("request")
+            expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                "Default",
+                3,
+                "get",
+                ""
+            )
+            expect(customFields.onRes.statusCode).toBe(statusCode)
             expect(customFields.onRes.setHeader).toBeCalledWith(
                 "Content-Type",
                 "application/json; charset=utf-8"
@@ -77,10 +89,10 @@ describe("Srvr", () => {
                 "Endpoint-Version",
                 endpointVersion
             )
-            // expect(customFields.onRes.setHeader).toBeCalledWith(
-            //     "Requested-Action",
-            //     "get"
-            // )
+            expect(customFields.onRes.setHeader).toBeCalledWith(
+                "Requested-Action",
+                action
+            )
             expect(customFields.onRes.setHeader).toBeCalledWith(
                 "Parameters-Sent",
                 parameters
@@ -89,6 +101,7 @@ describe("Srvr", () => {
                 "Rows-Affected",
                 rowsAffected
             )
+            expect(customFields.onRes.write).toBeCalledWith(response)
             expect(customFields.onRes.end).toBeCalled()
             expect(srvr["server"].listen).toBeCalledWith("3000")
         })
@@ -121,6 +134,73 @@ describe("Srvr", () => {
             srvr.shutdown(msg, onExit)
             expect(mockError).toBeCalledWith(err)
             expect(onExit).toBeCalledWith(1)
+        })
+    })
+
+    describe("given URL", () => {
+        EndpointFactory.createEndpoint = jest.fn()
+
+        describe("with valid endpoint", () => {
+            const endpoint = "Default"
+            const parameters = "para/meters"
+            const method = "get"
+            customFields.onReq.method = method
+
+            test("no version", () => {
+                customFields.onReq.url = `/${endpoint}/${parameters}`
+
+                srvr.listen()
+                expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                    endpoint,
+                    3,
+                    method,
+                    parameters
+                )
+            })
+
+            test("valid version", () => {
+                const version = 1
+                customFields.onReq.url = `/v${version}/${endpoint}/${parameters}`
+
+                srvr.listen()
+                expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                    endpoint,
+                    version,
+                    method,
+                    parameters
+                )
+            })
+
+            test("version invalid", () => {
+                customFields.onReq.url = `/v0/${endpoint}/${parameters}`
+
+                srvr.listen()
+                expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                    "",
+                    -1,
+                    method,
+                    ""
+                )
+                expect(mockLog).toBeCalledWith(`action: ${method}`)
+                expect(mockLog).toBeCalledWith(`url: ${customFields.onReq.url}`)
+                expect(mockLog).toBeCalledWith(
+                    expect.stringMatching(/^Error:/u)
+                )
+            })
+
+            test("error without error.stack", () => {
+                customFields.onRes.setHeader = jest
+                    .fn()
+                    .mockImplementation(() => {
+                        throw true // eslint-disable-line no-throw-literal
+                    })
+                customFields.onReq.url = `/v0/${endpoint}/${parameters}`
+
+                srvr.listen()
+                expect(mockLog).toBeCalledWith(
+                    expect.stringMatching(/\(stack missing\)$/u)
+                )
+            })
         })
     })
 })

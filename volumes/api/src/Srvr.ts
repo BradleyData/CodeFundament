@@ -15,7 +15,7 @@ export default class Srvr {
             "request",
             (req: Http.IncomingMessage, res: Http.ServerResponse): void => {
                 const action = req.method ?? "get"
-                const url = req.url ?? "/"
+                const url = req.url ?? ""
 
                 try {
                     sendResponse(createEndpoint())
@@ -198,7 +198,10 @@ export default class Srvr {
                 function logError(error: Error): void {
                     console.log(`action: ${action}`)
                     console.log(`url: ${url}`)
-                    console.log(error.stack ?? "")
+                    console.log(
+                        error.stack ??
+                            `${error.name}: ${error.message} (stack missing)`
+                    )
                 }
             }
         )
