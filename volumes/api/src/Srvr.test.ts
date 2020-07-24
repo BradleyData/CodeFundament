@@ -2,10 +2,12 @@ import EndpointFactory from "./EndpointFactory"
 import Fs from "fs"
 import Srvr from "./Srvr"
 
-const mockPath = `${process.cwd()}/app/src/endpoints/`
-const mockDirectory = "Directory/"
+const mockPath = `${process.cwd()}/app/src/endpoints`
+const mockDirectory = "Directory"
+const mockDirectories = "Director/ies"
 const mockEndpoint = "Endpoint"
-const mockPathWithDirectory = `${mockPath}${mockDirectory}`
+const mockPathWithDirectory = `${mockPath}/${mockDirectory}`
+const mockPathWithDirectories = `${mockPath}/${mockDirectories}`
 const mockMinVersion = 1
 const mockMainVersion = 3
 const mockMinVersionWithDirectory = 2
@@ -20,20 +22,29 @@ const mockLog = jest.spyOn(console, "log").mockImplementation()
 
 jest.mock("fs", () => {
     return {
-        readdirSync: jest.fn().mockImplementation((filePath: any) => {
-            if (filePath === mockPath) {
+        readdirSync: jest.fn().mockImplementation((filePath: string) => {
+            const testPath =
+                filePath.slice(-1) === "/" ? filePath.slice(0, -1) : filePath
+
+            if (testPath === mockPath) {
                 return [
                     `${mockDefaultEndpoint}.v${mockDefaultVersion}.ts`,
                     `${mockEndpoint}.v${mockMinVersion}.ts`,
                     `${mockEndpoint}.v${mockMainVersion}.ts`,
                 ]
             }
-            if (filePath === mockPathWithDirectory) {
+            if (
+                testPath === mockPathWithDirectory ||
+                testPath === mockPathWithDirectories
+            ) {
                 return [
                     `${mockEndpoint}.v${mockMinVersionWithDirectory}.ts`,
                     `${mockEndpoint}.v${mockMainVersionWithDirectory}.ts`,
                 ]
             }
+            // eslint-disable-next-line no-magic-numbers
+            if (testPath.length % 2 === 0) 
+                throw new Error()
             return []
         }),
     }
@@ -49,7 +60,8 @@ jest.mock("http", () => {
                     if (typeof callback !== "undefined")
                         callback(this.closeError)
                 },
-                closeError: undefined, // eslint-disable-line no-undefined
+                // eslint-disable-next-line no-undefined
+                closeError: undefined,
                 listen: jest.fn(),
                 on: function (
                     eventName: string,
@@ -167,7 +179,8 @@ describe("Srvr", () => {
 
     describe("not given URL", () => {
         test("and with no action", () => {
-            customFields.onReq.method = undefined // eslint-disable-line no-undefined
+            // eslint-disable-next-line no-undefined
+            customFields.onReq.method = undefined
 
             srvr.listen()
             expect(EndpointFactory.createEndpoint).toBeCalledWith(
@@ -195,23 +208,47 @@ describe("Srvr", () => {
                 )
             })
 
+            test("but no version or parameters", () => {
+                customFields.onReq.url = `/${mockEndpoint}`
+
+                srvr.listen()
+                expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                    mockEndpoint,
+                    mockMainVersion,
+                    expect.any(String),
+                    ""
+                )
+            })
+
             test("and valid version", () => {
                 customFields.onReq.url = `/v${mockMinVersion}/${mockEndpoint}/${parameters}`
 
                 srvr.listen()
                 expect(Fs.readdirSync).toBeCalledWith(
-                    `${mockPath}${mockEndpoint}/${parameters
+                    `${mockPath}/${mockEndpoint}/${parameters
                         .split("/")
-                        .slice(0, -1) // eslint-disable-line no-magic-numbers
+                        .slice(0, -1)
                         .join("/")}`
                 )
                 expect(Fs.readdirSync).toBeCalledWith(
-                    `${mockPath}${mockEndpoint}`
+                    `${mockPath}/${mockEndpoint}`
                 )
-                expect(Fs.readdirSync).toBeCalledWith(`${mockPath}`)
                 expect(EndpointFactory.createEndpoint).toBeCalledWith(
                     mockEndpoint,
                     mockMinVersion,
+                    expect.any(String),
+                    parameters
+                )
+            })
+
+            test("and really high version", () => {
+                const raiseVersionBy = 10
+                customFields.onReq.url = `/v${mockMainVersion + raiseVersionBy}/${mockEndpoint}/${parameters}`
+
+                srvr.listen()
+                expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                    mockEndpoint,
+                    mockMainVersion,
                     expect.any(String),
                     parameters
                 )
@@ -233,7 +270,7 @@ describe("Srvr", () => {
                 )
                 expect(mockLog).toBeCalledWith(`url: ${customFields.onReq.url}`)
                 expect(mockLog).toBeCalledWith(
-                    expect.stringMatching(/^Error:/u)
+                    expect.stringMatching(/^Error:.*version.*undefined/u)
                 )
             })
 
@@ -241,13 +278,54 @@ describe("Srvr", () => {
                 customFields.onRes.setHeader = jest
                     .fn()
                     .mockImplementation(() => {
-                        throw true // eslint-disable-line no-throw-literal
+                        // eslint-disable-next-line no-throw-literal
+                        throw true
                     })
                 customFields.onReq.url = `/v0/${mockEndpoint}/${parameters}`
 
                 srvr.listen()
                 expect(mockLog).toBeCalledWith(
                     expect.stringMatching(/\(stack missing\)$/u)
+                )
+            })
+        })
+
+        describe("with endpoint in subdirectory", () => {
+            test("one level deep", () => {
+                customFields.onReq.url = `/v${mockMinVersionWithDirectory}/${mockDirectory}/${mockEndpoint}/${parameters}`
+
+                srvr.listen()
+                expect(Fs.readdirSync).toBeCalledWith(
+                    `${mockPathWithDirectory}/${mockEndpoint}/${parameters
+                        .split("/")
+                        .slice(0, -1)
+                        .join("/")}`
+                )
+                // expect(Fs.readdirSync).not.toBeCalledWith(`${mockPath}`)
+                expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                    `${mockDirectory}/${mockEndpoint}`,
+                    mockMinVersionWithDirectory,
+                    expect.any(String),
+                    parameters
+                )
+            })
+
+            test("two levels deep", () => {
+                customFields.onReq.url = `/v${mockMinVersionWithDirectory}/${mockDirectories}/${mockEndpoint}/${parameters}`
+
+                srvr.listen()
+                expect(Fs.readdirSync).toBeCalledWith(
+                    `${mockPathWithDirectories}/${mockEndpoint}/${parameters
+                        .split("/")
+                        .slice(0, -1)
+                        .join("/")}`
+                )
+                // expect(Fs.readdirSync).not.toBeCalledWith(`${mockPath}`)
+                expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                    `${mockDirectories}/${mockEndpoint}`,
+                    mockMinVersionWithDirectory,
+                    expect.any(String),
+                    parameters
                 )
             })
         })

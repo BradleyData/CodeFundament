@@ -85,16 +85,15 @@ class Endpoint {
     }
 }
 
-/* eslint-disable no-redeclare */
+/* eslint-disable no-magic-numbers, no-redeclare, no-unused-vars */
 namespace Endpoint {
     export enum StatusCode {
-        /* eslint-disable no-magic-numbers */
-        /* eslint-disable no-unused-vars */
         ok = 200,
         created = 201,
         noContent = 204,
         badRequest = 400,
     }
 }
+/* eslint-enable no-magic-numbers, no-redeclare, no-unused-vars */
 
 export default Endpoint

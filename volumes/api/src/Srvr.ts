@@ -84,17 +84,9 @@ export default class Srvr {
                         )
 
                         function getFirstParameterPosition(): number {
-                            if (sansVersion.length === 0) 
-                                return 0
-
-                            if (sansVersion.length === 1) 
-                            {if (fileExists("", sansVersion[0])) 
-                                return 1}
-                            
-
                             for (
-                                let position = sansVersion.length - 1;
-                                position > 0;
+                                let position = sansVersion.length;
+                                position >= 0;
                                 position--
                             ) {
                                 if (
@@ -107,9 +99,6 @@ export default class Srvr {
                                 )
                                     return position + 1
                             }
-
-                            if (fileExists("", sansVersion[0])) 
-                                return 1
 
                             return 0
 
@@ -133,50 +122,45 @@ export default class Srvr {
                         }
 
                         function getVersion(): number {
-                            const parsedVersion = (() => {
-                                const requestedVersion = urlElements[0]
-
-                                const actualVersions = Fs.readdirSync(
-                                    `${process.cwd()}/app/src/endpoints/${endpointPath}`
-                                )
-                                    .filter((file) =>
-                                        file.match(
-                                            `^${endpointName}.v[0-9]+.[jt]s$`
-                                        )
+                            const actualVersions = Fs.readdirSync(
+                                `${process.cwd()}/app/src/endpoints/${endpointPath}`
+                            )
+                                .filter((file) =>
+                                    file.match(
+                                        `^${endpointName}.v[0-9]+.[jt]s$`
                                     )
-                                    .map(
-                                        (file) =>
-                                            (file.match(/\.v[0-9]+\.[jt]s$/u) ??
-                                                "")[0].split(".")[1]
+                                )
+                                .map((file) => {
+                                    const fileElements = file.split(".")
+                                    const versionIndex = 2
+                                    return parseInt(
+                                        fileElements[
+                                            fileElements.length - versionIndex
+                                        ].substring(1),
+                                        10
                                     )
-                                    .sort()
+                                })
+                                .sort()
 
-                                if (!hasVersion) {
-                                    return actualVersions[
-                                        actualVersions.length - 1
-                                    ]
-                                }
+                            if (!hasVersion)
+                                return actualVersions[actualVersions.length - 1]
 
-                                const allVersions = actualVersions.concat(
-                                    requestedVersion
-                                )
-                                const sansDuplicates = new Set(allVersions)
-                                if (
-                                    actualVersions.length ===
-                                    sansDuplicates.size
-                                )
-                                    return requestedVersion
+                            const requestedVersion = parseInt(
+                                urlElements[0].substring(1),
+                                10
+                            )
+                            
+                            if (actualVersions.includes(requestedVersion))
+                                return requestedVersion
 
-                                const requestedVersionIndex = allVersions
-                                    .sort()
-                                    .indexOf(requestedVersion)
-                                return (
-                                    allVersions[requestedVersionIndex - 1] ??
-                                    "v0"
-                                )
-                            })()
+                            const allVersions = actualVersions.concat(
+                                requestedVersion
+                            )
 
-                            return parseInt(parsedVersion.substr(1), 10)
+                            const requestedVersionIndex = allVersions
+                                .sort((a, b) => a - b)
+                                .indexOf(requestedVersion)
+                            return allVersions[requestedVersionIndex - 1] ?? 0
                         }
                     } catch (error) {
                         logError(error)
