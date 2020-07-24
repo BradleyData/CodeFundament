@@ -241,18 +241,22 @@ describe("Srvr", () => {
                 )
             })
 
+            /**
+             * When this uses parameters with slashes, Stryker seems to ignore it.
+             */
             test("and really high version", () => {
+                const customParameters = "parameters"
                 const raiseVersionBy = 10
                 customFields.onReq.url = `/v${
                     mockMainVersion + raiseVersionBy
-                }/${mockEndpoint}/${parameters}`
+                }/${mockEndpoint}/${customParameters}`
 
                 srvr.listen()
                 expect(EndpointFactory.createEndpoint).toBeCalledWith(
                     mockEndpoint,
                     mockMainVersion,
                     expect.any(String),
-                    parameters
+                    customParameters
                 )
             })
 
