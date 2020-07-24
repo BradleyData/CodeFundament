@@ -18,7 +18,7 @@ class Endpoint {
         this.action = action.toUpperCase()
         this.parameters = parameters
 
-        switch (action) {
+        switch (this.action) {
             case "DELETE":
                 this.statusCode = Endpoint.StatusCode.noContent
                 this.delete()
