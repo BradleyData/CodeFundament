@@ -149,7 +149,7 @@ export default class Srvr {
                                 urlElements[0].substring(1),
                                 10
                             )
-                            
+
                             if (actualVersions.includes(requestedVersion))
                                 return requestedVersion
 

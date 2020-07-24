@@ -243,7 +243,9 @@ describe("Srvr", () => {
 
             test("and really high version", () => {
                 const raiseVersionBy = 10
-                customFields.onReq.url = `/v${mockMainVersion + raiseVersionBy}/${mockEndpoint}/${parameters}`
+                customFields.onReq.url = `/v${
+                    mockMainVersion + raiseVersionBy
+                }/${mockEndpoint}/${parameters}`
 
                 srvr.listen()
                 expect(EndpointFactory.createEndpoint).toBeCalledWith(

@@ -1,8 +1,8 @@
-import EndpointFactory from "./EndpointFactory"
-import Endpoint from "./Endpoint"
 import DefaultEndpoint from "./endpoints/Default.v1"
+import Endpoint from "./Endpoint"
+import EndpointFactory from "./EndpointFactory"
 import InvalidEndpoint from "./endpoints/Invalid"
-import {mocked} from "ts-jest/utils"
+import { mocked } from "ts-jest/utils"
 
 jest.mock("./Endpoint")
 jest.mock("./endpoints/Invalid")
