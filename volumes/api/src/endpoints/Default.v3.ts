@@ -1,18 +1,12 @@
 import Endpoint from "../Endpoint"
 
 export default class Default extends Endpoint {
-    protected delete(): void {
-        this.rowsAffected = 0
-        this.response = "{}"
-    }
+    // eslint-disable-next-line no-empty-function
+    protected delete(): void {}
 
-    protected get(): void {
-        this.rowsAffected = 0
-        this.response = "{}"
-    }
+    // eslint-disable-next-line no-empty-function
+    protected get(): void {}
 
-    protected post(): void {
-        this.rowsAffected = 0
-        this.response = "{}"
-    }
+    // eslint-disable-next-line no-empty-function
+    protected post(): void {}
 }
