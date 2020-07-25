@@ -1,3 +1,5 @@
 .env
 *.swp
 
+volumes/api/output
+volumes/api/www

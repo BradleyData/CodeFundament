@@ -17,14 +17,14 @@
     "overrides": [{
         "files": ["*.test.ts"],
         "rules": {
-            "dot-notation": "off",
-            "no-magic-numbers": "off"
+            "dot-notation": "off"
         }
     }],
     "rules": {
         // Possible Errors
         "no-await-in-loop": "error",
         "no-extra-parens": ["error", "all"],
+        "no-inner-declarations": ["off"],
         "no-loss-of-precision": "error",
         "no-promise-executor-return": "error",
         "no-template-curly-in-string": "error",
@@ -58,7 +58,7 @@
         "no-labels": "error",
         "no-lone-blocks": "error",
         "no-loop-func": "error",
-        "no-magic-numbers": ["error", {"ignore": [0, 1], "enforceConst": true}],
+        "no-magic-numbers": ["error", {"ignore": [-1, 0, 1], "enforceConst": true}],
         "no-new": "error",
         "no-new-func": "error",
         "no-new-wrappers": "error",
