@@ -307,7 +307,6 @@ describe("Srvr", () => {
                         .slice(0, -1)
                         .join("/")}`
                 )
-                // expect(Fs.readdirSync).not.toBeCalledWith(`${mockPath}`)
                 expect(EndpointFactory.createEndpoint).toBeCalledWith(
                     `${mockDirectory}/${mockEndpoint}`,
                     mockMinVersionWithDirectory,
@@ -326,7 +325,6 @@ describe("Srvr", () => {
                         .slice(0, -1)
                         .join("/")}`
                 )
-                // expect(Fs.readdirSync).not.toBeCalledWith(`${mockPath}`)
                 expect(EndpointFactory.createEndpoint).toBeCalledWith(
                     `${mockDirectories}/${mockEndpoint}`,
                     mockMinVersionWithDirectory,

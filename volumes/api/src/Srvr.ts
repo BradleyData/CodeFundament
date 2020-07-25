@@ -18,13 +18,7 @@ export default class Srvr {
                 const url = req.url ?? ""
 
                 try {
-                    sendResponse(this.createEndpoint(action, url))
-                } catch (error) {
-                    this.logError(error, action, url)
-                }
-                res.end()
-
-                function sendResponse(endpoint: Endpoint): void {
+                    const endpoint = this.createEndpoint(action, url)
                     res.statusCode = endpoint.getStatusCode()
                     res.setHeader(
                         "Content-Type",
@@ -36,7 +30,10 @@ export default class Srvr {
                     res.setHeader("Parameters-Sent", endpoint.getParameters())
                     res.setHeader("Rows-Affected", endpoint.getRowsAffected())
                     res.write(endpoint.getResponse())
+                } catch (error) {
+                    this.logError(error, action, url)
                 }
+                res.end()
             }
         )
         this.server.listen(port)
