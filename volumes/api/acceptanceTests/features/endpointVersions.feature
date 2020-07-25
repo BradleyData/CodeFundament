@@ -2,27 +2,30 @@ Feature: Endpoint Versions and the Default Endpoint
 
     Scenario Outline: Default endpoint works
         When <action> is attempted on "<url>"
-        Then the endpoint <name> with <version> is used
+        Then the endpoint <name>(<version>) is used
+            And is passed "<parameters>"
             And it provides an HTTP <status> code
             And the number of <rows> affected
             And the json "<response>"
             
 
         Examples:
-            | url                | action | name       | version | status | rows | response |
-            |                    | delete | Default    |       3 |    204 |    0 | {}       |
-            |                    | get    | Default    |       3 |    200 |    0 | {}       |
-            |                    | post   | Default    |       3 |    201 |    0 | {}       |
-            | /                  | get    | Default    |       3 |    200 |    0 | {}       |
-            | /default           | get    | Default    |       3 |    200 |    0 | {}       |
-            | /nonexistent       | get    | Default    |       3 |    200 |    0 | {}       |
-            | /does/n0t/exist    | get    | Default    |       3 |    200 |    0 | {}       |
-            | /v1                | get    | Default    |       1 |    200 |    0 | {}       |
-            | /v1/default        | get    | Default    |       1 |    200 |    0 | {}       |
-            | /v1/does/n0t/exist | get    | Default    |       1 |    200 |    0 | {}       |
-            | /v2                | get    | Default    |       1 |    200 |    0 | {}       |
-            | /v3                | get    | Default    |       3 |    200 |    0 | {}       |
-            | /v3/               | get    | Default    |       3 |    200 |    0 | {}       |
-            | /v3/default        | get    | Default    |       3 |    200 |    0 | {}       |
-            | /v3/does/n0t/exist | get    | Default    |       3 |    200 |    0 | {}       |
-            | /v4                | get    | Default    |       3 |    200 |    0 | {}       |
+            | url                | action | name            | version | parameters     | status | rows | response |
+            |                    | DELETE | Default         |       3 |                |    204 |    0 | {}       |
+            |                    | GET    | Default         |       3 |                |    200 |    0 | {}       |
+            |                    | POST   | Default         |       3 |                |    201 |    0 | {}       |
+            | /                  | GET    | Default         |       3 |                |    200 |    0 | {}       |
+            | /Default           | GET    | Default         |       3 |                |    200 |    0 | {}       |
+            | /Default/extra     | GET    | Default         |       3 | extra          |    200 |    0 | {}       |
+            | /nonexistent       | GET    | Default         |       3 | nonexistent    |    200 |    0 | {}       |
+            | /does/n0t/exist    | GET    | Default         |       3 | does/n0t/exist |    200 |    0 | {}       |
+            | /v1                | GET    | Default         |       1 |                |    200 |    0 | {}       |
+            | /v1/Default        | GET    | Default         |       1 |                |    200 |    0 | {}       |
+            | /v1/does/n0t/exist | GET    | Default         |       1 | does/n0t/exist |    200 |    0 | {}       |
+            | /v2                | GET    | Default         |       1 |                |    200 |    0 | {}       |
+            | /v3                | GET    | Default         |       3 |                |    200 |    0 | {}       |
+            | /v3/               | GET    | Default         |       3 |                |    200 |    0 | {}       |
+            | /v3/Default        | GET    | Default         |       3 |                |    200 |    0 | {}       |
+            | /v3/does/n0t/exist | GET    | Default         |       3 | does/n0t/exist |    200 |    0 | {}       |
+            | /v4                | GET    | Default         |       3 |                |    200 |    0 | {}       |
+            | /Default/Default   | GET    | Default/Default |       2 |                |    200 |    0 | {}       |
