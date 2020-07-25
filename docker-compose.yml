@@ -6,7 +6,7 @@ x-docker-volume:
 
 services:
     traefik:
-        image: traefik:v2.2.1
+        image: traefik:v2.2.7
         command:
             - "--api.insecure=true"
             - "--entrypoints.web.address=:80"
