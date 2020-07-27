@@ -4,7 +4,7 @@ let common = [
     "--require app/acceptanceTests/steps/**/*.test.ts",
     "--format progress-bar",
     "--format node_modules/cucumber-pretty",
-    "--format json:app/output/acceptance/acceptance.json"
+    "--format json:app/output/acceptance/json/acceptance.json"
 ].join(" ")
 
 module.exports = {

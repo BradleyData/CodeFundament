@@ -1,10 +1,12 @@
-import chr from "cucumber-html-reporter"
+import chr from "multiple-cucumber-html-reporter"
 
 chr.generate({
-    theme: "bootstrap",
-    jsonFile: "app/output/acceptance/acceptance.json",
-    output: "app/output/acceptance/acceptance.html",
-    reportSuiteAsScenarios: true,
-    scenarioTimestamp: true,
-    launchReport: false
+    jsonDir: "./app/output/acceptance/json/",
+    reportPath: "./app/output/acceptance/html/",
+    metadata: {
+        device: "Development environment",
+        platform: {
+            name: "linux"
+        }
+    }
 })
