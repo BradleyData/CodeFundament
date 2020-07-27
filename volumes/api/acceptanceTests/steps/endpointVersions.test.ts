@@ -1,49 +1,36 @@
-import { defineFeature, loadFeature } from "jest-cucumber"
+import { Then, When } from "cucumber"
 // eslint-disable-next-line no-unused-vars
 import Endpoint from "../../src/Endpoint"
 import Srvr from "../../src/Srvr"
+import expect from "expect"
 
-const feature = loadFeature(
-    "./app/acceptanceTests/features/endpointVersions.feature"
+let endpoint: Endpoint
+
+When("{word} is attempted on {string}", (action: string, url: string) => {
+    const srvr = new Srvr()
+    endpoint = srvr.createEndpoint(action, url)
+})
+
+Then(
+    "the endpoint {string} with version {int} is used",
+    (name: string, version: number) => {
+        expect(name).toBe(endpoint.getName())
+        expect(version).toBe(endpoint.getVersion())
+    }
 )
 
-defineFeature(feature, (test) => {
-    test("Default endpoint works", ({ when, then }) => {
-        let endpoint: Endpoint
+Then("is passed parameters {string}", (parameters: string) => {
+    expect(parameters).toBe(endpoint.getParameters())
+})
 
-        when(
-            /^(?<action>.+) is attempted on "(?<url>.*)"$/u,
-            (action: string, url: string) => {
-                const srvr = new Srvr()
-                endpoint = srvr.createEndpoint(action, url)
-            }
-        )
+Then("it provides an HTTP status code of {int}", (status: number) => {
+    expect(status).toBe(endpoint.getStatusCode())
+})
 
-        then(
-            /^the endpoint (?<name>.+)\((?<version>[0-9]+)\) is used$/u,
-            (name: string, version: string) => {
-                expect(name).toBe(endpoint.getName())
-                expect(version).toBe(endpoint.getVersion().toString())
-            }
-        )
+Then("the number of rows affected is {int}", (rows: number) => {
+    expect(rows).toBe(endpoint.getRowsAffected())
+})
 
-        then(/^is passed "(?<parameters>.*)"$/u, (parameters: string) => {
-            expect(parameters).toBe(endpoint.getParameters())
-        })
-
-        then(
-            /^it provides an HTTP (?<status>[0-9]+) code$/u,
-            (status: string) => {
-                expect(status).toBe(endpoint.getStatusCode().toString())
-            }
-        )
-
-        then(/^the number of (?<rows>[0-9]+) affected$/u, (rows: string) => {
-            expect(rows).toBe(endpoint.getRowsAffected().toString())
-        })
-
-        then(/^the json "(?<response>.*)"$/u, (response: string) => {
-            expect(response).toBe(endpoint.getResponse())
-        })
-    })
+Then("the json output is {string}", (response: string) => {
+    expect(response).toBe(endpoint.getResponse())
 })

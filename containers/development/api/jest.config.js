@@ -98,15 +98,7 @@ module.exports = {
 
   // Use this configuration option to add custom reporters to Jest
   reporters: [
-    "default",
-    [
-      "./node_modules/jest-cucumber/dist/src/reporter",
-      {
-        formatter: "json",
-        path: "./app/output/acceptance/acceptance.json",
-        formatter: "summary"
-      }
-    ]
+    "default"
   ],
 
   // Automatically reset mock state between every test
@@ -126,7 +118,6 @@ module.exports = {
 
   // A list of paths to directories that Jest should use to search for files in
   roots: [
-    "<rootDir>/app/acceptanceTests",
     "<rootDir>/app/src"
   ],
 
@@ -161,7 +152,9 @@ module.exports = {
   testPathIgnorePatterns: [],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
-  // testRegex: [],
+  testRegex: [
+    "\.test\.ts$"
+  ],
 
   // This option allows the use of a custom results processor
   // testResultsProcessor: undefined,

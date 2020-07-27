@@ -1,12 +1,12 @@
 Feature: Endpoint Versions and the Default Endpoint
 
-    Scenario Outline: Default endpoint works
+    Scenario Outline: Default endpoint works with <action> on "<url>"
         When <action> is attempted on "<url>"
-        Then the endpoint <name>(<version>) is used
-            And is passed "<parameters>"
-            And it provides an HTTP <status> code
-            And the number of <rows> affected
-            And the json "<response>"
+        Then the endpoint "<name>" with version <version> is used
+            And is passed parameters "<parameters>"
+            And it provides an HTTP status code of <status>
+            And the number of rows affected is <rows>
+            And the json output is "<response>"
             
 
         Examples:
