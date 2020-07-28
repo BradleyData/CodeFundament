@@ -3,5 +3,6 @@ This project aims to provide an extremely light-weight but opinionated framework
 Deployment can happen using docker-compose for development purposes or docker swarm for production.
 # Documentation
 - [Installation](documentation/installation.md)
+- [Local Website](documentation/localWebsite.md)
 - [Tasks](documentation/tasks.md)
 - [API](documentation/api.md)
