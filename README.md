@@ -4,3 +4,4 @@ Deployment can happen using docker-compose for development purposes or docker sw
 # Documentation
 - [Installation](documentation/installation.md)
 - [Tasks](documentation/tasks.md)
+- [API](documentation/api.md)
