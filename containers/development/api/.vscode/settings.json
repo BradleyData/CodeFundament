@@ -1,4 +1,12 @@
 {
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "\\.ts$",
+                "cmd": "touch -m .watch"
+            }
+        ]
+    },
     "files.watcherExclude": {
         "**/.cache/**": true,
         "**/.cache/**/**": true,
