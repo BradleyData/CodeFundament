@@ -21,7 +21,7 @@ RUN echo "shell '/bin/bash'" > /home/node/.screenrc
 ENV NODE_ENV=development
 ENV PATH=/home/node/node_modules/.bin:$PATH
 WORKDIR /home/node
-RUN npm install --only=development
+RUN npm install --only=development && touch ./.watch
 COPY --chown=node:node .vscode .vscode/
 COPY --chown=node:node .eslintrc.json ./
 COPY --chown=node:node .prettierrc.json ./
@@ -31,7 +31,7 @@ COPY --chown=node:node cucumberHtmlReporter.mjs ./
 COPY --chown=node:node jest.config.js ./
 COPY --chown=node:node stryker.conf.json ./
 COPY --chown=node:node typedoc.json ./
-CMD ["tsnd", "--transpile-only", "app/src/index.ts"]
+CMD ["tsnd", "--transpile-only", "--watch=./.watch", "app/src/index.ts"]
 
 FROM dev as update
 WORKDIR /home/node
