@@ -6,14 +6,13 @@ x-docker-volume:
 
 services:
     traefik:
-        image: traefik:v2.2.7
+        image: traefik:v2.2.8
         command:
             - "--api.insecure=true"
             - "--entrypoints.web.address=:80"
             - "--log.level=WARN"
             - "--providers.docker=true"
             - "--providers.docker.defaultRule=Host(`${TRAEFIK_HOST}.${DOMAIN}`)"
-            - "--providers.docker.network=traefik"
             - "--providers.docker.swarmMode=false"
         networks:
             - traefik
