@@ -18,7 +18,7 @@
   - Docker by Microsoft
   - GitHub Pull Requests and Issues by GitHub (Optional. If you aren't using GitHub then you won't need this.)
   - Remote - Containers by Microsoft
-  - Visual Studio IntelliCode byt Microsoft
+  - **Windows:** Run on Save by emeraldwalk (Optional. Solves a problem with watch processes not receiving file timestamps.)
 ### GPG
 - **Linux and Mac:** Install gpg for the commandline.
 - **Windows:** Install a gpg certificate manager such as [Kleopatra](https://www.openpgp.org/software/kleopatra/).
@@ -48,3 +48,4 @@ If you are not using VSCode, you can refer to **.vscode/tasks.json** to see the 
 - You should see a list of pre-programmed scripts available.
 - Select **Start all containers** to bring up the development stack.
 - Go to the Remote Explorer in the left side-bar and click on the icon for **Attach to Container** next to the API container. A new VSCode window will open and the Explorer will have a button **Open Folder**. The default path should be "/home/node". On subsequent runs, attaching to the container should automatically open this folder.
+    - **Windows:** If you are using the Run on Save extension then you will need to install it in the container.

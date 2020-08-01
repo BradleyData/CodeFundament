@@ -16,6 +16,8 @@ Runs mutation testing against the unit tests and expects 100% of mutations to be
 Generates HTML reports that make fixing unit tests simpler. (Simpler does not mean "not painful". TDD is helpful)
 ### acceptanceTests
 Runs the full suite of acceptance tests and generates HTML reports.
+### restartServer
+Forces the Node server to restart. In Windows with WSL2 there is a bug with file times being ignored. ts-node-dev watches the source files and when they change it reconverts the Typescript to Javascript and restarts the Node server. That process does not work without file modification times. This script is a work-around so you don't have to restart the entire container. To automate this, see the VSCode [installation](installation.md#visual-studio-code) and [first run](installation.md#first-run) instructions.
 ## Directory Structure
 All of the code is in a volume mounted to **app**. Everything else is part of the container and will be reset when the container is restarted/rebuilt.
 ### app/acceptanceTests
