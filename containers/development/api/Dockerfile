@@ -14,7 +14,10 @@ FROM base as dev
 # Install screen and vim for ease of development.
 # Install procps because stryker requires ps to run.
 USER root
-RUN apt-get update && apt-get install --yes --no-install-recommends procps screen vim wget
+RUN apt-get update && \
+    apt-get install --yes --no-install-recommends \
+        screen vim \
+        procps
 USER node
 RUN echo "shell '/bin/bash'" > /home/node/.screenrc
 # Done installing things.

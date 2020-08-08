@@ -1,0 +1,110 @@
+{
+  "cacheBust": true,
+  "cleanPublic": true,
+  "defaultPattern": "all",
+  "defaultShowPatternInfo": false,
+  "ishControlsHide": {
+    "s": false,
+    "m": false,
+    "l": false,
+    "full": false,
+    "random": false,
+    "disco": false,
+    "hay": true,
+    "mqs": false,
+    "find": false,
+    "views-all": false,
+    "views-annotations": false,
+    "views-code": false,
+    "views-new": false,
+    "tools-all": false,
+    "tools-docs": false
+  },
+  "ishViewportRange": {
+    "s": [
+      240,
+      500
+    ],
+    "m": [
+      500,
+      800
+    ],
+    "l": [
+      800,
+      2600
+    ]
+  },
+  "logLevel": "info",
+  "outputFileSuffixes": {
+    "rendered": ".rendered",
+    "rawTemplate": "",
+    "markupOnly": ".markup-only"
+  },
+  "paths": {
+    "source": {
+      "root": "./app/source/",
+      "patterns": "./app/source/_patterns/",
+      "data": "./app/source/_data/",
+      "meta": "./app/source/_meta/",
+      "annotations": "./app/source/_annotations/",
+      "styleguide": "dist/",
+      "patternlabFiles": {
+        "general-header": "views/partials/general-header.mustache",
+        "general-footer": "views/partials/general-footer.mustache",
+        "patternSection": "views/partials/patternSection.mustache",
+        "patternSectionSubtype": "views/partials/patternSectionSubtype.mustache",
+        "viewall": "views/viewall.mustache"
+      },
+      "js": "./app/source/js",
+      "images": "./app/source/images",
+      "fonts": "./app/source/fonts",
+      "css": "./app/source/css"
+    },
+    "public": {
+      "root": "app/public/",
+      "patterns": "app/public/patterns/",
+      "data": "app/public/styleguide/data/",
+      "annotations": "app/public/annotations/",
+      "styleguide": "app/public/styleguide/",
+      "js": "app/public/js",
+      "images": "app/public/images",
+      "fonts": "app/public/fonts",
+      "css": "app/public/css"
+    }
+  },
+  "patternExtension": "hbs",
+  "patternStateCascade": [
+    "inprogress",
+    "inreview",
+    "complete"
+  ],
+  "patternExportAll": false,
+  "patternExportDirectory": "pattern_exports",
+  "patternExportPatternPartials": [],
+  "patternExportPreserveDirectoryStructure": true,
+  "patternExportRaw": false,
+  "serverOptions": {
+    "wait": 1000
+  },
+  "starterkitSubDir": "dist",
+  "styleGuideExcludes": [],
+  "theme": {
+    "color": "light",
+    "density": "compact",
+    "layout": "vertical"
+  },
+  "uikits": [
+    {
+      "name": "uikit-workshop",
+      "outputDir": "",
+      "enabled": true,
+      "excludedPatternStates": [],
+      "excludedTags": []
+    }
+  ],
+  "engines": {
+    "handlebars": {
+      "extend": "app/helpers/*.js"
+    }
+  }
+}

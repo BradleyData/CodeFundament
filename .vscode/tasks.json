@@ -26,12 +26,12 @@
             "problemMatcher": []
         },
         {
-            "label": "Update API package-lock.json",
+            "label": "Update container package-lock.json",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose --file containers/development/api/docker-compose.yml run --rm update",
+            "command": "docker-compose --file containers/development/${input:devContainerName}/docker-compose.yml run --rm update",
             "windows": {
-                "command": "docker-compose --file containers\\development\\api\\docker-compose.yml run --rm update"
+                "command": "docker-compose --file containers\\development\\${input:devContainerName}\\docker-compose.yml run --rm update"
             },
             "problemMatcher": []
         }
@@ -44,7 +44,18 @@
             "default": "api",
             "options": [
                 "api",
-                "info"
+                "info",
+                "patternlab"
+            ]
+        },
+        {
+            "id": "devContainerName",
+            "description": "Which docker container?",
+            "type": "pickString",
+            "default": "api",
+            "options": [
+                "api",
+                "patternlab"
             ]
         }
     ]

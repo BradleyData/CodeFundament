@@ -36,5 +36,16 @@ services:
             - traefik
         volumes:
             - ./volumes/api/output:/usr/local/apache2/htdocs/api
+    patternlab:
+        build:
+            context: ./containers/development/patternlab
+            target: dev
+        networks:
+            - traefik
+        volumes:
+            - ./volumes/patternlab:/home/node/app
+            - ../${ASSETS_PATH}/fonts:/home/node/app/source/fonts
+            - ../${ASSETS_PATH}/icons:/home/node/app/source/icons
+            - ../${ASSETS_PATH}/images:/home/node/app/source/images
 networks:
     traefik:
