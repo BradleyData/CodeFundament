@@ -1,0 +1,14 @@
+{
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "\\.hbs$",
+                "cmd": "npm run pl:build"
+            },
+            {
+                "match": "\\.scss$",
+                "cmd": "npm run pl:build"
+            }
+        ]
+    }
+}

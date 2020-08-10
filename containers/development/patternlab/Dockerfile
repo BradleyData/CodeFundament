@@ -25,6 +25,7 @@ RUN apt-get update && \
 USER node
 RUN echo "shell '/bin/bash'" > /home/node/.screenrc
 # Done installing things.
+COPY --chown=node:node .vscode .vscode/
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["npm", "run", "pl:serve"]
 
