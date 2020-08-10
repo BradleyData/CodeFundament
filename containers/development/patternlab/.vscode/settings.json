@@ -6,6 +6,10 @@
                 "cmd": "npm run pl:build"
             },
             {
+                "match": "\\.json$",
+                "cmd": "npm run pl:build"
+            },
+            {
                 "match": "\\.scss$",
                 "cmd": "npm run pl:build"
             }
