@@ -12,6 +12,7 @@ ENV NODE_ENV=production
 WORKDIR /home/node
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node patternlab-config.json ./
+COPY --chown=node:node gulpfile.js ./
 RUN npm config list && \
     npm ci && \
     npm cache clean --force && \
@@ -26,8 +27,9 @@ USER node
 RUN echo "shell '/bin/bash'" > /home/node/.screenrc
 # Done installing things.
 COPY --chown=node:node .vscode .vscode/
+RUN npm install --only=development && touch ./.watch
 ENTRYPOINT ["/usr/bin/tini", "--"]
-CMD ["npm", "run", "pl:serve"]
+CMD ["npx", "gulp"]
 
 FROM dev as update
 CMD ["/bin/bash", "update/update.sh"]
