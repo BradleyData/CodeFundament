@@ -13,7 +13,6 @@ services:
             - "--log.level=WARN"
             - "--providers.docker=true"
             - "--providers.docker.defaultRule=Host(`${TRAEFIK_HOST}.${DOMAIN}`)"
-            - "--providers.docker.network=traefik"
             - "--providers.docker.swarmMode=false"
         networks:
             - traefik
@@ -40,6 +39,13 @@ services:
         build:
             context: ./containers/development/patternlab
             target: dev
+        labels:
+            - traefik.http.routers.patternlab-${COMPOSE_PROJECT_NAME}.rule=Host(`patternlab.${DOMAIN}`)
+            - traefik.http.routers.patternlab-${COMPOSE_PROJECT_NAME}.service=patternlab-${COMPOSE_PROJECT_NAME}
+            - traefik.http.services.patternlab-${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=3000
+            - traefik.http.routers.browsersync-${COMPOSE_PROJECT_NAME}.rule=Host(`browsersync.${DOMAIN}`)
+            - traefik.http.routers.browsersync-${COMPOSE_PROJECT_NAME}.service=browsersync-${COMPOSE_PROJECT_NAME}
+            - traefik.http.services.browsersync-${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=3001
         networks:
             - traefik
         volumes:
