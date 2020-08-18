@@ -3,13 +3,12 @@
     "version": "0.0.0",
     "scripts": {
         "compile": "npm run pl:build; npm run sass",
-        "patternlab": "patternlab",
-        "pl:build": "patternlab build --config ./patternlab-config.json",
-        "sass": "find app/source/ -name '*.scss' -exec cat {} \\; | npx sass - app/public/css/style.css"
+        "lint": "prettier --write 'app/source/**/**' 'app/helpers/**/**' && echo 'All files passed!'",
+        "buildPatternLab": "patternlab build --config ./patternlab-config.json",
+        "compileSass": "find app/source/ -name '*.scss' -exec cat {} \\; | npx sass - app/public/css/style.css"
     },
     "main": "index.js",
-    "dependencies": {
-    },
+    "dependencies": {},
     "devDependencies": {
         "@pattern-lab/cli": "5.11.1",
         "@pattern-lab/core": "5.11.1",
@@ -18,6 +17,7 @@
         "@pattern-lab/uikit-workshop": "5.11.1",
         "browser-sync": "2.26.12",
         "gulp": "4.0.2",
-        "node-sass": "4.14.1"
+        "node-sass": "4.14.1",
+        "prettier": "2.0.5"
     }
 }

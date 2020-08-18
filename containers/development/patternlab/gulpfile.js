@@ -4,13 +4,18 @@ const BrowserSync = require('browser-sync').create()
 const Gulp = require("gulp")
 const {exec} = require("child_process")
 
+function lint(cb) {
+    exec("npm run lint")
+    cb()
+}
+
 function buildPatternLab(cb) {
-    exec("npm run pl:build")
+    exec("npm run buildPatternLab")
     cb()
 }
 
 function compileSass(cb) {
-    exec("npm run sass")
+    exec("npm run compileSass")
     cb()
 }
 
@@ -31,6 +36,7 @@ exports.default = function() {
         "app/source/**/*.*",
         {ignoreInitial: false},
         Gulp.series(
+            lint,
             Gulp.parallel(buildPatternLab, compileSass),
             reloadBrowser
         )
