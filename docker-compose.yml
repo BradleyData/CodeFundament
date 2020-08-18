@@ -43,8 +43,8 @@ services:
             - traefik
         volumes:
             - ./volumes/patternlab:/home/node/app
-            - ../${ASSETS_PATH}/fonts:/home/node/app/source/fonts
-            - ../${ASSETS_PATH}/icons:/home/node/app/source/icons
-            - ../${ASSETS_PATH}/images:/home/node/app/source/images
+            - ../${ASSETS_PATH}/fonts:/home/node/app/src/fonts
+            - ../${ASSETS_PATH}/icons:/home/node/app/src/icons
+            - ../${ASSETS_PATH}/images:/home/node/app/src/images
 networks:
     traefik:

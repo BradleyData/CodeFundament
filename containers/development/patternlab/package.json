@@ -2,10 +2,9 @@
     "name": "patternlab",
     "version": "0.0.0",
     "scripts": {
-        "compile": "npm run pl:build; npm run sass",
-        "lint": "prettier --write 'app/source/**/**' 'app/helpers/**/**' && echo 'All files passed!'",
+        "lint": "prettier --write 'app/src/**/**' 'app/helpers/**/**' && echo 'All files passed!'",
         "buildPatternLab": "patternlab build --config ./patternlab-config.json",
-        "compileSass": "find app/source/ -name '*.scss' -exec cat {} \\; | npx sass - app/public/css/style.css"
+        "compileSass": "find app/src/ -name '*.scss' -exec cat {} \\; | npx sass - app/www/css/style.css"
     },
     "main": "index.js",
     "dependencies": {},

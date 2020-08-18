@@ -32,6 +32,6 @@
         "**/.vscode-server/**": true,
         "**/node_modules/**": true,
         "**/app/pattern_exports/**": true,
-        "**/app/public/**": true
+        "**/app/www/**": true
     }
 }

@@ -1,7 +1,7 @@
 .gitkeep
 
-app/source/_meta/
-app/source/fonts/
-app/source/icons/
-app/source/images/
-app/source/favicon.ico
+app/src/_meta/
+app/src/fonts/
+app/src/icons/
+app/src/images/
+app/src/favicon.ico

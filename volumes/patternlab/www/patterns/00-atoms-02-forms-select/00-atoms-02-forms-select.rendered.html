@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html class="">
+  <head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="../../css/style.css?1597787770922" media="all" />
+    <link rel="stylesheet" href="../../css/pattern-scaffolding.css?1597787770922" media="all" />
+
+    <!-- Begin Pattern Lab (Required for Pattern Lab to run properly) -->
+    
+    <!-- End Pattern Lab -->
+
+  </head>
+  <body class="">
+<p>
+    <select>
+        <option>Option 1</option>
+        <option>Option 2</option>
+        <option>Option 3</option>
+    </select>
+    Simple select with options.
+</p>
+<p>
+    <select>
+        <option>Option 1</option>
+        <option selected>Option 2</option>
+        <option>Option 3</option>
+    </select>
+    Simple select with options and a default.
+</p>
+<p>
+    <select>
+        <option>Option 1</option>
+        <option disabled>Option 2</option>
+        <option>Option 3</option>
+        <option disabled>Option 4</option>
+        <option disabled>Option 5</option>
+    </select>
+    Simple select with some options disabled.
+</p>
+<p>
+    <select>
+        <option>Option 1</option>
+        <option label="Alternate text">Option 2</option>
+        <option>Option 3</option>
+    </select>
+    Simple select with options. The 2nd one has a label.
+</p>
+<p>
+    <select>
+        <optgroup label="Group 1">
+            <option>Option 1</option>
+            <option>Option 2</option>
+        </optgroup>
+        <optgroup label="Group 2">
+            <option>Option 3</option>
+            <option>Option 4</option>
+            <option>Option 5</option>
+        </optgroup>
+        <optgroup label="Group 3" disabled>
+            <option>Option 6</option>
+            <option>Option 7</option>
+        </optgroup>
+    </select>
+    A select with multiple option groups. The 3rd group is disabled.
+</p>
+<p>
+    <select size="5">
+        <option>Option 1</option>
+        <option>Option 2</option>
+        <option>Option 3</option>
+    </select>
+    Simple select with multiple options displayed.
+</p>
+<p>
+    <select size="5" multiple>
+        <option>Option 1</option>
+        <option>Option 2</option>
+        <option>Option 3</option>
+    </select>
+    Simple select with multiple options displayed and multi-select allowed.
+</p>
+
+<!--DO NOT REMOVE-->
+<script type="text/json" id="pl-pattern-data-footer" class="pl-js-pattern-data">
+  {"cssEnabled":false,"patternLineageExists":false,"patternLineages":[],"lineage":[],"patternLineageRExists":false,"patternLineagesR":[],"lineageR":[],"patternLineageEExists":false,"patternDesc":"","patternBreadcrumb":{"patternType":"atoms","patternSubtype":"forms"},"patternExtension":"hbs","patternName":"Select","patternPartial":"atoms-select","patternState":"","patternEngineName":"handlebars","extraOutput":{}}
+</script>
+
+<script>
+  window.patternData = {"cssEnabled":false,"patternLineageExists":false,"patternLineages":[],"lineage":[],"patternLineageRExists":false,"patternLineagesR":[],"lineageR":[],"patternLineageEExists":false,"patternDesc":"","patternBreadcrumb":{"patternType":"atoms","patternSubtype":"forms"},"patternExtension":"hbs","patternName":"Select","patternPartial":"atoms-select","patternState":"","patternEngineName":"handlebars","extraOutput":{}};
+</script>
+
+<script>
+  /*!
+   * scriptLoader - v0.1
+   *
+   * Copyright (c) 2014 Dave Olsen, http://dmolsen.com
+   * Licensed under the MIT license
+   *
+   */
+
+  var scriptLoader = {
+
+    run: function(js,cb,target) {
+      var s  = document.getElementById(target+'-'+cb);
+      for (var i = 0; i < js.length; i++) {
+        var src = (typeof js[i] != 'string') ? js[i].src : js[i];
+        var c   = document.createElement('script');
+        c.src   = '../../'+src+'?'+cb;
+        if (typeof js[i] != 'string') {
+          if (js[i].dep !== undefined) {
+            c.onload = function(dep,cb,target) {
+              return function() {
+                scriptLoader.run(dep,cb,target);
+              }
+            }(js[i].dep,cb,target);
+          }
+        }
+        s.parentNode.insertBefore(c,s);
+      }
+    }
+
+  }
+</script>
+
+<script id="pl-js-polyfill-insert-1597787770922">
+  (function() {
+    if (self != top) {
+      var cb = '1597787770922';
+      var js = [];
+      scriptLoader.run(js,cb,'pl-js-polyfill-insert');
+    }
+  })();
+</script>
+
+
+<script type="module">
+  // always load Pattern-specific JS so UI like accordions, etc can continue to work even when viewed as a standalone HTML page
+  import('../../styleguide/js/patternlab-pattern.modern.js');
+</script>
+
+<script id="pl-js-insert-1597787770922" nomodule>
+  /*! loadJS: load a JS file asynchronously. [c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). Licensed MIT */
+  !function(e){var t=function(t,n){"use strict";var o=e.document.getElementsByTagName("script")[0],r=e.document.createElement("script");return r.src=t,r.async=!0,o.parentNode.insertBefore(r,o),n&&"function"==typeof n&&(r.onload=n),r};"undefined"!=typeof module?module.exports=t:e.loadJS=t}("undefined"!=typeof global?global:this);
+
+  // always load Pattern-specific JS so UI like accordions, etc can continue to work even when viewed as a standalone HTML page
+  loadJS('../../styleguide/js/patternlab-pattern.js');
+</script>
+
+
+</body>
+</html>

@@ -42,11 +42,11 @@
   },
   "paths": {
     "source": {
-      "root": "./app/source/",
-      "patterns": "./app/source/_patterns/",
-      "data": "./app/source/_data/",
-      "meta": "./app/source/_meta/",
-      "annotations": "./app/source/_annotations/",
+      "root": "./app/src/",
+      "patterns": "./app/src/_patterns/",
+      "data": "./app/src/_data/",
+      "meta": "./app/src/_meta/",
+      "annotations": "./app/src/_annotations/",
       "styleguide": "dist/",
       "patternlabFiles": {
         "general-header": "views/partials/general-header.mustache",
@@ -55,21 +55,21 @@
         "patternSectionSubtype": "views/partials/patternSectionSubtype.mustache",
         "viewall": "views/viewall.mustache"
       },
-      "js": "./app/source/js",
-      "images": "./app/source/images",
-      "fonts": "./app/source/fonts",
-      "css": "./app/source/css"
+      "js": "./app/src/js",
+      "images": "./app/src/images",
+      "fonts": "./app/src/fonts",
+      "css": "./app/src/css"
     },
     "public": {
-      "root": "app/public/",
-      "patterns": "app/public/patterns/",
-      "data": "app/public/styleguide/data/",
-      "annotations": "app/public/annotations/",
-      "styleguide": "app/public/styleguide/",
-      "js": "app/public/js",
-      "images": "app/public/images",
-      "fonts": "app/public/fonts",
-      "css": "app/public/css"
+      "root": "app/www/",
+      "patterns": "app/www/patterns/",
+      "data": "app/www/styleguide/data/",
+      "annotations": "app/www/annotations/",
+      "styleguide": "app/www/styleguide/",
+      "js": "app/www/js",
+      "images": "app/www/images",
+      "fonts": "app/www/fonts",
+      "css": "app/www/css"
     }
   },
   "patternExtension": "hbs",

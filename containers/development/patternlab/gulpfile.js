@@ -29,11 +29,11 @@ exports.default = function() {
     BrowserSync.init({
         open: false,
         server: {
-            baseDir: "app/public"
+            baseDir: "app/www"
         }
     })
     Gulp.watch(
-        "app/source/**/*.*",
+        "app/src/**/*.*",
         {ignoreInitial: false},
         Gulp.series(
             lint,
