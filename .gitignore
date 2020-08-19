@@ -5,4 +5,4 @@ volumes/api/output
 volumes/api/www
 
 volumes/patternlab/pattern_exports
-volumes/patternlab/public
+volumes/patternlab/www

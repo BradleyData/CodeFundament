@@ -1,0 +1,11 @@
+.a_themes_swatches {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.a_themes_swatches > div {
+    display: inline;
+    padding-top: 1.5em;
+    margin-right: 2em;
+}
