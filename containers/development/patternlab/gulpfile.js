@@ -21,7 +21,7 @@ function compileSass(cb) {
 
 function reloadBrowser(cb) {
     // This runs after everything is built, but without a delay it manages to load stale files.
-    setTimeout(() => BrowserSync.reload(), 1000)
+    setTimeout(() => BrowserSync.reload(), 2000)
     cb()
 }
 
