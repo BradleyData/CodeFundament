@@ -46,5 +46,12 @@ services:
             - ../${ASSETS_PATH}/fonts:/home/node/app/src/fonts
             - ../${ASSETS_PATH}/icons:/home/node/app/src/icons
             - ../${ASSETS_PATH}/images:/home/node/app/src/images
+    www:
+        build:
+            context: ./containers/support/info
+        networks:
+            - traefik
+        volumes:
+            - ./volumes/patternlab/pattern_exports:/usr/local/apache2/htdocs
 networks:
     traefik:

@@ -24,9 +24,23 @@ function compileTypescript(cb) {
     cb()
 }
 
+function afterCompile(cb) {
+    // Without the delay things manage to load stale files.
+    setTimeout(() => {
+        BrowserSync.reload
+        exec("npm run export")
+    }, 2000)
+    cb()
+}
+
 function reloadBrowser(cb) {
-    // This runs after everything is built, but without a delay it manages to load stale files.
+    
     setTimeout(() => BrowserSync.reload(), 2000)
+    cb()
+}
+
+function exportAll(cb) {
+    exec("npm run export")
     cb()
 }
 
@@ -43,7 +57,7 @@ exports.default = function() {
         Gulp.series(
             lint,
             Gulp.parallel(buildPatternLab, compileSass, compileTypescript),
-            reloadBrowser
+            afterCompile
         )
     )
 }

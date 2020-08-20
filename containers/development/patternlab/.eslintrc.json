@@ -69,7 +69,6 @@
         "no-sequences": "error",
         "no-throw-literal": "error",
         "no-unmodified-loop-condition": "error",
-        "no-unused-expressions": "error",
         "no-useless-call": "error",
         "no-useless-concat": "error",
         "no-useless-return": "error",
@@ -90,7 +89,6 @@
         "no-unused-vars": "off",
 
          // Stylistic Issues
-        "camelcase": "error",
         "indent": ["error", 4, {"SwitchCase": 1, "VariableDeclarator": "first"}],
         "max-len": ["error", {"code": 125, "ignoreUrls": true}],
         "max-depth": ["error", 4],

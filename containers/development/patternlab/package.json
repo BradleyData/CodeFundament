@@ -5,7 +5,8 @@
         "lint": "prettier --write 'app/src/**/**' 'app/helpers/**/**' && eslint --fix 'app/src/**/*.ts' && echo 'All files passed!'",
         "buildPatternLab": "patternlab build --config ./patternlab-config.json",
         "compileSass": "find app/src/ -name '*.scss' -exec cat {} \\; | npx sass - app/www/css/style.css",
-        "compileTypescript": "find app/src/ -name '*.ts' -exec cat {} \\; > app/www/js/app.ts && babel app/www/js/app.ts --out-file app/www/js/app.js"
+        "compileTypescript": "find app/src/ -name '*.ts' -exec cat {} \\; > app/www/js/app.ts && babel app/www/js/app.ts --out-file app/www/js/app.js",
+        "export": "./export.sh"
     },
     "main": "index.js",
     "dependencies": {},

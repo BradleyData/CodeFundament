@@ -31,8 +31,11 @@ COPY --chown=node:node .eslintrc.json ./
 COPY --chown=node:node .prettierignore ./
 COPY --chown=node:node .prettierrc.json ./
 COPY --chown=node:node babel.config.json ./
+COPY --chown=node:node export.sh ./
+COPY --chown=node:node html_export_postfix.htm ./
+COPY --chown=node:node html_export_prefix.htm ./
 COPY --chown=node:node tsconfig.json ./
-RUN npm install --only=development && touch ./.watch
+RUN npm install --only=development && touch ./.watch && chmod 700 export.sh
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["npx", "gulp"]
 

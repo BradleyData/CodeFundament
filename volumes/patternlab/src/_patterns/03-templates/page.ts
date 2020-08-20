@@ -1,6 +1,7 @@
 function page_switchTheme(): void {
-    /* global console */
+    /* global document */
     const app = document.getElementById("app")
+
     app?.classList.contains("theme_dark")
         ? swap("theme_dark", "theme_light")
         : swap("theme_light", "theme_dark")

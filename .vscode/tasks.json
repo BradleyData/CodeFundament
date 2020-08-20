@@ -12,10 +12,17 @@
             "problemMatcher": []
         },
         {
+            "label": "Rebuild all containers",
+            "type": "shell",
+            "group": "build",
+            "command": "docker-compose up --detach --remove-orphans --build --force-recreate",
+            "problemMatcher": []
+        },
+        {
             "label": "Start all containers",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose up --detach",
+            "command": "docker-compose up --detach --remove-orphans",
             "problemMatcher": []
         },
         {
@@ -45,7 +52,8 @@
             "options": [
                 "api",
                 "info",
-                "patternlab"
+                "patternlab",
+                "www"
             ]
         },
         {
