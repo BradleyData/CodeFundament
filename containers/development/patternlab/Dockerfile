@@ -27,8 +27,11 @@ USER node
 RUN echo "shell '/bin/bash'" > /home/node/.screenrc
 # Done installing things.
 COPY --chown=node:node .vscode .vscode/
+COPY --chown=node:node .eslintrc.json ./
 COPY --chown=node:node .prettierignore ./
 COPY --chown=node:node .prettierrc.json ./
+COPY --chown=node:node babel.config.json ./
+COPY --chown=node:node tsconfig.json ./
 RUN npm install --only=development && touch ./.watch
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["npx", "gulp"]

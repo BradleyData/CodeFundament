@@ -19,6 +19,11 @@ function compileSass(cb) {
     cb()
 }
 
+function compileTypescript(cb) {
+    exec("npm run compileTypescript")
+    cb()
+}
+
 function reloadBrowser(cb) {
     // This runs after everything is built, but without a delay it manages to load stale files.
     setTimeout(() => BrowserSync.reload(), 2000)
@@ -37,7 +42,7 @@ exports.default = function() {
         {ignoreInitial: false},
         Gulp.series(
             lint,
-            Gulp.parallel(buildPatternLab, compileSass),
+            Gulp.parallel(buildPatternLab, compileSass, compileTypescript),
             reloadBrowser
         )
     )

@@ -1,0 +1,135 @@
+{
+    "env": {
+        "es2020": true
+    },
+    "extends": [
+        "eslint:recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "overrides": [{
+        "files": ["*.test.ts"],
+        "rules": {
+            "dot-notation": "off"
+        }
+    }],
+    "rules": {
+        // Possible Errors
+        "no-await-in-loop": "error",
+        "no-extra-parens": ["error", "all"],
+        "no-inner-declarations": ["off"],
+        "no-loss-of-precision": "error",
+        "no-promise-executor-return": "error",
+        "no-template-curly-in-string": "error",
+        "no-unreachable-loop": "error",
+        "no-useless-backreference": "error",
+        "require-atomic-updates": "error",
+
+        // Best Practices
+        "array-callback-return": "error",
+        "block-scoped-var": "error",
+        "complexity": ["error", 20],
+        "consistent-return": "error",
+        "curly": ["error", "multi-or-nest"],
+        "default-case-last": "error",
+        "default-param-last": "error",
+        "dot-notation": "error",
+        "eqeqeq": ["error", "always"],
+        "guard-for-in": "error",
+        "no-constructor-return": "error",
+        "no-else-return": "error",
+        "no-empty-function": "error",
+        "no-eval": "error",
+        "no-extend-native": "error",
+        "no-extra-bind": "error",
+        "no-floating-decimal": "error",
+        "no-implicit-coercion": "error",
+        "no-implicit-globals": "error",
+        "no-implied-eval": "error",
+        "no-invalid-this": "error",
+        "no-iterator": "error",
+        "no-labels": "error",
+        "no-lone-blocks": "error",
+        "no-loop-func": "error",
+        "no-magic-numbers": ["error", {"ignore": [-1, 0, 1], "enforceConst": true}],
+        "no-new": "error",
+        "no-new-func": "error",
+        "no-new-wrappers": "error",
+        "no-octal-escape": "error",
+        "no-param-reassign": "error",
+        "no-proto": "error",
+        "no-return-assign": "error",
+        "no-script-url": "error",
+        "no-self-compare": "error",
+        "no-sequences": "error",
+        "no-throw-literal": "error",
+        "no-unmodified-loop-condition": "error",
+        "no-unused-expressions": "error",
+        "no-useless-call": "error",
+        "no-useless-concat": "error",
+        "no-useless-return": "error",
+        "no-void": "error",
+        "prefer-named-capture-group": "error",
+        "prefer-promise-reject-errors": "error",
+        "prefer-regex-literals": "error",
+        "radix": "error",
+        "require-await": "error",
+        "require-unicode-regexp": "error",
+        "vars-on-top": "error",
+        "yoda": "error",
+
+        // Variables
+        "no-shadow": "error",
+        "no-undef-init": "error",
+        "no-undefined": "error",
+        "no-unused-vars": "off",
+
+         // Stylistic Issues
+        "camelcase": "error",
+        "indent": ["error", 4, {"SwitchCase": 1, "VariableDeclarator": "first"}],
+        "max-len": ["error", {"code": 125, "ignoreUrls": true}],
+        "max-depth": ["error", 4],
+        "max-statements-per-line": "error",
+        "no-array-constructor": "error",
+        "no-bitwise": "error",
+        "no-continue": "error",
+        "no-lonely-if": "error",
+        "no-mixed-operators": "error",
+        "no-multi-assign": "error",
+        "no-negated-condition": "error",
+        "no-nested-ternary": "error",
+        "no-new-object": "error",
+        "no-tabs": "error",
+        "no-underscore-dangle": ["error", {"enforceInMethodNames": true}],
+        "no-unneeded-ternary": "error",
+        "nonblock-statement-body-position": ["error", "below"],
+        "prefer-exponentiation-operator": "error",
+        "prefer-object-spread": "error",
+        "quote-props": ["error", "consistent-as-needed"],
+        "quotes": ["error", "double", {"avoidEscape": true}],
+        "semi": ["error", "never"],
+        "sort-keys": "error",
+        "sort-vars": "error",
+        "spaced-comment": ["error", "always"],
+
+        // ECMAScript 6
+        "arrow-parens": "error",
+        "no-confusing-arrow": "error",
+        "no-duplicate-imports": "error",
+        "no-useless-computed-key": "error",
+        "no-useless-constructor": "error",
+        "no-useless-rename": "error",
+        "no-var": "error",
+        "prefer-const": "error",
+        "prefer-rest-params": "error",
+        "prefer-spread": "error",
+        "prefer-template": "error",
+        "sort-imports": "error",
+        "symbol-description": "error"
+    }
+}

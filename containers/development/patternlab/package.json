@@ -2,9 +2,10 @@
     "name": "patternlab",
     "version": "0.0.0",
     "scripts": {
-        "lint": "prettier --write 'app/src/**/**' 'app/helpers/**/**' && echo 'All files passed!'",
+        "lint": "prettier --write 'app/src/**/**' 'app/helpers/**/**' && eslint --fix 'app/src/**/*.ts' && echo 'All files passed!'",
         "buildPatternLab": "patternlab build --config ./patternlab-config.json",
-        "compileSass": "find app/src/ -name '*.scss' -exec cat {} \\; | npx sass - app/www/css/style.css"
+        "compileSass": "find app/src/ -name '*.scss' -exec cat {} \\; | npx sass - app/www/css/style.css",
+        "compileTypescript": "find app/src/ -name '*.ts' -exec cat {} \\; > app/www/js/app.ts && babel app/www/js/app.ts --out-file app/www/js/app.js"
     },
     "main": "index.js",
     "dependencies": {},
@@ -14,9 +15,24 @@
         "@pattern-lab/engine-handlebars": "5.10.1",
         "@pattern-lab/plugin-tab": "5.10.1",
         "@pattern-lab/uikit-workshop": "5.11.1",
+
         "browser-sync": "2.26.12",
+
+        "prettier": "2.0.5",
+
         "gulp": "4.0.2",
+
         "node-sass": "4.14.1",
-        "prettier": "2.0.5"
+
+        "@babel/cli": "7.10.5",
+        "@babel/core": "7.11.1",
+        "@babel/plugin-proposal-class-properties": "7.10.4",
+        "@babel/plugin-proposal-object-rest-spread": "7.10.4",
+        "@babel/preset-typescript": "7.10.4",
+        "@typescript-eslint/eslint-plugin": "3.9.1",
+        "@typescript-eslint/parser": "3.9.1",
+        "eslint":"7.7.0",
+        "eslint-plugin-prettier": "3.1.4",
+        "typescript": "3.9.7"
     }
 }
