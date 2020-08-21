@@ -1,11 +1,5 @@
-{{> molecules-helper-documentTitle }}
-<div id="app" class="t_page {{ theme }}">
-    {{> organisms-global-header }}
-    <main>
-        <!-- prettier-ignore -->
-        {{#> molecules-layout-container }}
-            {{> organisms-text-passage }}
-        {{/ molecules-layout-container }}
-        <button type="button" onclick="page_switchTheme()">Switch Theme</button>
-    </main>
-</div>
+<!-- prettier-ignore -->
+{{#> organisms-global-page }}
+    {{> organisms-text-passage }}
+    {{> molecules-button-theme }}
+{{/ organisms-global-page }}

@@ -4,6 +4,7 @@ pageLocation="04-pages-"
 
 rm -rf app/pattern_exports/*
 
+cp app/www/favicon.ico app/pattern_exports/
 cp app/www/css/style.css app/pattern_exports/
 cp app/www/js/app.js app/pattern_exports/
 

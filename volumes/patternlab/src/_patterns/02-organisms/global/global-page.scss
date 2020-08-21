@@ -1,0 +1,30 @@
+.t_page {
+    background-color: var(--color_bg);
+    color: var(--color_font);
+
+    --header_height: 50px;
+    --main_offset: 0px;
+
+    @media (min-width: $width-sd) {
+        --header_height: 60px;
+        --main_offset: 0px;
+    }
+
+    @media (min-width: $width-hd) {
+        --header_height: 90px;
+        --main_offset: 5px;
+    }
+
+    @media (min-width: $width-2k) {
+        --header_height: 120px;
+        --main_offset: 10px;
+    }
+}
+
+.t_page > .o_global_header {
+    height: var(--header_height);
+}
+
+.t_page > main {
+    padding-top: calc(var(--header_height) + var(--main_offset));
+}

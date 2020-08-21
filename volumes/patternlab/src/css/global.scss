@@ -1,0 +1,234 @@
+// http://typecast.com/blog/a-more-modern-scale-for-web-typography
+html,
+body {
+    height: 100vh;
+    min-height: 100vh;
+}
+
+body {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+
+    font-family: $font;
+    overflow-wrap: break-word;
+}
+
+code,
+kbd,
+output,
+pre,
+samp,
+var {
+    font-family: $font-mono;
+}
+
+p {
+    font-size: 1em;
+    line-height: 1.1em;
+    margin-top: 0.1em;
+    margin-bottom: 0.1em;
+}
+
+p {
+    text-indent: 2em;
+
+    @media (min-width: $width-sd) {
+        text-indent: 2.25em;
+    }
+
+    @media (min-width: $width-hd) {
+        text-indent: 2.5em;
+    }
+
+    @media (min-width: $width-2k) {
+        text-indent: 3em;
+    }
+
+    @media (min-width: $width-4k) {
+        text-indent: 3em;
+    }
+
+    @media (min-width: $width-8k) {
+        text-indent: 3em;
+    }
+}
+
+p + p {
+    margin-top: 0.8em;
+
+    @media (min-width: $width-sd) {
+        margin-top: 1em;
+    }
+
+    @media (min-width: $width-hd) {
+        margin-top: 1.25em;
+    }
+
+    @media (min-width: $width-2k) {
+        margin-top: 1.4em;
+    }
+
+    @media (min-width: $width-4k) {
+        margin-top: 1.4em;
+    }
+
+    @media (min-width: $width-8k) {
+        margin-top: 1.4em;
+    }
+}
+
+body {
+    font-size: 12px;
+    line-height: 1.2em;
+
+    @media (min-width: $width-sd) {
+        font-size: 13px;
+        line-height: 1.25em;
+    }
+
+    @media (min-width: $width-hd) {
+        font-size: 15px;
+        line-height: 1.3em;
+    }
+
+    @media (min-width: $width-2k) {
+        font-size: 16px;
+        line-height: 1.375em;
+    }
+
+    @media (min-width: $width-4k) {
+        font-size: 16px;
+        line-height: 1.375em;
+    }
+
+    @media (min-width: $width-8k) {
+        font-size: 16px;
+        line-height: 1.375em;
+    }
+}
+
+h1 {
+    font-size: 2em;
+    line-height: 1.2em;
+    margin-top: 0.4em;
+    margin-bottom: 0.2em;
+
+    @media (min-width: $width-sd) {
+        font-size: 2em;
+        line-height: 1.25em;
+        margin-top: 0.5em;
+        margin-bottom: 0.2em;
+    }
+
+    @media (min-width: $width-hd) {
+        font-size: 2.5em;
+        line-height: 1.125em;
+        margin-top: 0.7em;
+        margin-bottom: 0.3em;
+    }
+
+    @media (min-width: $width-2k) {
+        font-size: 3em;
+        line-height: 1.05em;
+        margin-top: 0.8em;
+        margin-bottom: 0.35em;
+    }
+
+    @media (min-width: $width-4k) {
+        font-size: 3em;
+        line-height: 1.05em;
+        margin-top: 0.8em;
+        margin-bottom: 0.35em;
+    }
+
+    @media (min-width: $width-8k) {
+        font-size: 3em;
+        line-height: 1.05em;
+        margin-top: 0.8em;
+        margin-bottom: 0.35em;
+    }
+}
+
+h2 {
+    font-size: 1.625em;
+    line-height: 1.15em;
+    margin-top: 0.3em;
+    margin-bottom: 0.2em;
+
+    @media (min-width: $width-sd) {
+        font-size: 1.625em;
+        line-height: 1.2em;
+        margin-top: 0.3em;
+        margin-bottom: 0.2em;
+    }
+
+    @media (min-width: $width-hd) {
+        font-size: 1.8em;
+        line-height: 1.25em;
+        margin-top: 0.3em;
+        margin-bottom: 0.2em;
+    }
+
+    @media (min-width: $width-2k) {
+        font-size: 2em;
+        line-height: 1.05em;
+        margin-top: 0.3em;
+        margin-bottom: 0.2em;
+    }
+
+    @media (min-width: $width-4k) {
+        font-size: 2em;
+        line-height: 1.05em;
+        margin-top: 0.3em;
+        margin-bottom: 0.2em;
+    }
+
+    @media (min-width: $width-8k) {
+        font-size: 2em;
+        line-height: 1.05em;
+        margin-top: 0.3em;
+        margin-bottom: 0.2em;
+    }
+}
+
+h3 {
+    font-size: 1.2em;
+    line-height: 1.13em;
+    margin-top: 0.25em;
+    margin-bottom: 0.15em;
+
+    @media (min-width: $width-sd) {
+        font-size: 1.2em;
+        line-height: 1.15em;
+        margin-top: 0.25em;
+        margin-bottom: 0.15em;
+    }
+
+    @media (min-width: $width-hd) {
+        font-size: 1.4em;
+        line-height: 1.2em;
+        margin-top: 0.25em;
+        margin-bottom: 0.15em;
+    }
+
+    @media (min-width: $width-2k) {
+        font-size: 1.5em;
+        line-height: 1.25em;
+        margin-top: 0.25em;
+        margin-bottom: 0.15em;
+    }
+
+    @media (min-width: $width-4k) {
+        font-size: 1.5em;
+        line-height: 1.25em;
+        margin-top: 0.25em;
+        margin-bottom: 0.15em;
+    }
+
+    @media (min-width: $width-8k) {
+        font-size: 1.5em;
+        line-height: 1.25em;
+        margin-top: 0.25em;
+        margin-bottom: 0.15em;
+    }
+}

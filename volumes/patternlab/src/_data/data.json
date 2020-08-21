@@ -1,4 +1,7 @@
 {
+    "caption": {
+        "button-theme": "Switch Theme"
+    },
     "page": {
         "title": "A Page Title"
     },

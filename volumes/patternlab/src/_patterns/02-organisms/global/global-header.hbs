@@ -1,6 +1,7 @@
-<header class="o_global_header {{ pseudoTheme }}">
-    <!-- prettier-ignore -->
-    {{#> molecules-layout-container }}
-        {{> molecules-layout-title }}
-    {{/ molecules-layout-container }}
+<header
+    role="banner"
+    aria-label="header"
+    class="o_global_header {{ pseudoTheme }}"
+>
+    <h1 role="heading" aria-label="page title">{{ page.title }}</h1>
 </header>
