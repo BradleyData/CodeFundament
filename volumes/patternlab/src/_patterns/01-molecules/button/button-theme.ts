@@ -1,4 +1,4 @@
-function m_button_theme_switchTheme(): void {
+function m_button_theme__switchTheme(): void {
     /* global document */
     const themed = [...document.getElementsByClassName("themed")]
     themed.forEach((element: Element) => {
