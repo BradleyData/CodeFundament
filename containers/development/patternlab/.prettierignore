@@ -1,7 +1,5 @@
 .gitkeep
 
 app/src/_meta/
-app/src/fonts/
-app/src/icons/
-app/src/images/
+app/src/assets/
 app/src/favicon.ico
