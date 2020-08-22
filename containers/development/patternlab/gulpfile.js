@@ -27,20 +27,9 @@ function compileTypescript(cb) {
 function afterCompile(cb) {
     // Without the delay things manage to load stale files.
     setTimeout(() => {
-        BrowserSync.reload
+        BrowserSync.reload()
         exec("npm run export")
     }, 2000)
-    cb()
-}
-
-function reloadBrowser(cb) {
-    
-    setTimeout(() => BrowserSync.reload(), 2000)
-    cb()
-}
-
-function exportAll(cb) {
-    exec("npm run export")
     cb()
 }
 
