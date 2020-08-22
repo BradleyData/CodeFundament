@@ -2,6 +2,7 @@
     "name": "patternlab",
     "version": "0.0.0",
     "scripts": {
+        "clean": "rm -rf `ls -d app/www/* | grep -v app/www/assets`",
         "lint": "prettier --write 'app/src/**/**' 'app/helpers/**/**' && eslint --fix 'app/src/**/*.ts' && echo 'All files passed!'",
         "buildPatternLab": "patternlab build --config ./patternlab-config.json",
         "compileSass": "cat $(find app/src/ -name '*.var.scss') $(find app/src/ \\( -name '*.scss' ! -iname '*.var.scss' \\)) | npx sass - app/www/css/style.css",

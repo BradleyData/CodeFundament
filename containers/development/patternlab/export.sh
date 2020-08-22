@@ -2,7 +2,7 @@
 
 pageLocation="04-pages-"
 
-rm -rf app/pattern_exports/*
+rm -rf `ls -d app/pattern_exports/* | grep -v app/pattern_exports/assets`
 
 cp app/www/favicon.ico app/pattern_exports/
 cp app/www/css/style.css app/pattern_exports/
