@@ -1,11 +1,5 @@
 {
     "quoteProps": "consistent",
     "semi": false,
-    "tabWidth": 4,
-    "overrides": [{
-        "files": "*.hbs",
-        "options": {
-            "parser": "html"
-        }
-    }]
+    "tabWidth": 4
 }

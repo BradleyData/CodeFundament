@@ -5,6 +5,7 @@ ENV NODE_ENV=production
 WORKDIR /home/node
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node tsconfig.json ./
+COPY --chown=node:node tsconfig.common.json ./
 RUN npm config list && \
     npm ci && \
     npm cache clean --force && \
@@ -27,6 +28,7 @@ WORKDIR /home/node
 RUN npm install --only=development && touch ./.watch
 COPY --chown=node:node .vscode .vscode/
 COPY --chown=node:node .eslintrc.json ./
+COPY --chown=node:node .eslintrc.custom.json ./
 COPY --chown=node:node .prettierrc.json ./
 COPY --chown=node:node babel.config.json ./
 COPY --chown=node:node cucumber.js ./

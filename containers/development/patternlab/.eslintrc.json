@@ -12,12 +12,6 @@
     "plugins": [
         "@typescript-eslint"
     ],
-    "overrides": [{
-        "files": ["*.test.ts"],
-        "rules": {
-            "dot-notation": "off"
-        }
-    }],
     "rules": {
         // Possible Errors
         "no-await-in-loop": "error",
@@ -86,7 +80,6 @@
         "no-shadow": "error",
         "no-undef-init": "error",
         "no-undefined": "error",
-        "no-unused-vars": "off",
 
          // Stylistic Issues
         "indent": ["error", 4, {"SwitchCase": 1, "VariableDeclarator": "first"}],

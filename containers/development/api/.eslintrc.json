@@ -1,8 +1,6 @@
 {
     "env": {
-        "es2020": true,
-        "jest": true,
-        "node": true
+        "es2020": true
     },
     "extends": [
         "eslint:recommended"
@@ -14,12 +12,6 @@
     "plugins": [
         "@typescript-eslint"
     ],
-    "overrides": [{
-        "files": ["*.test.ts"],
-        "rules": {
-            "dot-notation": "off"
-        }
-    }],
     "rules": {
         // Possible Errors
         "no-await-in-loop": "error",
@@ -71,7 +63,6 @@
         "no-sequences": "error",
         "no-throw-literal": "error",
         "no-unmodified-loop-condition": "error",
-        "no-unused-expressions": "error",
         "no-useless-call": "error",
         "no-useless-concat": "error",
         "no-useless-return": "error",
@@ -91,7 +82,6 @@
         "no-undefined": "error",
 
          // Stylistic Issues
-        "camelcase": "error",
         "indent": ["error", 4, {"SwitchCase": 1, "VariableDeclarator": "first"}],
         "max-len": ["error", {"code": 125, "ignoreUrls": true}],
         "max-depth": ["error", 4],

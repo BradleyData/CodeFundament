@@ -2,6 +2,18 @@
     "emeraldwalk.runonsave": {
         "commands": [
             {
+                "match": "\\.hbs$",
+                "cmd": "touch -m .watch"
+            },
+            {
+                "match": "\\.json$",
+                "cmd": "touch -m .watch"
+            },
+            {
+                "match": "\\.scss$",
+                "cmd": "touch -m .watch"
+            },
+            {
                 "match": "\\.ts$",
                 "cmd": "touch -m .watch"
             }
@@ -16,6 +28,7 @@
         "**/.profile": true,
         "**/.screenrc": true,
         "**/.watch": true,
+        "**/dependencyGraph.json": true,
         "**/package-lock.json": true
     },
     "files.watcherExclude": {
@@ -25,6 +38,8 @@
         "**/.vscode/**": true,
         "**/.vscode-server/**": true,
         "**/node_modules/**": true,
-        "**/app/output/**": true
+        "**/app/output/**": true,
+        "**/app/pattern_exports/**": true,
+        "**/app/www/**": true
     }
 }

@@ -1,21 +1,9 @@
 {
+    "extends": "./tsconfig.common.json",
     "compilerOptions": {
         "outDir": "/home/node/app/www/js",
         "target": "ES6",
-        "module": "commonjs",
 
-        "allowJs": false,
-        "esModuleInterop": true,
-        "moduleResolution": "node",
-        "noEmitOnError": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "removeComments": true,
-        "sourceMap": true,
-        "strict": true,
         "types": []
-    },
-    "include": [
-        "app/src/**/*.ts"
-    ]
+    }
 }

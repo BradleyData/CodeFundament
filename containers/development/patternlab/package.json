@@ -3,7 +3,7 @@
     "version": "0.0.0",
     "scripts": {
         "clean": "rm -rf `ls -d app/www/* | grep -v app/www/assets`",
-        "lint": "prettier --write 'app/src/**/**' 'app/helpers/**/**' && eslint --fix 'app/src/**/*.ts' && echo 'All files passed!'",
+        "lint": "prettier --write 'app/(src|helpers)/**/!(*.hbs)' && prettier --write --parser 'html' 'app/(src|helpers)/**/*.hbs' && eslint --report-unused-disable-directives --fix --config .eslintrc.custom.json 'app/src/**/*.ts' && echo 'All files passed!'",
         "buildPatternLab": "patternlab build --config ./patternlab-config.json",
         "compileSass": "cat $(find app/src/ -name '*.var.scss') $(find app/src/ \\( -name '*.scss' ! -iname '*.var.scss' \\)) | npx sass - app/www/css/style.css",
         "compileTypescript": "find app/src/ -name '*.ts' -exec cat {} \\; > app/www/js/app.ts && babel app/www/js/app.ts --out-file app/www/js/app.js",

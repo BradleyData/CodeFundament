@@ -3,15 +3,19 @@
         "commands": [
             {
                 "match": "\\.hbs$",
-                "cmd": "npm run pl:build"
+                "cmd": "touch -m .watch"
             },
             {
                 "match": "\\.json$",
-                "cmd": "npm run pl:build"
+                "cmd": "touch -m .watch"
             },
             {
                 "match": "\\.scss$",
-                "cmd": "npm run pl:build"
+                "cmd": "touch -m .watch"
+            },
+            {
+                "match": "\\.ts$",
+                "cmd": "touch -m .watch"
             }
         ]
     },
@@ -19,6 +23,9 @@
         "**/.config": true,
         "**/.npm": true,
         "**/.vscode-server": true,
+        "**/.bash_logout": true,
+        "**/.bashrc": true,
+        "**/.profile": true,
         "**/.screenrc": true,
         "**/.watch": true,
         "**/dependencyGraph.json": true,
@@ -31,6 +38,7 @@
         "**/.vscode/**": true,
         "**/.vscode-server/**": true,
         "**/node_modules/**": true,
+        "**/app/output/**": true,
         "**/app/pattern_exports/**": true,
         "**/app/www/**": true
     }
