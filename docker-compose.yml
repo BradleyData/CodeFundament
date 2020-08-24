@@ -28,6 +28,7 @@ services:
         networks:
             - traefik
         volumes:
+            - ./containers/config:/home/node/config/shared
             - ./volumes/api:/home/node/app
     info:
         build:
@@ -38,5 +39,24 @@ services:
             - traefik
         volumes:
             - ./volumes/api/output:/usr/local/apache2/htdocs/api
+    patternlab:
+        build:
+            context: ./containers/development/patternlab
+            target: dev
+        networks:
+            - traefik
+        volumes:
+            - ./containers/config:/home/node/config/shared
+            - ./volumes/patternlab:/home/node/app
+            - ../${ASSETS_PATH}:/home/node/app/src/assets
+            - ../${ASSETS_PATH}:/home/node/app/www/assets
+    www:
+        build:
+            context: ./containers/support/info
+        networks:
+            - traefik
+        volumes:
+            - ./volumes/patternlab/pattern_exports:/usr/local/apache2/htdocs
+            - ../${ASSETS_PATH}:/usr/local/apache2/htdocs/assets
 networks:
     traefik:

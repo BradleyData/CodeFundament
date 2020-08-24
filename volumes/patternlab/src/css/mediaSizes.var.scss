@@ -1,0 +1,9 @@
+/**
+ * These are defined to support Progressive Enhancement rather than Graceful Degredation.
+ * As a result, anything less than the lowest value is considered phone-sized.
+ */
+$width-sd: 399px;
+$width-hd: 769px;
+$width-2k: 1025px;
+$width-4k: 1921px;
+$width-8k: 2561px;

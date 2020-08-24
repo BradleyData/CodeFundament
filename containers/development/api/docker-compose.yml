@@ -7,3 +7,4 @@ services:
             target: update
         volumes:
             - .:/home/node/update
+            - ../../config:/home/node/config/shared

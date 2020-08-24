@@ -1,0 +1,9 @@
+.o_global_header {
+    background-color: var(--color_primary);
+    color: var(--color_tertiary);
+
+    position: fixed;
+    width: 100%;
+    overflow-y: hidden;
+    padding-left: 1em;
+}

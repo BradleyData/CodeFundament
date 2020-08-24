@@ -1,0 +1,12 @@
+{
+    "extends": "/home/node/config/shared/tsconfig.json",
+    "compilerOptions": {
+        "outDir": "/home/node/app/www/",
+        "target": "ES2019",
+
+        "types": [
+            "jest",
+            "node"
+        ]
+    }
+}

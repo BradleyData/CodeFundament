@@ -1,0 +1,33 @@
+.a_themes_swatch > div {
+    display: flex;
+    align-items: center;
+    padding: 2px;
+}
+
+.a_themes_swatch-color {
+    height: 2em;
+    width: 2em;
+    border: 1px solid black;
+    display: inline-block;
+    margin-right: 0.25em;
+}
+
+.a_themes_swatch-bg {
+    background-color: var(--color_bg);
+}
+
+.a_themes_swatch-font {
+    background-color: var(--color_font);
+}
+
+.a_themes_swatch-primary {
+    background-color: var(--color_primary);
+}
+
+.a_themes_swatch-secondary {
+    background-color: var(--color_secondary);
+}
+
+.a_themes_swatch-tertiary {
+    background-color: var(--color_tertiary);
+}

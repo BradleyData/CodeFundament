@@ -1,0 +1,10 @@
+version: '3.7'
+
+services:
+    update:
+        build:
+            context: .
+            target: update
+        volumes:
+            - .:/home/node/update
+            - ../../config:/home/node/config/shared

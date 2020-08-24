@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.common.json",
+    "compilerOptions": {
+        "outDir": "/home/node/app/www/js",
+        "target": "ES6",
+
+        "types": []
+    }
+}

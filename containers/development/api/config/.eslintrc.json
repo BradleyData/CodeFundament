@@ -1,0 +1,17 @@
+{
+    "extends": "/home/node/config/shared/.eslintrc.json",
+    "env": {
+        "jest": true,
+        "node": true
+    },
+    "overrides": [{
+        "files": ["*.test.ts"],
+        "rules": {
+            "dot-notation": "off"
+        }
+    }],
+    "rules": {
+        "no-unused-expressions": "error",
+        "camelcase": "error"
+    }
+}
