@@ -31,7 +31,10 @@ services:
             - ./containers/config:/home/node/config/shared
             - ./volumes/api:/home/node/app
     info:
-        build: ./containers/support/info
+        build:
+            context: ./containers/support/info
+            args:
+                domain: ${DOMAIN}
         networks:
             - traefik
         volumes:
