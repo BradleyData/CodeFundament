@@ -1,4 +1,5 @@
 {
+    "extends": "/home/node/config/shared/.eslintrc.json",
     "env": {
         "jest": true,
         "node": true

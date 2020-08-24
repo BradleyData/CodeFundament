@@ -3,12 +3,12 @@
     "version": "0.0.0",
     "private": true,
     "scripts": {
-        "compile": "babel app/src/ --out-dir app/www/ --extensions '.ts'",
-        "document": "typedoc",
-        "lint": "prettier --write 'app/acceptanceTests/steps/**/**' 'app/src/**/**' && eslint --report-unused-disable-directives --fix --config .eslintrc.custom.json 'app/acceptanceTests/steps/**/**' 'app/src/**/**' && echo 'All files passed!'",
-        "unitTests": "jest --detectOpenHandles",
-        "mutationTests": "stryker run",
-        "acceptanceTests": "mkdir --parents app/output/acceptance/html; mkdir --parents app/output/acceptance/json;cucumber-js; node cucumberHtmlReporter.mjs",
+        "compile": "babel app/src/ --out-dir app/www/ --extensions '.ts' --config-file ./config/shared/babel.config.json",
+        "document": "typedoc --options config/typedoc.json --tsconfig config/tsconfig.json",
+        "lint": "bash /home/node/config/runLinters.sh",
+        "unitTests": "bash /home/node/config/runJest.sh",
+        "mutationTests": "stryker run config/stryker.conf.json",
+        "acceptanceTests": "bash /home/node/config/runCucumber.sh",
         "restartServer": "touch -m .watch"
     },
     "main": "app/www/index.js",

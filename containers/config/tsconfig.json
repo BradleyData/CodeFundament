@@ -13,6 +13,6 @@
         "strict": true,
     },
     "include": [
-        "app/src/**/*.ts"
+        "/home/node/app/src/**/*.ts"
     ]
 }

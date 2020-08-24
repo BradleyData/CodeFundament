@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "$schema": "/home/node/node_modules/@stryker-mutator/core/schema/stryker-schema.json",
   "mutator": "typescript",
   "packageManager": "npm",
   "reporters": [
@@ -8,14 +8,14 @@
     "progress"
   ],
   "htmlReporter": {
-      "baseDir": "app/output/mutation"
+      "baseDir": "/home/node/app/output/mutation"
   },
   "testRunner": "jest",
   "transpilers": [
     "typescript"
   ],
   "coverageAnalysis": "off",
-  "tsconfigFile": "tsconfig.json",
+  "tsconfigFile": "/home/node/config/tsconfig.json",
   "files": [
     "app/src/**/*.ts"
   ],

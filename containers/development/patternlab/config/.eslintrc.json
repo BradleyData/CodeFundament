@@ -1,0 +1,6 @@
+{
+    "extends": "/home/node/config/shared/.eslintrc.json",
+    "rules": {
+        "no-unused-vars": "off"
+    }
+}

@@ -50,7 +50,8 @@ exports.default = function() {
         {ignoreInitial: false},
         Gulp.series(
             Gulp.parallel(clean, lint),
-            Gulp.parallel(buildPatternLab, compileSass, compileTypescript),
+            Gulp.parallel(buildPatternLab, compileSass),
+            compileTypescript,
             afterCompile
         )
     )

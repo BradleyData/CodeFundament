@@ -11,8 +11,8 @@ EXPOSE 3000
 ENV NODE_ENV=production
 WORKDIR /home/node
 COPY --chown=node:node package*.json ./
-COPY --chown=node:node patternlab-config.json ./
 COPY --chown=node:node gulpfile.js ./
+COPY --chown=node:node config config/
 RUN npm config list && \
     npm ci && \
     npm cache clean --force && \
@@ -27,19 +27,13 @@ USER node
 RUN echo "shell '/bin/bash'" > /home/node/.screenrc
 # Done installing things.
 COPY --chown=node:node .vscode .vscode/
-COPY --chown=node:node .eslintrc.json ./
-COPY --chown=node:node .eslintrc.custom.json ./
-COPY --chown=node:node .prettierignore ./
-COPY --chown=node:node .prettierrc.json ./
-COPY --chown=node:node babel.config.json ./
-COPY --chown=node:node export.sh ./
-COPY --chown=node:node html_export_postfix.htm ./
-COPY --chown=node:node html_export_prefix.htm ./
-COPY --chown=node:node tsconfig.json ./
-COPY --chown=node:node tsconfig.common.json ./
-RUN npm install --only=development && touch ./.watch && chmod 700 export.sh
+ENV NODE_ENV=development
+ENV PATH=/home/node/node_modules/.bin:$PATH
+WORKDIR /home/node
+RUN npm install --only=development && touch ./.watch
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["npx", "gulp"]
 
 FROM dev as update
-CMD ["/bin/bash", "update/update.sh"]
+WORKDIR /home/node
+CMD ["/bin/bash", "config/shared/update.sh"]

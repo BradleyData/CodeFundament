@@ -28,6 +28,7 @@ services:
         networks:
             - traefik
         volumes:
+            - ./containers/config:/home/node/config/shared
             - ./volumes/api:/home/node/app
     info:
         build: ./containers/support/info
@@ -42,6 +43,7 @@ services:
         networks:
             - traefik
         volumes:
+            - ./containers/config:/home/node/config/shared
             - ./volumes/patternlab:/home/node/app
             - ../${ASSETS_PATH}:/home/node/app/src/assets
             - ../${ASSETS_PATH}:/home/node/app/www/assets
