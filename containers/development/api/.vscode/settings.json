@@ -19,6 +19,8 @@
             }
         ]
     },
+    "files.encoding": "utf8",
+    "files.eol": "\n",
     "files.exclude": {
         ".cache": true,
         ".config": true,
