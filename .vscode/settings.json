@@ -4,11 +4,12 @@
     "files.watcherExclude": {
         "**/**": true
     },
-    "git.branchValidationRegex": "^([A-Za-z0-9]+\/)?[Ii]ssue[1-9][0-9]*$",
+    "git.branchValidationRegex": "^issue[1-9][0-9]*$",
     "git.enableCommitSigning": true,
     "git.inputValidationSubjectLength": 50,
     "git.inputValidationLength": 72,
     "git.inputValidation": "always",
-    "githubIssues.workingIssueBranch": "issue${issueNumber}",
+    "githubIssues.issueBranchTitle": "issue${issueNumber}",
+    "githubIssues.useBranchForIssues": "on",
     "githubIssues.workingIssueFormatScm": "${issueTitle}",
 }
