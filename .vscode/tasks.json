@@ -2,6 +2,16 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Initialize postgres database",
+            "type": "shell",
+            "group": "none",
+            "command": "docker-compose --file containers/support/postgres/docker-compose.yml run --rm initialize",
+            "windows": {
+                "command": "docker-compose --file containers\\support\\postgres\\docker-compose.yml run --rm initialize"
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Rebuild container",
             "type": "shell",
             "group": {
@@ -53,6 +63,7 @@
                 "api",
                 "info",
                 "patternlab",
+                "postgres",
                 "www"
             ]
         },

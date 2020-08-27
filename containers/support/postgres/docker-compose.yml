@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+    initialize:
+        build:
+            context: .
+            target: initialize
+        secrets:
+            - source: POSTGRES_PASSWORD
+        volumes:
+            - ../../../volumes/postgres:/var/lib/postgresql/data
+secrets:
+    POSTGRES_PASSWORD:
+        file: ../../../secrets/postgres_password

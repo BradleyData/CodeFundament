@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 x-docker-volume:
     &docker-volume
@@ -50,6 +50,19 @@ services:
             - ./volumes/patternlab:/home/node/app
             - ../${ASSETS_PATH}:/home/node/app/src/assets
             - ../${ASSETS_PATH}:/home/node/app/www/assets
+    postgres:
+        build:
+            context: ./containers/support/postgres
+            target: dev
+        networks:
+            - traefik
+        secrets:
+            - source: POSTGRES_PASSWORD
+              uid: '0'
+              gid: '0'
+              mode: 0400
+        volumes:
+            - ./volumes/postgres:/var/lib/postgresql/data
     www:
         build:
             context: ./containers/support/info
@@ -60,3 +73,6 @@ services:
             - ../${ASSETS_PATH}:/usr/local/apache2/htdocs/assets
 networks:
     traefik:
+secrets:
+    POSTGRES_PASSWORD:
+        file: ./secrets/postgres_password
