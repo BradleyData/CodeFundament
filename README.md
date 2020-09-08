@@ -6,3 +6,5 @@ Deployment can happen using docker-compose for development purposes or docker sw
 - [Local Website](documentation/localWebsite.md)
 - [Tasks](documentation/tasks.md)
 - [API](documentation/api.md)
+- [Patternlab](documentation/patternlab.md)
+- [Postgres](documentation/postgres.md)
