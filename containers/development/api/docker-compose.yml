@@ -8,3 +8,6 @@ services:
         volumes:
             - .:/home/node/update
             - ../../config:/home/node/config/shared
+secrets:
+    POSTGRES_PASSWORD:
+        file: ../../../secrets/postgres_password

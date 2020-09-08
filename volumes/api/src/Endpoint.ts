@@ -17,19 +17,22 @@ class Endpoint {
         this.version = version
         this.action = action.toUpperCase()
         this.parameters = parameters
+        this.statusCode = 0
+    }
 
+    public async init() {
         switch (this.action) {
             case "DELETE":
                 this.statusCode = Endpoint.StatusCode.noContent
-                this.delete()
+                await this.delete()
                 break
             case "GET":
                 this.statusCode = Endpoint.StatusCode.ok
-                this.get()
+                await this.get()
                 break
             case "POST":
                 this.statusCode = Endpoint.StatusCode.created
-                this.post()
+                await this.post()
                 break
             default:
                 this.statusCode = Endpoint.StatusCode.badRequest
@@ -44,16 +47,16 @@ class Endpoint {
         this.response = "{}"
     }
 
-    protected delete(): void {
-        this.invalidAction()
+    protected async delete(): Promise<void> {
+        await this.invalidAction()
     }
 
-    protected get(): void {
-        this.invalidAction()
+    protected async get(): Promise<void> {
+        await this.invalidAction()
     }
 
-    protected post(): void {
-        this.invalidAction()
+    protected async post(): Promise<void> {
+        await this.invalidAction()
     }
 
     public getAction(): string {

@@ -4,7 +4,9 @@
             "name": "Debug Jest Tests",
             "type": "node",
             "request": "launch",
+            "preLaunchTask": "Copy jest config",
             "program": "/home/node/node_modules/jest/bin/jest.js",
+            "postDebugTask": "Cleanup jest config",
             "args": [
                 "--runInBand"
             ],

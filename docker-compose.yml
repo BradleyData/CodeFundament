@@ -27,6 +27,8 @@ services:
             target: dev
         networks:
             - traefik
+        secrets:
+            - source: POSTGRES_PASSWORD
         volumes:
             - ./containers/config:/home/node/config/shared
             - ./volumes/api:/home/node/app
@@ -58,9 +60,6 @@ services:
             - traefik
         secrets:
             - source: POSTGRES_PASSWORD
-              uid: '0'
-              gid: '0'
-              mode: 0400
         volumes:
             - ./volumes/postgres:/var/lib/postgresql/data
     www:

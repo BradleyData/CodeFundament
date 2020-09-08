@@ -13,12 +13,15 @@ export default class Srvr {
     listen(port: string = "3000"): void {
         this.server.on(
             "request",
-            (req: Http.IncomingMessage, res: Http.ServerResponse): void => {
+            async (
+                req: Http.IncomingMessage,
+                res: Http.ServerResponse
+            ): Promise<void> => {
                 const action = req.method ?? "get"
                 const url = req.url ?? ""
 
                 try {
-                    const endpoint = this.createEndpoint(action, url)
+                    const endpoint = await this.createEndpoint(action, url)
                     res.statusCode = endpoint.getStatusCode()
                     res.setHeader(
                         "Content-Type",
@@ -52,7 +55,10 @@ export default class Srvr {
         })
     }
 
-    createEndpoint(action: string, url: string): Endpoint {
+    private async createEndpoint(
+        action: string,
+        url: string
+    ): Promise<Endpoint> {
         let endpoint: Endpoint
 
         try {
@@ -88,7 +94,7 @@ export default class Srvr {
             if (version === 0) 
                 throw new Error("Endpoint version undefined.")
 
-            endpoint = EndpointFactory.createEndpoint(
+            endpoint = await EndpointFactory.createEndpoint(
                 `${endpointPath}${endpointName}`,
                 version,
                 action,
@@ -118,7 +124,7 @@ export default class Srvr {
                 ): boolean {
                     try {
                         const files = Fs.readdirSync(
-                            `${process.cwd()}/app/src/endpoints/${filepath}`
+                            `${process.cwd()}/app/src/endpoint/${filepath}`
                         ).filter((file) =>
                             file.match(`^${filename}.v[0-9]+.[jt]s$`)
                         )
@@ -131,7 +137,7 @@ export default class Srvr {
 
             function getVersion(): number {
                 const actualVersions = Fs.readdirSync(
-                    `${process.cwd()}/app/src/endpoints/${endpointPath}`
+                    `${process.cwd()}/app/src/endpoint/${endpointPath}`
                 )
                     .filter((file) =>
                         file.match(`^${endpointName}.v[0-9]+.[jt]s$`)
@@ -170,7 +176,7 @@ export default class Srvr {
             this.logError(error, action, url)
 
             const invalidVersion = -1
-            endpoint = EndpointFactory.createEndpoint(
+            endpoint = await EndpointFactory.createEndpoint(
                 "",
                 invalidVersion,
                 action,

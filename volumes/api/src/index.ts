@@ -1,3 +1,4 @@
+import Postgres from "./wrapper/Postgres"
 import Srvr from "./Srvr"
 
 const srvr = new Srvr()
@@ -10,7 +11,8 @@ process.on("SIGTERM", () =>
     srvr.shutdown("Got SIGTERM (docker container stop).", onExit)
 )
 
-function onExit(exitCode: number): void {
+async function onExit(exitCode: number): Promise<void> {
+    await Postgres.end()
     process.exitCode = exitCode
     process.exit()
 }

@@ -11,6 +11,9 @@
       "baseDir": "/home/node/app/output/mutation"
   },
   "testRunner": "jest",
+  "jest": {
+    "configFile": "/home/node/config/jest.config.js"
+  },
   "transpilers": [
     "typescript"
   ],
@@ -22,7 +25,8 @@
   "mutate": [
     "app/src/**/*.ts",
     "!app/src/**/*.test.ts",
-    "!app/src/index.ts"
+    "!app/src/index.ts",
+    "!app/src/wrapper/**/*.ts"
   ],
   "thresholds": {
       "high": 100,
