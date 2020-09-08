@@ -2,6 +2,16 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Check versions",
+            "type": "shell",
+            "group": "none",
+            "command": "docker-compose --file containers/support/bash/docker-compose.yml up --build check_versions",
+            "windows": {
+                "command": "docker-compose --file containers\\support\\bash\\docker-compose.yml up --build check_versions",
+            },
+            "problemMatcher": []
+        },
+        {
             "label": "Initialize postgres database",
             "type": "shell",
             "group": "none",
