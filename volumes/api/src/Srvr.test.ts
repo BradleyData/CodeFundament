@@ -67,6 +67,7 @@ const mockRes = {
 }
 const mockServer = {
     close: function (
+        // eslint-disable-next-line no-unused-vars
         callback?: ((err?: Error | undefined) => void) | undefined
     ) {
         if (typeof callback !== "undefined") 
@@ -75,6 +76,7 @@ const mockServer = {
     listen: jest.fn(),
     on: jest.fn(function (
         eventName: string,
+        // eslint-disable-next-line no-unused-vars
         listener: (req: any, res: any) => void
     ) {
         onEventName = eventName

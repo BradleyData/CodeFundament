@@ -88,7 +88,7 @@ class Endpoint {
     }
 }
 
-/* eslint-disable no-magic-numbers, no-redeclare, no-unused-vars */
+/* eslint-disable no-magic-numbers, no-redeclare, no-shadow, no-unused-vars */
 namespace Endpoint {
     export enum StatusCode {
         ok = 200,

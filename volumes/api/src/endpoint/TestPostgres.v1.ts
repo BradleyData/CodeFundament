@@ -1,6 +1,6 @@
 import Endpoint from "../Endpoint"
 import Postgres from "../wrapper/Postgres"
-import { QueryResult } from "pg" // eslint-disable-line no-unused-vars
+import { QueryResult } from "pg"
 
 export default class TestPostgres extends Endpoint {
     protected async get(): Promise<void> {

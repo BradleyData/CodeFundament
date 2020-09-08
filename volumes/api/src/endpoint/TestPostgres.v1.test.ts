@@ -1,5 +1,5 @@
 import Postgres from "../wrapper/Postgres"
-import { QueryResult } from "pg" // eslint-disable-line no-unused-vars
+import { QueryResult } from "pg"
 import TestHelper from "../TestHelper"
 import TestPostgres from "./TestPostgres.v1"
 
@@ -12,25 +12,24 @@ describe(TestPostgres.name, () => {
         async (hasPostgres?: boolean) => {
             const rowsAffected = TestHelper.randomInt()
             const errorMsg = "errorMsg"
-            Postgres.query = jest
-                .fn()
-                .mockImplementation(
-                    (
-                        sql: string,
-                        values: any,
-                        useResults: (queryResult: QueryResult) => void
-                    ) => {
-                        // eslint-disable-next-line no-param-reassign, no-self-assign
-                        sql = sql
+            Postgres.query = jest.fn().mockImplementation(
+                (
+                    sql: string,
+                    values: any,
+                    // eslint-disable-next-line no-unused-vars
+                    useResults: (queryResult: QueryResult) => void
+                ) => {
+                    // eslint-disable-next-line no-param-reassign, no-self-assign
+                    sql = sql
 
-                        // eslint-disable-next-line no-undefined
-                        if (hasPostgres === undefined) 
-                            throw errorMsg
+                    // eslint-disable-next-line no-undefined
+                    if (hasPostgres === undefined) 
+                        throw errorMsg
 
-                        useResults(getQueryResult(hasPostgres ? values[0] : ""))
-                        return Promise.resolve(rowsAffected)
-                    }
-                )
+                    useResults(getQueryResult(hasPostgres ? values[0] : ""))
+                    return Promise.resolve(rowsAffected)
+                }
+            )
 
             const testPostgres = new TestPostgres("", 1, "get", "")
             await testPostgres.init()

@@ -1,4 +1,4 @@
-FROM node:14.5.0-buster-slim as base
+FROM node:14.9.0-buster-slim as base
 RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
     apt-get install --no-install-recommends -y \

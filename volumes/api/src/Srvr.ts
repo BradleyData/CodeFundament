@@ -1,4 +1,4 @@
-import Endpoint from "./Endpoint" // eslint-disable-line no-unused-vars
+import Endpoint from "./Endpoint"
 import EndpointFactory from "./EndpointFactory"
 import Fs from "fs"
 import Http from "http"
@@ -42,6 +42,7 @@ export default class Srvr {
         this.server.listen(port)
     }
 
+    // eslint-disable-next-line no-unused-vars
     shutdown(msg: string, onExit: (exitCode: number) => void): void {
         let exitCode = 0
 
