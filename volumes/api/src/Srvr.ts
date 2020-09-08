@@ -55,10 +55,7 @@ export default class Srvr {
         })
     }
 
-    private async createEndpoint(
-        action: string,
-        url: string
-    ): Promise<Endpoint> {
+    async createEndpoint(action: string, url: string): Promise<Endpoint> {
         let endpoint: Endpoint
 
         try {
