@@ -1,4 +1,6 @@
 # Tasks
+## Initialize postgres database
+Creates a default database named `postgres` under the `postgres` user. This must be done before the postgres container can be used.
 ## Start all containers
 This will start all of the containers in the development stack. If the containers are not running then you won't be able to do anything else.
 ## Stop all containers

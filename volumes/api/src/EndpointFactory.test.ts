@@ -1,33 +1,38 @@
-import DefaultEndpoint from "./endpoints/Default.v1"
+import DefaultEndpoint from "./endpoint/Default.v1"
 import Endpoint from "./Endpoint"
 import EndpointFactory from "./EndpointFactory"
-import InvalidEndpoint from "./endpoints/Invalid"
+import InvalidEndpoint from "./endpoint/Invalid"
 import { mocked } from "ts-jest/utils"
 
 jest.mock("./Endpoint")
-jest.mock("./endpoints/Invalid")
-jest.mock("./endpoints/Default.v1")
+jest.mock("./endpoint/Invalid")
+jest.mock("./endpoint/Default.v1")
 
-describe("EndpointFactory", () => {
-    test("with invalid instanceof", () => {
-        expect(() => {
-            EndpointFactory.createEndpoint("Default", 1, "", "")
-        }).toThrow("Invalid endpoint")
+describe(EndpointFactory.name, () => {
+    test("with invalid instanceof", async () => {
+        expect.assertions(1)
+        try {
+            await EndpointFactory.createEndpoint("Default", 1, "", "")
+        } catch (err) {
+            expect(err.message).toBe("Invalid endpoint.")
+        }
     })
 
     describe("with valid instanceof", () => {
         const endpoint = mocked(Endpoint, true)
 
-        test("with valid version", () => {
+        test("with valid version", async () => {
             const defaultEndpoint = mocked(DefaultEndpoint, true)
             defaultEndpoint.prototype = endpoint.prototype
-            EndpointFactory.createEndpoint("Default", 1, "", "")
+
+            await EndpointFactory.createEndpoint("Default", 1, "", "")
         })
 
-        test("with invalid version", () => {
+        test("with invalid version", async () => {
             const invalidEndpoint = mocked(InvalidEndpoint, true)
             invalidEndpoint.prototype = endpoint.prototype
-            EndpointFactory.createEndpoint("Default", -1, "", "")
+
+            await EndpointFactory.createEndpoint("Default", -1, "", "")
         })
     })
 })

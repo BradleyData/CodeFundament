@@ -1,0 +1,19 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Copy jest config",
+            "type": "shell",
+            "group": "none",
+            "command": "cp config/jest.config.js .; cp config/tsconfig.json .",
+            "problemMatcher": []
+        },
+        {
+            "label": "Cleanup jest config",
+            "type": "shell",
+            "group": "none",
+            "command": "rm jest.config.js; rm tsconfig.json",
+            "problemMatcher": []
+        }
+    ]
+}

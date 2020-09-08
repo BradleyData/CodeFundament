@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 x-docker-volume:
     &docker-volume
@@ -27,6 +27,8 @@ services:
             target: dev
         networks:
             - traefik
+        secrets:
+            - source: POSTGRES_PASSWORD
         volumes:
             - ./containers/config:/home/node/config/shared
             - ./volumes/api:/home/node/app
@@ -50,6 +52,16 @@ services:
             - ./volumes/patternlab:/home/node/app
             - ../${ASSETS_PATH}:/home/node/app/src/assets
             - ../${ASSETS_PATH}:/home/node/app/www/assets
+    postgres:
+        build:
+            context: ./containers/support/postgres
+            target: dev
+        networks:
+            - traefik
+        secrets:
+            - source: POSTGRES_PASSWORD
+        volumes:
+            - ./volumes/postgres:/var/lib/postgresql/data
     www:
         build:
             context: ./containers/support/info
@@ -60,3 +72,6 @@ services:
             - ../${ASSETS_PATH}:/usr/local/apache2/htdocs/assets
 networks:
     traefik:
+secrets:
+    POSTGRES_PASSWORD:
+        file: ./secrets/postgres_password

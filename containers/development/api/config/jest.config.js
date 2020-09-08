@@ -48,6 +48,9 @@ module.exports = {
   // Make calling deprecated APIs throw helpful error messages
   errorOnDeprecated: true,
 
+  // Specify extra properties to be defined inside the vm for faster lookups
+  extraGlobals: ["Math"],
+
   // Force coverage collection from ignored files using an array of glob patterns
   // forceCoverageMatch: [],
 

@@ -6,9 +6,9 @@ import expect from "expect"
 
 let endpoint: Endpoint
 
-When("{word} is attempted on {string}", (action: string, url: string) => {
+When("{word} is attempted on {string}", async (action: string, url: string) => {
     const srvr = new Srvr()
-    endpoint = srvr.createEndpoint(action, url)
+    endpoint = await srvr.createEndpoint(action, url)
 })
 
 Then(

@@ -1,8 +1,12 @@
 .env
 *.swp
 
+secrets/
+
 volumes/api/output
 volumes/api/www
 
 volumes/patternlab/pattern_exports
 volumes/patternlab/www
+
+volumes/postgres
