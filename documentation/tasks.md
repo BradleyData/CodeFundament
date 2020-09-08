@@ -1,4 +1,6 @@
 # Tasks
+## Check versions
+Creates a list of versions hardcoded into files that may need to be updated. This can be used as a checklist when upgrading to be certain nothing is accidentally skipped.
 ## Initialize postgres database
 Creates a default database named `postgres` under the `postgres` user. This must be done before the postgres container can be used.
 ## Start all containers

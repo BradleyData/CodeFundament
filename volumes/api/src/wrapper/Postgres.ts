@@ -1,4 +1,4 @@
-import { Pool, QueryResult } from "pg" // eslint-disable-line no-unused-vars
+import { Pool, QueryResult } from "pg"
 import Fs from "fs"
 
 export default class Postgres {
@@ -13,6 +13,7 @@ export default class Postgres {
     static async query(
         sql: string,
         values: any,
+        // eslint-disable-next-line no-unused-vars
         useResults?: (queryResult: QueryResult) => void
     ): Promise<number> {
         const client = await this.pool.connect()

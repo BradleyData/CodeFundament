@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+    check_versions:
+        build: .
+        command: ["bash", "/root/checkVersions.sh"]
+        volumes:
+            - ../../..:/root/framework

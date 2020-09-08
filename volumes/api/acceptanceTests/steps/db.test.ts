@@ -1,5 +1,4 @@
 import { Then, When } from "cucumber"
-// eslint-disable-next-line no-unused-vars
 import Endpoint from "../../src/Endpoint"
 import Srvr from "../../src/Srvr"
 import expect from "expect"
