@@ -1,7 +1,7 @@
 {
   "$schema": "/home/node/node_modules/@stryker-mutator/core/schema/stryker-schema.json",
-  "mutator": "typescript",
   "packageManager": "npm",
+  "checkers": ["typescript"],
   "reporters": [
     "clear-text",
     "html",
@@ -11,12 +11,6 @@
       "baseDir": "/home/node/app/output/mutation"
   },
   "testRunner": "jest",
-  "jest": {
-    "configFile": "/home/node/config/jest.config.js"
-  },
-  "transpilers": [
-    "typescript"
-  ],
   "coverageAnalysis": "off",
   "tsconfigFile": "/home/node/config/tsconfig.json",
   "files": [
@@ -33,5 +27,9 @@
       "high": 100,
       "low": 100,
       "break": 100
-  }
+  },
+  "buildCommand_comment": "Copy the config files to the temp directory so Stryker can find them.",
+  "buildCommand": "cp -t . /home/node/config/shared/babel.config.json /home/node/config/jest.config.js /home/node/config/tsconfig.json",
+  "disableTypeChecks_comment": "Tell Stryker to look under the app/src/ directory for our files.",
+  "disableTypeChecks": "app/src/**/*.{js,ts,jsx,tsx,html,vue}"
 }

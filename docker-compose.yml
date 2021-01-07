@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 x-docker-volume:
     &docker-volume
@@ -6,7 +6,7 @@ x-docker-volume:
 
 services:
     traefik:
-        image: traefik:v2.2.10
+        image: traefik:v2.3.6
         command:
             - "--api.insecure=true"
             - "--entrypoints.web.address=:80"
