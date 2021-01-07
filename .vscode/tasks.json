@@ -5,20 +5,14 @@
             "label": "Check versions",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose --file containers/support/bash/docker-compose.yml up --build check_versions",
-            "windows": {
-                "command": "docker-compose --file containers\\support\\bash\\docker-compose.yml up --build check_versions",
-            },
+            "command": "docker-compose --file containers${pathSeparator}support${pathSeparator}bash${pathSeparator}docker-compose.yml up --build check_versions",
             "problemMatcher": []
         },
         {
             "label": "Initialize postgres database",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose --file containers/support/postgres/docker-compose.yml run --rm initialize",
-            "windows": {
-                "command": "docker-compose --file containers\\support\\postgres\\docker-compose.yml run --rm initialize"
-            },
+            "command": "docker-compose --file containers${pathSeparator}support${pathSeparator}postgres${pathSeparator}docker-compose.yml run --rm initialize",
             "problemMatcher": []
         },
         {
@@ -56,10 +50,7 @@
             "label": "Update container package-lock.json",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose --file containers/development/${input:devContainerName}/docker-compose.yml run --rm update",
-            "windows": {
-                "command": "docker-compose --file containers\\development\\${input:devContainerName}\\docker-compose.yml run --rm update"
-            },
+            "command": "docker-compose --file containers${pathSeparator}development${pathSeparator}${input:devContainerName}${pathSeparator}docker-compose.yml run --rm update",
             "problemMatcher": []
         }
     ],

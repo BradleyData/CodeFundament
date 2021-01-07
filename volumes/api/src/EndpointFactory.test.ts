@@ -22,14 +22,14 @@ describe(EndpointFactory.name, () => {
         const endpoint = mocked(Endpoint, true)
 
         test("with valid version", async () => {
-            const defaultEndpoint = mocked(DefaultEndpoint, true)
+            const defaultEndpoint: Partial<typeof Endpoint> = mocked(DefaultEndpoint, true)
             defaultEndpoint.prototype = endpoint.prototype
 
             await EndpointFactory.createEndpoint("Default", 1, "", "")
         })
 
         test("with invalid version", async () => {
-            const invalidEndpoint = mocked(InvalidEndpoint, true)
+            const invalidEndpoint: Partial<typeof Endpoint> = mocked(InvalidEndpoint, true)
             invalidEndpoint.prototype = endpoint.prototype
 
             await EndpointFactory.createEndpoint("Default", -1, "", "")

@@ -1,4 +1,4 @@
-import { Then, When } from "cucumber"
+import { Then, When } from "@cucumber/cucumber"
 import Endpoint from "../../src/Endpoint"
 import Srvr from "../../src/Srvr"
 import expect from "expect"
