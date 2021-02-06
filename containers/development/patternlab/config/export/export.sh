@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pageLocation="04-pages-"
+pageLocation="pages-"
 
 rm -rf `ls -d /home/node/app/pattern_exports/* | grep -v /home/node/app/pattern_exports/assets`
 
