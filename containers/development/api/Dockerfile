@@ -1,4 +1,4 @@
-FROM node:15.5.0-buster-slim as base
+FROM node:15.8.0-buster-slim as base
 USER node
 EXPOSE 3000
 ENV NODE_ENV=production
