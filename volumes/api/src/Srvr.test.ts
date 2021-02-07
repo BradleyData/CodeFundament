@@ -1,7 +1,7 @@
-import EndpointFactory from "./EndpointFactory"
-import Fs from "fs"
-import Srvr from "./Srvr"
-import TestHelper from "./TestHelper"
+import * as Fs from "fs"
+import { EndpointFactory } from "./EndpointFactory"
+import { Srvr } from "./Srvr"
+import { TestHelper } from "./TestHelper"
 
 const mockPath = `${process.cwd()}/app/src/endpoint`
 const mockDirectory = "Directory"

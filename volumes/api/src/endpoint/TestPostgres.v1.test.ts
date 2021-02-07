@@ -1,9 +1,13 @@
-import Postgres from "../wrapper/Postgres"
+import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
-import TestHelper from "../TestHelper"
-import TestPostgres from "./TestPostgres.v1"
+import { TestHelper } from "../TestHelper"
+import { TestPostgres } from "./TestPostgres.v1"
 
-jest.mock("../wrapper/Postgres", () => jest.fn())
+jest.mock("../wrapper/Postgres", () => {
+    return {
+        Postgres: jest.fn(),
+    }
+})
 
 describe(TestPostgres.name, () => {
     // eslint-disable-next-line no-undefined

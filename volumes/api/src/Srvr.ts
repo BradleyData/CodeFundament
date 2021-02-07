@@ -1,9 +1,9 @@
-import Endpoint from "./Endpoint"
-import EndpointFactory from "./EndpointFactory"
-import Fs from "fs"
-import Http from "http"
+import * as Fs from "fs"
+import * as Http from "http"
+import { Endpoint } from "./Endpoint"
+import { EndpointFactory } from "./EndpointFactory"
 
-export default class Srvr {
+export class Srvr {
     private readonly server: Http.Server
 
     constructor() {

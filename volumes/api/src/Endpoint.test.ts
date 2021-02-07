@@ -1,5 +1,5 @@
-import Endpoint from "./Endpoint"
-import TestHelper from "./TestHelper"
+import { Endpoint, StatusCode } from "./Endpoint"
+import { TestHelper } from "./TestHelper"
 
 describe(Endpoint.name, () => {
     const rowsAffected = TestHelper.randomInt()
@@ -29,9 +29,9 @@ describe(Endpoint.name, () => {
     }
 
     describe.each([
-        ["delete", Endpoint.StatusCode.noContent],
-        ["get", Endpoint.StatusCode.ok],
-        ["post", Endpoint.StatusCode.created],
+        ["delete", StatusCode.noContent],
+        ["get", StatusCode.ok],
+        ["post", StatusCode.created],
     ])("%s", (action: string, statusCode: number) => {
         test("with actions defined", async () => {
             const endpoint = new AllActions(name, version, action, parameters)
@@ -50,9 +50,7 @@ describe(Endpoint.name, () => {
             await endpoint.init()
 
             expect(endpoint.getName()).toBe(name)
-            expect(endpoint.getStatusCode()).toBe(
-                Endpoint.StatusCode.badRequest
-            )
+            expect(endpoint.getStatusCode()).toBe(StatusCode.badRequest)
             expect(endpoint.getRowsAffected()).toBe(0)
             expect(endpoint.getResponse()).toBe("{}")
         })
@@ -69,7 +67,7 @@ describe(Endpoint.name, () => {
         await endpoint.init()
 
         expect(endpoint.getName()).toBe(name)
-        expect(endpoint.getStatusCode()).toBe(Endpoint.StatusCode.badRequest)
+        expect(endpoint.getStatusCode()).toBe(StatusCode.badRequest)
         expect(endpoint.getRowsAffected()).toBe(0)
         expect(endpoint.getResponse()).toBe("{}")
     })
