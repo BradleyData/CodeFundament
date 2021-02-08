@@ -1,5 +1,5 @@
-import Postgres from "./wrapper/Postgres"
-import Srvr from "./Srvr"
+import { Postgres } from "./wrapper/Postgres"
+import { Srvr } from "./Srvr"
 
 const srvr = new Srvr()
 srvr.listen(process.env.PORT)

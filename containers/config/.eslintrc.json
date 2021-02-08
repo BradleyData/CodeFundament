@@ -3,14 +3,17 @@
         "es2020": true
     },
     "extends": [
-        "eslint:recommended"
+        "eslint:recommended",
+        "plugin:import/errors",
+        "plugin:import/warnings"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "import"
     ],
     "rules": {
         // Possible Errors
@@ -121,6 +124,25 @@
         "prefer-spread": "error",
         "prefer-template": "error",
         "sort-imports": "error",
-        "symbol-description": "error"
+        "symbol-description": "error",
+
+        // eslint-plugin-import
+        "import/export": "error",
+        "import/first": "error",
+        "import/exports-last": "error",
+        "import/named": "error",
+        "import/newline-after-import": "error",
+        "import/no-absolute-path": "error",
+        "import/no-amd": "error",
+        "import/no-commonjs": "error",
+        "import/no-cycle": "error",
+        "import/no-default-export": "error",
+        "import/no-deprecated": "error",
+        "import/no-duplicates": "error",
+        "import/no-mutable-exports": "error",
+        "import/no-self-import": "error",
+        "import/no-unassigned-import": "error",
+        "import/no-unresolved": "off",
+        "import/no-unused-modules": "error"
     }
 }

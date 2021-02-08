@@ -1,6 +1,8 @@
 {
     "extends": "/home/node/config/shared/.eslintrc.json",
     "rules": {
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+
+        "import/no-nodejs-modules": "error"
     }
 }

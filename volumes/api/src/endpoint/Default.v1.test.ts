@@ -1,4 +1,4 @@
-import Endpoint from "./Default.v1"
+import { Default as Endpoint } from "./Default.v1"
 
 describe(Endpoint.name, () => {
     test.each([["delete"], ["get"], ["post"]])("%s", async (action: string) => {

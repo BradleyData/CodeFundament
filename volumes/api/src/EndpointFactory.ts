@@ -1,6 +1,6 @@
-import Endpoint from "./Endpoint"
+import { Endpoint } from "./Endpoint"
 
-export default class EndpointFactory {
+export class EndpointFactory {
     static async createEndpoint(
         name: string,
         version: number,
@@ -12,7 +12,7 @@ export default class EndpointFactory {
             version === invalidVersion
                 ? "./endpoint/Invalid"
                 : `./endpoint/${name}.v${version}`
-        const SpecificEndpoint = require(path).default
+        const SpecificEndpoint = require(path).Endpoint
         const endpoint = new SpecificEndpoint(name, version, action, parameters)
 
         if (!(endpoint instanceof Endpoint))

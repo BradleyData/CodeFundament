@@ -5,7 +5,7 @@ class Endpoint {
     protected readonly parameters: string
     protected rowsAffected = 0
     protected response = "{}"
-    private statusCode: Endpoint.StatusCode
+    private statusCode: StatusCode
 
     constructor(
         name: string,
@@ -23,26 +23,26 @@ class Endpoint {
     public async init() {
         switch (this.action) {
             case "DELETE":
-                this.statusCode = Endpoint.StatusCode.noContent
+                this.statusCode = StatusCode.noContent
                 await this.delete()
                 break
             case "GET":
-                this.statusCode = Endpoint.StatusCode.ok
+                this.statusCode = StatusCode.ok
                 await this.get()
                 break
             case "POST":
-                this.statusCode = Endpoint.StatusCode.created
+                this.statusCode = StatusCode.created
                 await this.post()
                 break
             default:
-                this.statusCode = Endpoint.StatusCode.badRequest
+                this.statusCode = StatusCode.badRequest
                 this.invalidAction()
                 break
         }
     }
 
     private invalidAction(): void {
-        this.statusCode = Endpoint.StatusCode.badRequest
+        this.statusCode = StatusCode.badRequest
         this.rowsAffected = 0
         this.response = "{}"
     }
@@ -88,15 +88,13 @@ class Endpoint {
     }
 }
 
-/* eslint-disable no-magic-numbers, no-redeclare, no-shadow, no-unused-vars */
-namespace Endpoint {
-    export enum StatusCode {
-        ok = 200,
-        created = 201,
-        noContent = 204,
-        badRequest = 400,
-    }
+/* eslint-disable no-magic-numbers, no-shadow, no-unused-vars */
+enum StatusCode {
+    ok = 200,
+    created = 201,
+    noContent = 204,
+    badRequest = 400,
 }
-/* eslint-enable no-magic-numbers, no-redeclare, no-unused-vars */
+/* eslint-enable no-magic-numbers, no-shadow, no-unused-vars */
 
-export default Endpoint
+export { Endpoint, StatusCode }

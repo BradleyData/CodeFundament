@@ -11,7 +11,7 @@
       "baseDir": "/home/node/app/output/mutation"
   },
   "testRunner": "jest",
-  "coverageAnalysis": "off",
+  "coverageAnalysis": "perTest",
   "tsconfigFile": "/home/node/config/tsconfig.json",
   "files": [
     "app/src/**/*.ts"

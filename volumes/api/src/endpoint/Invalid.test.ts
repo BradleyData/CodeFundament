@@ -1,4 +1,4 @@
-import Endpoint from "./Invalid"
+import { Invalid as Endpoint } from "./Invalid"
 
 describe(Endpoint.name, () => {
     test.each([["delete"], ["get"], ["post"]])("%s", async (action: string) => {

@@ -1,8 +1,8 @@
-import Endpoint from "../Endpoint"
-import Postgres from "../wrapper/Postgres"
+import { Endpoint } from "../Endpoint"
+import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
 
-export default class TestPostgres extends Endpoint {
+class TestPostgres extends Endpoint {
     protected async get(): Promise<void> {
         try {
             const message = "Postgres is working."
@@ -20,3 +20,5 @@ export default class TestPostgres extends Endpoint {
         }
     }
 }
+
+export { TestPostgres, TestPostgres as Endpoint }

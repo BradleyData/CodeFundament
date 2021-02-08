@@ -1,7 +1,7 @@
-import DefaultEndpoint from "./endpoint/Default.v1"
-import Endpoint from "./Endpoint"
-import EndpointFactory from "./EndpointFactory"
-import InvalidEndpoint from "./endpoint/Invalid"
+import { Default as DefaultEndpoint } from "./endpoint/Default.v1"
+import { Endpoint } from "./Endpoint"
+import { EndpointFactory } from "./EndpointFactory"
+import { Invalid as InvalidEndpoint } from "./endpoint/Invalid"
 import { mocked } from "ts-jest/utils"
 
 jest.mock("./Endpoint")
@@ -22,14 +22,20 @@ describe(EndpointFactory.name, () => {
         const endpoint = mocked(Endpoint, true)
 
         test("with valid version", async () => {
-            const defaultEndpoint: Partial<typeof Endpoint> = mocked(DefaultEndpoint, true)
+            const defaultEndpoint: Partial<typeof Endpoint> = mocked(
+                DefaultEndpoint,
+                true
+            )
             defaultEndpoint.prototype = endpoint.prototype
 
             await EndpointFactory.createEndpoint("Default", 1, "", "")
         })
 
         test("with invalid version", async () => {
-            const invalidEndpoint: Partial<typeof Endpoint> = mocked(InvalidEndpoint, true)
+            const invalidEndpoint: Partial<typeof Endpoint> = mocked(
+                InvalidEndpoint,
+                true
+            )
             invalidEndpoint.prototype = endpoint.prototype
 
             await EndpointFactory.createEndpoint("Default", -1, "", "")

@@ -1,6 +1,6 @@
-import Endpoint from "../../Endpoint"
+import { Endpoint } from "../../Endpoint"
 
-export default class Default extends Endpoint {
+class Default extends Endpoint {
     // eslint-disable-next-line no-empty-function
     protected async delete(): Promise<void> {}
 
@@ -10,3 +10,5 @@ export default class Default extends Endpoint {
     // eslint-disable-next-line no-empty-function
     protected async post(): Promise<void> {}
 }
+
+export { Default, Default as Endpoint }

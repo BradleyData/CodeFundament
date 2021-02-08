@@ -1,4 +1,4 @@
-export default class TestHelper {
+export class TestHelper {
     static randomInt = () => {
         const maxRandomInt = 100
 

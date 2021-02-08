@@ -1,6 +1,6 @@
-import Endpoint from "../Endpoint"
+import { Endpoint } from "../Endpoint"
 
-export default class Invalid extends Endpoint {
+class Invalid extends Endpoint {
     private execute(): void {
         this.name = "Invalid"
         this.version = 1
@@ -18,3 +18,5 @@ export default class Invalid extends Endpoint {
         await this.execute()
     }
 }
+
+export { Invalid, Invalid as Endpoint }

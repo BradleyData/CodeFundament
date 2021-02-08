@@ -1,7 +1,7 @@
+import * as Fs from "fs"
 import { Pool, QueryResult } from "pg"
-import Fs from "fs"
 
-export default class Postgres {
+export class Postgres {
     private static pool = new Pool({
         database: "postgres",
         host: "postgres",

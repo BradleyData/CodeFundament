@@ -1,7 +1,7 @@
-import EndpointFactory from "./EndpointFactory"
-import Fs from "fs"
-import Srvr from "./Srvr"
-import TestHelper from "./TestHelper"
+import * as Fs from "fs"
+import { EndpointFactory } from "./EndpointFactory"
+import { Srvr } from "./Srvr"
+import { TestHelper } from "./TestHelper"
 
 const mockPath = `${process.cwd()}/app/src/endpoint`
 const mockDirectory = "Directory"
@@ -350,6 +350,36 @@ describe(Srvr.name, () => {
                     parameters
                 )
             })
+        })
+    })
+
+    describe("version regex test", () => {
+        test("regex starts at beginning of potential version", () => {
+            mockReq.method = "get"
+            mockReq.url = "/vv1"
+
+            srvr.listen()
+
+            expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                expect.any(String),
+                expect.any(Number),
+                expect.any(String),
+                "vv1"
+            )
+        })
+
+        test("regex goes to end of potential version", () => {
+            mockReq.method = "get"
+            mockReq.url = "/v1v"
+
+            srvr.listen()
+
+            expect(EndpointFactory.createEndpoint).toBeCalledWith(
+                expect.any(String),
+                expect.any(Number),
+                expect.any(String),
+                "v1v"
+            )
         })
     })
 })

@@ -11,7 +11,9 @@
         }
     }],
     "rules": {
+        "camelcase": "error",
         "no-unused-expressions": "error",
-        "camelcase": "error"
+
+        "import/unambiguous": "error"
     }
 }
