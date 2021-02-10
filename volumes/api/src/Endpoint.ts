@@ -47,6 +47,12 @@ class Endpoint {
         this.response = "{}"
     }
 
+    protected returnError(error: Error, output: { [key: string]: any }): void {
+        output.error = error
+        this.response = JSON.stringify(output)
+        this.statusCode = StatusCode.badRequest
+    }
+
     protected async delete(): Promise<void> {
         await this.invalidAction()
     }

@@ -1,5 +1,6 @@
 import { Postgres } from "../../wrapper/Postgres"
 import { QueryResult } from "pg"
+import { StatusCode } from "../../Endpoint"
 import { TestHelper } from "../../TestHelper"
 import { UsernameExists } from "./UsernameExists.v1"
 
@@ -29,6 +30,9 @@ describe(UsernameExists.name, () => {
 
             // eslint-disable-next-line no-undefined
             if (result === undefined) {
+                expect(usernameExists.getStatusCode()).toBe(
+                    StatusCode.badRequest
+                )
                 expect(usernameExists.getRowsAffected()).toBe(0)
                 const response = JSON.parse(usernameExists.getResponse())
                 expect(response.error).toBe(errorMsg)

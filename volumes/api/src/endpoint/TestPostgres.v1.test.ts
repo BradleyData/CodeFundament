@@ -1,5 +1,6 @@
 import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
+import { StatusCode } from "../Endpoint"
 import { TestHelper } from "../TestHelper"
 import { TestPostgres } from "./TestPostgres.v1"
 
@@ -28,6 +29,7 @@ describe(TestPostgres.name, () => {
 
             // eslint-disable-next-line no-undefined
             if (hasPostgres === undefined) {
+                expect(testPostgres.getStatusCode()).toBe(StatusCode.badRequest)
                 expect(testPostgres.getRowsAffected()).toBe(0)
                 const response = JSON.parse(testPostgres.getResponse())
                 expect(response.error).toBe(errorMsg)

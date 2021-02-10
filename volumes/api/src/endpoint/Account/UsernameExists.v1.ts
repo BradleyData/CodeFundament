@@ -17,10 +17,7 @@ class UsernameExists extends Endpoint {
                 }
             )
         } catch (error) {
-            this.response = JSON.stringify({
-                error: error,
-                usernameExists: true,
-            })
+            this.returnError(error, { usernameExists: true })
         }
     }
 

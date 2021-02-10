@@ -16,7 +16,7 @@ class TestPostgres extends Endpoint {
                 }
             )
         } catch (error) {
-            this.response = JSON.stringify({ error: error, postgres: false })
+            this.returnError(error, { postgres: false })
         }
     }
 }
