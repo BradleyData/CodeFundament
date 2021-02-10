@@ -3,7 +3,7 @@ import { Postgres } from "../../wrapper/Postgres"
 import { QueryResult } from "pg"
 
 class UsernameExists extends Endpoint {
-    protected async post(): Promise<void> {
+    protected async get(): Promise<void> {
         try {
             const username = this.getParameters()
 

@@ -24,7 +24,7 @@ describe(UsernameExists.name, () => {
                 result
             )
 
-            const usernameExists = new UsernameExists("", 1, "post", username)
+            const usernameExists = new UsernameExists("", 1, "get", username)
             await usernameExists.init()
 
             // eslint-disable-next-line no-undefined
