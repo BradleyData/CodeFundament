@@ -16,23 +16,11 @@ describe(TestPostgres.name, () => {
         async (hasPostgres?: boolean) => {
             const rowsAffected = TestHelper.randomInt()
             const errorMsg = "errorMsg"
-            Postgres.query = jest.fn().mockImplementation(
-                (
-                    sql: string,
-                    values: any,
-                    // eslint-disable-next-line no-unused-vars
-                    useResults: (queryResult: QueryResult) => void
-                ) => {
-                    // eslint-disable-next-line no-param-reassign, no-self-assign
-                    sql = sql
-
-                    // eslint-disable-next-line no-undefined
-                    if (hasPostgres === undefined) 
-                        throw errorMsg
-
-                    useResults(getQueryResult(hasPostgres ? values[0] : ""))
-                    return Promise.resolve(rowsAffected)
-                }
+            Postgres.query = TestHelper.getPostgresQueryMock(
+                rowsAffected,
+                errorMsg,
+                getQueryResults,
+                hasPostgres
             )
 
             const testPostgres = new TestPostgres("", 1, "get", "")
@@ -59,7 +47,9 @@ describe(TestPostgres.name, () => {
     )
 })
 
-function getQueryResult(message: string): QueryResult {
+function getQueryResults(expected: boolean, values?: any): QueryResult {
+    const message = expected ? values[0] : ""
+
     return {
         command: "",
         fields: [],

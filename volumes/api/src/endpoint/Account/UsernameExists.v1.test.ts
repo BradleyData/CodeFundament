@@ -1,5 +1,6 @@
 import { Postgres } from "../../wrapper/Postgres"
 import { QueryResult } from "pg"
+import { TestHelper } from "../../TestHelper"
 import { UsernameExists } from "./UsernameExists.v1"
 
 jest.mock("../../wrapper/Postgres", () => {
@@ -16,25 +17,11 @@ describe(UsernameExists.name, () => {
             const rowsAffected = result === true ? 1 : 0
             const errorMsg = "errorMsg"
             const username = "newUser85"
-            Postgres.query = jest.fn().mockImplementation(
-                (
-                    sql: string,
-                    values: any,
-                    // eslint-disable-next-line no-unused-vars
-                    useResults: (queryResult: QueryResult) => void
-                ) => {
-                    // eslint-disable-next-line no-param-reassign, no-self-assign
-                    sql = sql
-                    // eslint-disable-next-line no-param-reassign, no-self-assign
-                    values = values
-
-                    // eslint-disable-next-line no-undefined
-                    if (result === undefined) 
-                        throw errorMsg
-
-                    useResults(getQueryResult(result ? values[0] : ""))
-                    return Promise.resolve(rowsAffected)
-                }
+            Postgres.query = TestHelper.getPostgresQueryMock(
+                rowsAffected,
+                errorMsg,
+                getQueryResults,
+                result
             )
 
             const usernameExists = new UsernameExists("", 1, "post", username)
@@ -61,8 +48,10 @@ describe(UsernameExists.name, () => {
     )
 })
 
-function getQueryResult(username: string): QueryResult {
+function getQueryResults(result: boolean, values?: any): QueryResult {
+    const username = result ? values[0] : ""
     const rows = username === "" ? [] : [{ username: username }]
+
     return {
         command: "",
         fields: [],
