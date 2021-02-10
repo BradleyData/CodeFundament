@@ -11,6 +11,5 @@ When("the API attempts to connect to postgres", async () => {
 })
 
 Then("the postgres connection is successful", () => {
-    console.log(endpoint)
     expect(endpoint.getResponse()).toBe(JSON.stringify({ postgres: true }))
 })
