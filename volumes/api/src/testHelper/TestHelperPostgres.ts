@@ -5,7 +5,7 @@ export class TestHelperPostgres {
     static queryMock(
         rowsAffected: number,
         errorMsg: string,
-        getQueryResults: (expected: boolean, values?: any) => QueryResult,
+        getRows: (values?: any) => Array<any>,
         expected?: boolean
     ): jest.Mock {
         return jest
@@ -23,7 +23,7 @@ export class TestHelperPostgres {
                     if (expected === undefined) 
                         throw errorMsg
 
-                    useResults(getQueryResults(expected, values))
+                    useResults(this.queryResultsMock(getRows(values)))
                     return Promise.resolve(rowsAffected)
                 }
             )

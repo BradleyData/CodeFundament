@@ -20,10 +20,8 @@ describe(UsernameExists.name, () => {
             Postgres.query = TestHelperPostgres.queryMock(
                 rowsAffected,
                 errorMsg,
-                (exists: boolean, values?: any) => {
-                    return TestHelperPostgres.queryResultsMock(
-                        exists === false ? [] : [{ username: values[0] }]
-                    )
+                (values?: any) => {
+                    return result === false ? [] : [{ username: values[0] }]
                 },
                 result
             )

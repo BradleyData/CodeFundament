@@ -20,10 +20,8 @@ describe(TestPostgres.name, () => {
             Postgres.query = TestHelperPostgres.queryMock(
                 rowsAffected,
                 errorMsg,
-                (expected: boolean, values?: any) => {
-                    return TestHelperPostgres.queryResultsMock([
-                        { message: expected ? values[0] : "" },
-                    ])
+                (values?: any) => {
+                    return [{ message: hasPostgres === false ? "" : values[0] }]
                 },
                 hasPostgres
             )
