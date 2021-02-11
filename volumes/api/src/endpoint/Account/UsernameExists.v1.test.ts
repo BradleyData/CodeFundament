@@ -1,7 +1,6 @@
 import { Postgres } from "../../wrapper/Postgres"
-import { QueryResult } from "pg"
 import { StatusCode } from "../../Endpoint"
-import { TestHelper } from "../../TestHelper"
+import { TestHelperPostgres } from "../../testHelper/TestHelperPostgres"
 import { UsernameExists } from "./UsernameExists.v1"
 
 jest.mock("../../wrapper/Postgres", () => {
@@ -18,10 +17,14 @@ describe(UsernameExists.name, () => {
             const rowsAffected = result === true ? 1 : 0
             const errorMsg = "errorMsg"
             const username = "newUser85"
-            Postgres.query = TestHelper.getPostgresQueryMock(
+            Postgres.query = TestHelperPostgres.queryMock(
                 rowsAffected,
                 errorMsg,
-                getQueryResults,
+                (exists: boolean, values?: any) => {
+                    return TestHelperPostgres.queryResultsMock(
+                        exists === false ? [] : [{ username: values[0] }]
+                    )
+                },
                 result
             )
 
@@ -53,16 +56,3 @@ describe(UsernameExists.name, () => {
         }
     )
 })
-
-function getQueryResults(result: boolean, values?: any): QueryResult {
-    const username = result ? values[0] : ""
-    const rows = username === "" ? [] : [{ username: username }]
-
-    return {
-        command: "",
-        fields: [],
-        oid: 0,
-        rowCount: 0,
-        rows: rows,
-    }
-}

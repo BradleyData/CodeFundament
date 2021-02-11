@@ -20,7 +20,7 @@
     "app/src/**/*.ts",
     "!app/src/**/*.test.ts",
     "!app/src/index.ts",
-    "!app/src/TestHelper.ts",
+    "!app/src/testHelper/**/*.ts",
     "!app/src/wrapper/**/*.ts"
   ],
   "thresholds": {

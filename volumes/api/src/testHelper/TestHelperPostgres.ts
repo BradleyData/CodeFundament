@@ -1,14 +1,8 @@
 import { QueryResult } from "pg"
 
-export class TestHelper {
-    static randomInt = () => {
-        const maxRandomInt = 100
-
-        return Math.floor(Math.random() * maxRandomInt)
-    }
-
+export class TestHelperPostgres {
     /* eslint-disable no-unused-vars */
-    static getPostgresQueryMock(
+    static queryMock(
         rowsAffected: number,
         errorMsg: string,
         getQueryResults: (expected: boolean, values?: any) => QueryResult,
@@ -35,4 +29,14 @@ export class TestHelper {
             )
     }
     /* eslint-ensable no-unused-vars */
+
+    static queryResultsMock(rows: Array<any>): QueryResult {
+        return {
+            command: "",
+            fields: [],
+            oid: 0,
+            rowCount: 0,
+            rows: rows,
+        }
+    }
 }

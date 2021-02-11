@@ -2,7 +2,7 @@ import * as Fs from "fs"
 import { Convert } from "./Convert"
 import { EndpointFactory } from "./EndpointFactory"
 import { Srvr } from "./Srvr"
-import { TestHelper } from "./TestHelper"
+import { TestHelperData } from "./testHelper/TestHelperData"
 
 const mockPath = `${process.cwd()}/app/src/endpoint`
 const mockDirectory = "Directory"
@@ -98,14 +98,14 @@ describe(Srvr.name, () => {
     describe("listens on", () => {
         test("default port", async () => {
             const endpointName = "EndpointName"
-            const endpointVersion = TestHelper.randomInt()
+            const endpointVersion = TestHelperData.randomInt()
             const urlParameters = "endpoint/parameters"
             const convertedParameters = Convert.urlParametersToObject(
                 urlParameters
             )
-            const rowsAffected = TestHelper.randomInt()
+            const rowsAffected = TestHelperData.randomInt()
             const response = `{Version: ${endpointVersion}}`
-            const statusCode = TestHelper.randomInt()
+            const statusCode = TestHelperData.randomInt()
             const action = "action"
             const endpoint = {
                 getAction: jest.fn().mockReturnValue(action),
@@ -158,7 +158,7 @@ describe(Srvr.name, () => {
         })
 
         test("given port", () => {
-            const port = TestHelper.randomInt().toString()
+            const port = TestHelperData.randomInt().toString()
 
             srvr.listen(port)
 

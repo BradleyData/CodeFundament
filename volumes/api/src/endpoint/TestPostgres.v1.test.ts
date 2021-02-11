@@ -1,7 +1,7 @@
 import { Postgres } from "../wrapper/Postgres"
-import { QueryResult } from "pg"
 import { StatusCode } from "../Endpoint"
-import { TestHelper } from "../TestHelper"
+import { TestHelperData } from "../testHelper/TestHelperData"
+import { TestHelperPostgres } from "../testHelper/TestHelperPostgres"
 import { TestPostgres } from "./TestPostgres.v1"
 
 jest.mock("../wrapper/Postgres", () => {
@@ -15,12 +15,16 @@ describe(TestPostgres.name, () => {
     test.each([[true], [false], [undefined]])(
         "get: postgres is %p",
         async (hasPostgres?: boolean) => {
-            const rowsAffected = TestHelper.randomInt()
+            const rowsAffected = TestHelperData.randomInt()
             const errorMsg = "errorMsg"
-            Postgres.query = TestHelper.getPostgresQueryMock(
+            Postgres.query = TestHelperPostgres.queryMock(
                 rowsAffected,
                 errorMsg,
-                getQueryResults,
+                (expected: boolean, values?: any) => {
+                    return TestHelperPostgres.queryResultsMock([
+                        { message: expected ? values[0] : "" },
+                    ])
+                },
                 hasPostgres
             )
 
@@ -48,19 +52,3 @@ describe(TestPostgres.name, () => {
         }
     )
 })
-
-function getQueryResults(expected: boolean, values?: any): QueryResult {
-    const message = expected ? values[0] : ""
-
-    return {
-        command: "",
-        fields: [],
-        oid: 0,
-        rowCount: 0,
-        rows: [
-            {
-                message: message,
-            },
-        ],
-    }
-}
