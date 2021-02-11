@@ -38,11 +38,7 @@ describe(TestPostgres.name, () => {
                 expect(response.postgres).toBe(false)
             } else {
                 expect(testPostgres.getRowsAffected()).toBe(rowsAffected)
-                expect(Postgres.query).toBeCalledWith(
-                    expect.stringContaining("SELECT"),
-                    expect.arrayContaining([expect.any(String)]),
-                    expect.any(Function)
-                )
+                TestHelperPostgres.verifyQueryExists("SELECT")
                 expect(testPostgres.getResponse()).toBe(
                     JSON.stringify({ postgres: hasPostgres })
                 )

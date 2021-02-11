@@ -42,11 +42,7 @@ describe(UsernameExists.name, () => {
                 expect(response.usernameExists).toBe(true)
             } else {
                 expect(usernameExists.getRowsAffected()).toBe(rowsAffected)
-                expect(Postgres.query).toBeCalledWith(
-                    expect.stringContaining("SELECT"),
-                    expect.arrayContaining([expect.any(String)]),
-                    expect.any(Function)
-                )
+                TestHelperPostgres.verifyQueryExists("SELECT")
                 expect(usernameExists.getResponse()).toBe(
                     JSON.stringify({ usernameExists: result })
                 )

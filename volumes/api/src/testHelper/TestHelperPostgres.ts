@@ -1,3 +1,4 @@
+import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
 
 export class TestHelperPostgres {
@@ -38,5 +39,13 @@ export class TestHelperPostgres {
             rowCount: 0,
             rows: rows,
         }
+    }
+
+    static verifyQueryExists(queryType: string): void {
+        expect(Postgres.query).toBeCalledWith(
+            expect.stringContaining(queryType),
+            expect.arrayContaining([expect.any(String)]),
+            expect.any(Function)
+        )
     }
 }
