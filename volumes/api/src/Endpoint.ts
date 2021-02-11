@@ -2,7 +2,7 @@ class Endpoint {
     protected name: string
     protected version: number
     protected readonly action: string
-    protected readonly parameters: string
+    protected readonly parameters: { [key: string]: string }
     protected rowsAffected = 0
     protected response = "{}"
     private statusCode: StatusCode
@@ -11,7 +11,7 @@ class Endpoint {
         name: string,
         version: number,
         action: string,
-        parameters: string
+        parameters: { [key: string]: string }
     ) {
         this.name = name
         this.version = version
@@ -73,7 +73,7 @@ class Endpoint {
         return this.name
     }
 
-    public getParameters(): string {
+    public getParameters(): { [key: string]: string } {
         return this.parameters
     }
 

@@ -1,5 +1,6 @@
 import * as Fs from "fs"
 import * as Http from "http"
+import { Convert } from "./Convert"
 import { Endpoint } from "./Endpoint"
 import { EndpointFactory } from "./EndpointFactory"
 
@@ -30,7 +31,11 @@ export class Srvr {
                     res.setHeader("Endpoint-Name", endpoint.getName())
                     res.setHeader("Endpoint-Version", endpoint.getVersion())
                     res.setHeader("Requested-Action", endpoint.getAction())
-                    res.setHeader("Parameters-Sent", endpoint.getParameters())
+                    res.setHeader(
+                        "Parameters-Sent",
+                        JSON.stringify(endpoint.getParameters())
+                    )
+                    console.log(JSON.stringify(endpoint.getParameters()))
                     res.setHeader("Rows-Affected", endpoint.getRowsAffected())
                     res.write(endpoint.getResponse())
                 } catch (error) {
@@ -84,9 +89,9 @@ export class Srvr {
                     ? "Default"
                     : sansVersion[firstParameterPosition - 1]
 
-            const parameters = sansVersion
-                .slice(firstParameterPosition)
-                .join("/")
+            const parameters = Convert.urlParametersToObject(
+                sansVersion.slice(firstParameterPosition).join("/")
+            )
 
             const version = getVersion()
             if (version === 0) 
@@ -178,7 +183,7 @@ export class Srvr {
                 "",
                 invalidVersion,
                 action,
-                ""
+                {}
             )
         }
 

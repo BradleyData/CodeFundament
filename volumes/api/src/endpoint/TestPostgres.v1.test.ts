@@ -24,7 +24,7 @@ describe(TestPostgres.name, () => {
                 hasPostgres
             )
 
-            const testPostgres = new TestPostgres("", 1, "get", "")
+            const testPostgres = new TestPostgres("", 1, "get", {})
             await testPostgres.init()
 
             // eslint-disable-next-line no-undefined

@@ -5,14 +5,17 @@ import { QueryResult } from "pg"
 class UsernameExists extends Endpoint {
     protected async get(): Promise<void> {
         try {
-            const username = this.getParameters()
+            const parameters = this.getParameters()
 
             this.rowsAffected = await Postgres.query(
                 "SELECT username FROM login WHERE username = $1::text",
-                [username],
+                [parameters.username],
                 (queryResult: QueryResult): void => {
                     this.response = JSON.stringify({
-                        usernameExists: this.parseResult(queryResult, username),
+                        usernameExists: this.parseResult(
+                            queryResult,
+                            parameters.username
+                        ),
                     })
                 }
             )

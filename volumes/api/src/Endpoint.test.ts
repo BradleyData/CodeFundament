@@ -1,4 +1,5 @@
 import { Endpoint, StatusCode } from "./Endpoint"
+import { Convert } from "./Convert"
 import { TestHelper } from "./TestHelper"
 
 describe(Endpoint.name, () => {
@@ -6,7 +7,7 @@ describe(Endpoint.name, () => {
     const response = "response"
     const name = "name"
     const version = TestHelper.randomInt()
-    const parameters = "parameters"
+    const parameters = Convert.urlParametersToObject("parameters")
     class AllActions extends Endpoint {
         private setup(): void {
             this.rowsAffected = rowsAffected

@@ -5,7 +5,7 @@ export class EndpointFactory {
         name: string,
         version: number,
         action: string,
-        parameters: string
+        parameters: { [key: string]: string }
     ): Promise<Endpoint> {
         const invalidVersion = -1
         const path =

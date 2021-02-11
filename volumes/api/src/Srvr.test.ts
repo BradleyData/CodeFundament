@@ -1,4 +1,5 @@
 import * as Fs from "fs"
+import { Convert } from "./Convert"
 import { EndpointFactory } from "./EndpointFactory"
 import { Srvr } from "./Srvr"
 import { TestHelper } from "./TestHelper"
@@ -98,7 +99,10 @@ describe(Srvr.name, () => {
         test("default port", async () => {
             const endpointName = "EndpointName"
             const endpointVersion = TestHelper.randomInt()
-            const parameters = "endpoint/parameters"
+            const urlParameters = "endpoint/parameters"
+            const convertedParameters = Convert.urlParametersToObject(
+                urlParameters
+            )
             const rowsAffected = TestHelper.randomInt()
             const response = `{Version: ${endpointVersion}}`
             const statusCode = TestHelper.randomInt()
@@ -106,7 +110,7 @@ describe(Srvr.name, () => {
             const endpoint = {
                 getAction: jest.fn().mockReturnValue(action),
                 getName: jest.fn().mockReturnValue(endpointName),
-                getParameters: jest.fn().mockReturnValue(parameters),
+                getParameters: jest.fn().mockReturnValue(convertedParameters),
                 getResponse: jest.fn().mockReturnValue(response),
                 getRowsAffected: jest.fn().mockReturnValue(rowsAffected),
                 getStatusCode: jest.fn().mockReturnValue(statusCode),
@@ -124,7 +128,7 @@ describe(Srvr.name, () => {
                 mockDefaultEndpoint,
                 mockDefaultVersion,
                 "get",
-                ""
+                {}
             )
             expect(mockRes.statusCode).toBe(statusCode)
             expect(mockRes.setHeader).toBeCalledWith(
@@ -142,7 +146,7 @@ describe(Srvr.name, () => {
             expect(mockRes.setHeader).toBeCalledWith("Requested-Action", action)
             expect(mockRes.setHeader).toBeCalledWith(
                 "Parameters-Sent",
-                parameters
+                JSON.stringify(convertedParameters)
             )
             expect(mockRes.setHeader).toBeCalledWith(
                 "Rows-Affected",
@@ -205,11 +209,12 @@ describe(Srvr.name, () => {
     })
 
     describe("given URL", () => {
-        const parameters = "para/mete/rs"
+        const urlParameters = "para/mete/rs"
+        const convertedParameters = Convert.urlParametersToObject(urlParameters)
 
         describe("with valid endpoint", () => {
             test("but no version", () => {
-                mockReq.url = `/${mockEndpoint}/${parameters}`
+                mockReq.url = `/${mockEndpoint}/${urlParameters}`
 
                 srvr.listen()
 
@@ -217,7 +222,7 @@ describe(Srvr.name, () => {
                     mockEndpoint,
                     mockMainVersion,
                     expect.any(String),
-                    parameters
+                    convertedParameters
                 )
             })
 
@@ -230,17 +235,17 @@ describe(Srvr.name, () => {
                     mockEndpoint,
                     mockMainVersion,
                     expect.any(String),
-                    ""
+                    {}
                 )
             })
 
             test("and valid version", () => {
-                mockReq.url = `/v${mockMinVersion}/${mockEndpoint}/${parameters}`
+                mockReq.url = `/v${mockMinVersion}/${mockEndpoint}/${urlParameters}`
 
                 srvr.listen()
 
                 expect(Fs.readdirSync).toBeCalledWith(
-                    `${mockPath}/${mockEndpoint}/${parameters
+                    `${mockPath}/${mockEndpoint}/${urlParameters
                         .split("/")
                         .slice(0, -1)
                         .join("/")}`
@@ -252,19 +257,15 @@ describe(Srvr.name, () => {
                     mockEndpoint,
                     mockMinVersion,
                     expect.any(String),
-                    parameters
+                    convertedParameters
                 )
             })
 
-            /**
-             * When this uses parameters with slashes, Stryker seems to ignore it.
-             */
             test("and really high version", () => {
-                const customParameters = "parameters"
                 const raiseVersionBy = 10
                 mockReq.url = `/v${
                     mockMainVersion + raiseVersionBy
-                }/${mockEndpoint}/${customParameters}`
+                }/${mockEndpoint}/${urlParameters}`
 
                 srvr.listen()
 
@@ -272,14 +273,14 @@ describe(Srvr.name, () => {
                     mockEndpoint,
                     mockMainVersion,
                     expect.any(String),
-                    customParameters
+                    convertedParameters
                 )
             })
 
             test("and invalid version", () => {
                 const invalidVersion = -1
                 mockReq.method = "get"
-                mockReq.url = `/v0/${mockEndpoint}/${parameters}`
+                mockReq.url = `/v0/${mockEndpoint}/${urlParameters}`
 
                 srvr.listen()
 
@@ -287,7 +288,7 @@ describe(Srvr.name, () => {
                     "",
                     invalidVersion,
                     expect.any(String),
-                    ""
+                    {}
                 )
                 expect(mockLog).toBeCalledWith(`action: ${mockReq.method}`)
                 expect(mockLog).toBeCalledWith(`url: ${mockReq.url}`)
@@ -301,7 +302,7 @@ describe(Srvr.name, () => {
                     // eslint-disable-next-line no-throw-literal
                     throw true
                 })
-                mockReq.url = `/v0/${mockEndpoint}/${parameters}`
+                mockReq.url = `/v0/${mockEndpoint}/${urlParameters}`
 
                 srvr.listen()
                 await mockServer.on.mock.calls[0][1](mockReq, mockRes)
@@ -314,12 +315,12 @@ describe(Srvr.name, () => {
 
         describe("with endpoint in subdirectory", () => {
             test("one level deep", () => {
-                mockReq.url = `/v${mockMinVersionWithDirectory}/${mockDirectory}/${mockEndpoint}/${parameters}`
+                mockReq.url = `/v${mockMinVersionWithDirectory}/${mockDirectory}/${mockEndpoint}/${urlParameters}`
 
                 srvr.listen()
 
                 expect(Fs.readdirSync).toBeCalledWith(
-                    `${mockPathWithDirectory}/${mockEndpoint}/${parameters
+                    `${mockPathWithDirectory}/${mockEndpoint}/${urlParameters
                         .split("/")
                         .slice(0, -1)
                         .join("/")}`
@@ -328,17 +329,17 @@ describe(Srvr.name, () => {
                     `${mockDirectory}/${mockEndpoint}`,
                     mockMinVersionWithDirectory,
                     expect.any(String),
-                    parameters
+                    convertedParameters
                 )
             })
 
             test("two levels deep", () => {
-                mockReq.url = `/v${mockMinVersionWithDirectory}/${mockDirectories}/${mockEndpoint}/${parameters}`
+                mockReq.url = `/v${mockMinVersionWithDirectory}/${mockDirectories}/${mockEndpoint}/${urlParameters}`
 
                 srvr.listen()
 
                 expect(Fs.readdirSync).toBeCalledWith(
-                    `${mockPathWithDirectories}/${mockEndpoint}/${parameters
+                    `${mockPathWithDirectories}/${mockEndpoint}/${urlParameters
                         .split("/")
                         .slice(0, -1)
                         .join("/")}`
@@ -347,7 +348,7 @@ describe(Srvr.name, () => {
                     `${mockDirectories}/${mockEndpoint}`,
                     mockMinVersionWithDirectory,
                     expect.any(String),
-                    parameters
+                    convertedParameters
                 )
             })
         })
@@ -364,7 +365,7 @@ describe(Srvr.name, () => {
                 expect.any(String),
                 expect.any(Number),
                 expect.any(String),
-                "vv1"
+                Convert.urlParametersToObject("vv1")
             )
         })
 
@@ -378,7 +379,7 @@ describe(Srvr.name, () => {
                 expect.any(String),
                 expect.any(Number),
                 expect.any(String),
-                "v1v"
+                Convert.urlParametersToObject("v1v")
             )
         })
     })
