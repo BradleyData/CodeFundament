@@ -1,5 +1,4 @@
 import { Postgres } from "../wrapper/Postgres"
-import { StatusCode } from "../Endpoint"
 import { TestHelperData } from "../testHelper/TestHelperData"
 import { TestHelperPostgres } from "../testHelper/TestHelperPostgres"
 import { TestPostgres } from "./TestPostgres.v1"
@@ -31,14 +30,15 @@ describe(TestPostgres.name, () => {
 
             // eslint-disable-next-line no-undefined
             if (hasPostgres === undefined) {
-                expect(testPostgres.getStatusCode()).toBe(StatusCode.badRequest)
-                expect(testPostgres.getRowsAffected()).toBe(0)
-                const response = JSON.parse(testPostgres.getResponse())
-                expect(response.error).toBe(errorMsg)
-                expect(response.postgres).toBe(false)
+                TestHelperPostgres.expectBadRequest({
+                    endpoint: testPostgres,
+                    errorMsg,
+                    responseKey: "postgres",
+                    responseValue: false,
+                })
             } else {
                 expect(testPostgres.getRowsAffected()).toBe(rowsAffected)
-                TestHelperPostgres.verifyQueryExists("SELECT")
+                TestHelperPostgres.expectQueryExists({ queryType: "SELECT"})
                 expect(testPostgres.getResponse()).toBe(
                     JSON.stringify({ postgres: hasPostgres })
                 )

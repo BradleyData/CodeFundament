@@ -33,16 +33,15 @@ describe(UsernameExists.name, () => {
 
             // eslint-disable-next-line no-undefined
             if (result === undefined) {
-                expect(usernameExists.getStatusCode()).toBe(
-                    StatusCode.badRequest
-                )
-                expect(usernameExists.getRowsAffected()).toBe(0)
-                const response = JSON.parse(usernameExists.getResponse())
-                expect(response.error).toBe(errorMsg)
-                expect(response.usernameExists).toBe(true)
+                TestHelperPostgres.expectBadRequest({
+                    endpoint: usernameExists,
+                    errorMsg,
+                    responseKey: "usernameExists",
+                    responseValue: true,
+                })
             } else {
                 expect(usernameExists.getRowsAffected()).toBe(rowsAffected)
-                TestHelperPostgres.verifyQueryExists("SELECT")
+                TestHelperPostgres.expectQueryExists({ queryType: "SELECT"})
                 expect(usernameExists.getResponse()).toBe(
                     JSON.stringify({ usernameExists: result })
                 )

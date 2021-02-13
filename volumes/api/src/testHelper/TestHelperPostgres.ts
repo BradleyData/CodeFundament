@@ -1,7 +1,35 @@
+import { Endpoint, StatusCode } from "../Endpoint"
 import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
 
 export class TestHelperPostgres {
+    static expectBadRequest({
+        endpoint,
+        errorMsg,
+        responseKey,
+        responseValue,
+    }: {
+        endpoint: Endpoint
+        errorMsg: string
+        responseKey: string
+        responseValue: any
+    }): void {
+        const response = JSON.parse(endpoint.getResponse())
+
+        expect(endpoint.getStatusCode()).toBe(StatusCode.badRequest)
+        expect(endpoint.getRowsAffected()).toBe(0)
+        expect(response.error).toBe(errorMsg)
+        expect(response[responseKey]).toBe(responseValue)
+    }
+
+    static expectQueryExists({queryType}: {queryType: string}): void {
+        expect(Postgres.query).toBeCalledWith(
+            expect.stringContaining(queryType),
+            expect.arrayContaining([expect.any(String)]),
+            expect.any(Function)
+        )
+    }
+
     /* eslint-disable no-unused-vars */
     static queryMock(
         rowsAffected: number,
@@ -39,13 +67,5 @@ export class TestHelperPostgres {
             rowCount: 0,
             rows: rows,
         }
-    }
-
-    static verifyQueryExists(queryType: string): void {
-        expect(Postgres.query).toBeCalledWith(
-            expect.stringContaining(queryType),
-            expect.arrayContaining([expect.any(String)]),
-            expect.any(Function)
-        )
     }
 }
