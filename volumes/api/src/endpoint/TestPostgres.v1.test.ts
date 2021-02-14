@@ -38,7 +38,7 @@ describe(TestPostgres.name, () => {
                 })
             } else {
                 expect(testPostgres.getRowsAffected()).toBe(rowsAffected)
-                TestHelperPostgres.expectQueryExists({ queryType: "SELECT"})
+                TestHelperPostgres.expectQueryExists({ queryType: "SELECT" })
                 expect(testPostgres.getResponse()).toBe(
                     JSON.stringify({ postgres: hasPostgres })
                 )

@@ -1,5 +1,4 @@
 import { Postgres } from "../../wrapper/Postgres"
-import { StatusCode } from "../../Endpoint"
 import { TestHelperPostgres } from "../../testHelper/TestHelperPostgres"
 import { UsernameExists } from "./UsernameExists.v1"
 
@@ -41,7 +40,7 @@ describe(UsernameExists.name, () => {
                 })
             } else {
                 expect(usernameExists.getRowsAffected()).toBe(rowsAffected)
-                TestHelperPostgres.expectQueryExists({ queryType: "SELECT"})
+                TestHelperPostgres.expectQueryExists({ queryType: "SELECT" })
                 expect(usernameExists.getResponse()).toBe(
                     JSON.stringify({ usernameExists: result })
                 )

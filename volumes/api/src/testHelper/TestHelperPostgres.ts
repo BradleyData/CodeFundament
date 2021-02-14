@@ -22,7 +22,7 @@ export class TestHelperPostgres {
         expect(response[responseKey]).toBe(responseValue)
     }
 
-    static expectQueryExists({queryType}: {queryType: string}): void {
+    static expectQueryExists({ queryType }: { queryType: string }): void {
         expect(Postgres.query).toBeCalledWith(
             expect.stringContaining(queryType),
             expect.arrayContaining([expect.any(String)]),

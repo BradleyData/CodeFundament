@@ -1,4 +1,5 @@
 import { Then, When } from "@cucumber/cucumber"
+import { Convert } from "../../src/Convert"
 import { Endpoint } from "../../src/Endpoint"
 import { Srvr } from "../../src/Srvr"
 import expect from "expect"
@@ -19,7 +20,8 @@ Then(
 )
 
 Then("is passed parameters {string}", (parameters: string) => {
-    expect(parameters).toBe(endpoint.getParameters())
+    const convertedParameters = Convert.urlParametersToObject(parameters)
+    expect(convertedParameters).toStrictEqual(endpoint.getParameters())
 })
 
 Then("it provides an HTTP status code of {int}", (status: number) => {
