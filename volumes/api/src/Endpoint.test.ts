@@ -37,7 +37,12 @@ describe(Endpoint.name, () => {
         ["post", StatusCode.created],
     ])("%s", (action: string, statusCode: number) => {
         test("with actions defined", async () => {
-            const endpoint = new AllActions(name, version, action, parameters)
+            const endpoint = new AllActions({
+                action,
+                name,
+                parameters,
+                version,
+            })
 
             await endpoint.init()
 
@@ -48,7 +53,12 @@ describe(Endpoint.name, () => {
         })
 
         test("without actions defined", async () => {
-            const endpoint = new NoActions(name, version, action, parameters)
+            const endpoint = new NoActions({
+                action,
+                name,
+                parameters,
+                version,
+            })
 
             await endpoint.init()
 
@@ -60,12 +70,12 @@ describe(Endpoint.name, () => {
     })
 
     test("invalid action", async () => {
-        const endpoint = new AllActions(
+        const endpoint = new AllActions({
+            action: "invalid action",
             name,
+            parameters,
             version,
-            "invalid action",
-            parameters
-        )
+        })
 
         await endpoint.init()
 
@@ -76,12 +86,12 @@ describe(Endpoint.name, () => {
     })
 
     test("default response", async () => {
-        const endpoint = new TestDefaultResponse(
+        const endpoint = new TestDefaultResponse({
+            action: "get",
             name,
+            parameters,
             version,
-            "get",
-            parameters
-        )
+        })
 
         await endpoint.init()
 

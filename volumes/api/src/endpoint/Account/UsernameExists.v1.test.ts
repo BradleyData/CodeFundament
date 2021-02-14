@@ -25,8 +25,13 @@ describe(UsernameExists.name, () => {
                 rowsAffected,
             })
 
-            const usernameExists = new UsernameExists("", 1, "get", {
-                username: username,
+            const usernameExists = new UsernameExists({
+                action: "get",
+                name: "",
+                parameters: {
+                    username: username,
+                },
+                version: 1,
             })
             await usernameExists.init()
 

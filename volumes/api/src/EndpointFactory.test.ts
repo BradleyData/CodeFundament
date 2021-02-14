@@ -12,7 +12,12 @@ describe(EndpointFactory.name, () => {
     test("with invalid instanceof", async () => {
         expect.assertions(1)
         try {
-            await EndpointFactory.createEndpoint("Default", 1, "", {})
+            await EndpointFactory.createEndpoint({
+                action: "",
+                name: "Default",
+                parameters: {},
+                version: 1,
+            })
         } catch (err) {
             expect(err.message).toBe("Invalid endpoint.")
         }
@@ -28,7 +33,12 @@ describe(EndpointFactory.name, () => {
             )
             defaultEndpoint.prototype = endpoint.prototype
 
-            await EndpointFactory.createEndpoint("Default", 1, "", {})
+            await EndpointFactory.createEndpoint({
+                action: "",
+                name: "Default",
+                parameters: {},
+                version: 1,
+            })
         })
 
         test("with invalid version", async () => {
@@ -38,7 +48,12 @@ describe(EndpointFactory.name, () => {
             )
             invalidEndpoint.prototype = endpoint.prototype
 
-            await EndpointFactory.createEndpoint("Default", -1, "", {})
+            await EndpointFactory.createEndpoint({
+                action: "",
+                name: "Default",
+                parameters: {},
+                version: -1,
+            })
         })
     })
 })

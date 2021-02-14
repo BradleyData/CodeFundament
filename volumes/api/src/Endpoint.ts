@@ -7,12 +7,17 @@ class Endpoint {
     protected response = "{}"
     private statusCode: StatusCode
 
-    constructor(
-        name: string,
-        version: number,
-        action: string,
+    constructor({
+        action,
+        name,
+        parameters,
+        version,
+    }: {
+        action: string
+        name: string
         parameters: { [key: string]: string }
-    ) {
+        version: number
+    }) {
         this.name = name
         this.version = version
         this.action = action.toUpperCase()
@@ -47,7 +52,13 @@ class Endpoint {
         this.response = "{}"
     }
 
-    protected returnError(error: Error, output: { [key: string]: any }): void {
+    protected returnError({
+        error,
+        output,
+    }: {
+        error: Error
+        output: { [key: string]: any }
+    }): void {
         output.error = error
         this.response = JSON.stringify(output)
         this.statusCode = StatusCode.badRequest

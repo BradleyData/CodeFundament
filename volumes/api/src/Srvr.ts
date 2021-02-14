@@ -35,7 +35,6 @@ export class Srvr {
                         "Parameters-Sent",
                         JSON.stringify(endpoint.getParameters())
                     )
-                    console.log(JSON.stringify(endpoint.getParameters()))
                     res.setHeader("Rows-Affected", endpoint.getRowsAffected())
                     res.write(endpoint.getResponse())
                 } catch (error) {
@@ -111,12 +110,12 @@ export class Srvr {
             if (version === 0) 
                 throw new Error("Endpoint version undefined.")
 
-            endpoint = await EndpointFactory.createEndpoint(
-                `${endpointPath}${endpointName}`,
-                version,
+            endpoint = await EndpointFactory.createEndpoint({
                 action,
-                parameters
-            )
+                name: `${endpointPath}${endpointName}`,
+                parameters,
+                version,
+            })
 
             function getFirstParameterPosition(): number {
                 for (
@@ -196,12 +195,12 @@ export class Srvr {
             this.logError({ action, error, url })
 
             const invalidVersion = -1
-            endpoint = await EndpointFactory.createEndpoint(
-                "",
-                invalidVersion,
+            endpoint = await EndpointFactory.createEndpoint({
                 action,
-                {}
-            )
+                name: "",
+                parameters: {},
+                version: invalidVersion,
+            })
         }
 
         return endpoint

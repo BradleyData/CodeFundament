@@ -23,11 +23,11 @@ export class TestHelperPostgres {
     }
 
     static expectQueryExists({ queryType }: { queryType: string }): void {
-        expect(Postgres.query).toBeCalledWith(
-            expect.stringContaining(queryType),
-            expect.arrayContaining([expect.any(String)]),
-            expect.any(Function)
-        )
+        expect(Postgres.query).toBeCalledWith({
+            sql: expect.stringContaining(queryType),
+            useResults: expect.any(Function),
+            values: expect.arrayContaining([expect.any(String)]),
+        })
     }
 
     /* eslint-disable no-unused-vars */
@@ -45,11 +45,19 @@ export class TestHelperPostgres {
         return jest
             .fn()
             .mockImplementation(
-                (
-                    sql: string,
-                    values: any,
-                    useResults: (queryResult: QueryResult) => void
-                ) => {
+                ({
+                    sql,
+                    values,
+                    useResults,
+                }: {
+                    sql: string
+                    values: any
+                    useResults: ({
+                        queryResult,
+                    }: {
+                        queryResult: QueryResult
+                    }) => void
+                }) => {
                     // eslint-disable-next-line no-param-reassign, no-self-assign
                     sql = sql
 
@@ -57,7 +65,11 @@ export class TestHelperPostgres {
                     if (expected === undefined) 
                         throw errorMsg
 
-                    useResults(this.queryResultsMock({ rows: getRows(values) }))
+                    useResults({
+                        queryResult: this.queryResultsMock({
+                            rows: getRows(values),
+                        }),
+                    })
                     return Promise.resolve(rowsAffected)
                 }
             )

@@ -124,12 +124,12 @@ describe(Srvr.name, () => {
             await mockServer.on.mock.calls[0][1](mockReq, mockRes)
 
             expect(onEventName).toBe("request")
-            expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                mockDefaultEndpoint,
-                mockDefaultVersion,
-                "get",
-                {}
-            )
+            expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                action: "get",
+                name: mockDefaultEndpoint,
+                parameters: {},
+                version: mockDefaultVersion,
+            })
             expect(mockRes.statusCode).toBe(statusCode)
             expect(mockRes.setHeader).toBeCalledWith(
                 "Content-Type",
@@ -199,12 +199,12 @@ describe(Srvr.name, () => {
 
             srvr.listen()
 
-            expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                expect.anything(),
-                expect.anything(),
-                "get",
-                expect.anything()
-            )
+            expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                action: "get",
+                name: expect.anything(),
+                parameters: expect.anything(),
+                version: expect.anything(),
+            })
         })
     })
 
@@ -220,12 +220,12 @@ describe(Srvr.name, () => {
 
                 srvr.listen()
 
-                expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                    mockEndpoint,
-                    mockMainVersion,
-                    expect.any(String),
-                    convertedParameters
-                )
+                expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                    action: expect.any(String),
+                    name: mockEndpoint,
+                    parameters: convertedParameters,
+                    version: mockMainVersion,
+                })
             })
 
             test("but no version or parameters", () => {
@@ -233,12 +233,12 @@ describe(Srvr.name, () => {
 
                 srvr.listen()
 
-                expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                    mockEndpoint,
-                    mockMainVersion,
-                    expect.any(String),
-                    {}
-                )
+                expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                    action: expect.any(String),
+                    name: mockEndpoint,
+                    parameters: {},
+                    version: mockMainVersion,
+                })
             })
 
             test("and valid version", () => {
@@ -255,12 +255,12 @@ describe(Srvr.name, () => {
                 expect(Fs.readdirSync).toBeCalledWith(
                     `${mockPath}/${mockEndpoint}`
                 )
-                expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                    mockEndpoint,
-                    mockMinVersion,
-                    expect.any(String),
-                    convertedParameters
-                )
+                expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                    action: expect.any(String),
+                    name: mockEndpoint,
+                    parameters: convertedParameters,
+                    version: mockMinVersion,
+                })
             })
 
             test("and really high version", () => {
@@ -271,12 +271,12 @@ describe(Srvr.name, () => {
 
                 srvr.listen()
 
-                expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                    mockEndpoint,
-                    mockMainVersion,
-                    expect.any(String),
-                    convertedParameters
-                )
+                expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                    action: expect.any(String),
+                    name: mockEndpoint,
+                    parameters: convertedParameters,
+                    version: mockMainVersion,
+                })
             })
 
             test("and invalid version", () => {
@@ -286,12 +286,12 @@ describe(Srvr.name, () => {
 
                 srvr.listen()
 
-                expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                    "",
-                    invalidVersion,
-                    expect.any(String),
-                    {}
-                )
+                expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                    action: expect.any(String),
+                    name: "",
+                    parameters: {},
+                    version: invalidVersion,
+                })
                 expect(mockLog).toBeCalledWith(`action: ${mockReq.method}`)
                 expect(mockLog).toBeCalledWith(`url: ${mockReq.url}`)
                 expect(mockLog).toBeCalledWith(
@@ -327,12 +327,12 @@ describe(Srvr.name, () => {
                         .slice(0, -1)
                         .join("/")}`
                 )
-                expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                    `${mockDirectory}/${mockEndpoint}`,
-                    mockMinVersionWithDirectory,
-                    expect.any(String),
-                    convertedParameters
-                )
+                expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                    action: expect.any(String),
+                    name: `${mockDirectory}/${mockEndpoint}`,
+                    parameters: convertedParameters,
+                    version: mockMinVersionWithDirectory,
+                })
             })
 
             test("two levels deep", () => {
@@ -346,12 +346,12 @@ describe(Srvr.name, () => {
                         .slice(0, -1)
                         .join("/")}`
                 )
-                expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                    `${mockDirectories}/${mockEndpoint}`,
-                    mockMinVersionWithDirectory,
-                    expect.any(String),
-                    convertedParameters
-                )
+                expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                    action: expect.any(String),
+                    name: `${mockDirectories}/${mockEndpoint}`,
+                    parameters: convertedParameters,
+                    version: mockMinVersionWithDirectory,
+                })
             })
         })
     })
@@ -363,12 +363,14 @@ describe(Srvr.name, () => {
 
             srvr.listen()
 
-            expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                expect.any(String),
-                expect.any(Number),
-                expect.any(String),
-                Convert.urlParametersToObject({ urlParameters: "vv1" })
-            )
+            expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                action: expect.any(String),
+                name: expect.any(String),
+                parameters: Convert.urlParametersToObject({
+                    urlParameters: "vv1",
+                }),
+                version: expect.any(Number),
+            })
         })
 
         test("regex goes to end of potential version", () => {
@@ -377,12 +379,14 @@ describe(Srvr.name, () => {
 
             srvr.listen()
 
-            expect(EndpointFactory.createEndpoint).toBeCalledWith(
-                expect.any(String),
-                expect.any(Number),
-                expect.any(String),
-                Convert.urlParametersToObject({ urlParameters: "v1v" })
-            )
+            expect(EndpointFactory.createEndpoint).toBeCalledWith({
+                action: expect.any(String),
+                name: expect.any(String),
+                parameters: Convert.urlParametersToObject({
+                    urlParameters: "v1v",
+                }),
+                version: expect.any(Number),
+            })
         })
     })
 })

@@ -25,7 +25,12 @@ describe(TestPostgres.name, () => {
                 rowsAffected,
             })
 
-            const testPostgres = new TestPostgres("", 1, "get", {})
+            const testPostgres = new TestPostgres({
+                action: "get",
+                name: "",
+                parameters: {},
+                version: 1,
+            })
             await testPostgres.init()
 
             // eslint-disable-next-line no-undefined

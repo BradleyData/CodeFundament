@@ -19,6 +19,7 @@
   "mutate": [
     "app/src/**/*.ts",
     "!app/src/**/*.test.ts",
+    "!app/src/EndpointFactory.ts",
     "!app/src/index.ts",
     "!app/src/testHelper/**/*.ts",
     "!app/src/wrapper/**/*.ts"

@@ -7,20 +7,24 @@ class UsernameExists extends Endpoint {
         try {
             const parameters = this.getParameters()
 
-            this.rowsAffected = await Postgres.query(
-                "SELECT username FROM login WHERE username = $1::text",
-                [parameters.username],
-                (queryResult: QueryResult): void => {
+            this.rowsAffected = await Postgres.query({
+                sql: "SELECT username FROM login WHERE username = $1::text",
+                useResults: ({
+                    queryResult,
+                }: {
+                    queryResult: QueryResult
+                }): void => {
                     this.response = JSON.stringify({
                         usernameExists: this.parseResult({
                             queryResult,
                             username: parameters.username,
                         }),
                     })
-                }
-            )
+                },
+                values: [parameters.username],
+            })
         } catch (error) {
-            this.returnError(error, { usernameExists: true })
+            this.returnError({ error, output: { usernameExists: true } })
         }
     }
 

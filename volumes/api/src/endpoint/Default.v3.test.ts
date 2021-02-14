@@ -1,8 +1,14 @@
 import { Default as Endpoint } from "./Default.v3"
+import { TestHelperData } from "../testHelper/TestHelperData"
 
 describe(Endpoint.name, () => {
     test.each([["delete"], ["get"], ["post"]])("%s", async (action: string) => {
-        const endpoint = new Endpoint("", 1, action, {})
+        const endpoint = new Endpoint({
+            action,
+            name: "",
+            parameters: {},
+            version: TestHelperData.randomInt(),
+        })
 
         await endpoint.init()
 
