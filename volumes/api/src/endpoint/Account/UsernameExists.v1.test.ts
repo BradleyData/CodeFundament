@@ -16,14 +16,14 @@ describe(UsernameExists.name, () => {
             const rowsAffected = result === true ? 1 : 0
             const errorMsg = "errorMsg"
             const username = "newUser85"
-            Postgres.query = TestHelperPostgres.queryMock(
-                rowsAffected,
+            Postgres.query = TestHelperPostgres.queryMock({
                 errorMsg,
-                (values?: any) => {
+                expected: result,
+                getRows: (values?: any) => {
                     return result === false ? [] : [{ username: values[0] }]
                 },
-                result
-            )
+                rowsAffected,
+            })
 
             const usernameExists = new UsernameExists("", 1, "get", {
                 username: username,

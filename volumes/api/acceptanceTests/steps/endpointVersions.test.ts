@@ -8,7 +8,7 @@ let endpoint: Endpoint
 
 When("{word} is attempted on {string}", async (action: string, url: string) => {
     const srvr = new Srvr()
-    endpoint = await srvr.createEndpoint(action, url)
+    endpoint = await srvr.createEndpoint({ action, url })
 })
 
 Then(
@@ -19,8 +19,8 @@ Then(
     }
 )
 
-Then("is passed parameters {string}", (parameters: string) => {
-    const convertedParameters = Convert.urlParametersToObject(parameters)
+Then("is passed parameters {string}", (urlParameters: string) => {
+    const convertedParameters = Convert.urlParametersToObject({ urlParameters })
     expect(convertedParameters).toStrictEqual(endpoint.getParameters())
 })
 

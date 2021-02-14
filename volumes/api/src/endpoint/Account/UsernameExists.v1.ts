@@ -12,10 +12,10 @@ class UsernameExists extends Endpoint {
                 [parameters.username],
                 (queryResult: QueryResult): void => {
                     this.response = JSON.stringify({
-                        usernameExists: this.parseResult(
+                        usernameExists: this.parseResult({
                             queryResult,
-                            parameters.username
-                        ),
+                            username: parameters.username,
+                        }),
                     })
                 }
             )
@@ -24,7 +24,13 @@ class UsernameExists extends Endpoint {
         }
     }
 
-    private parseResult(queryResult: QueryResult, username: string): boolean {
+    private parseResult({
+        queryResult,
+        username,
+    }: {
+        queryResult: QueryResult
+        username: string
+    }): boolean {
         try {
             return queryResult.rows[0].username === username
         } catch {

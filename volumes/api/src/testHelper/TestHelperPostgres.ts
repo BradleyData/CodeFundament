@@ -31,12 +31,17 @@ export class TestHelperPostgres {
     }
 
     /* eslint-disable no-unused-vars */
-    static queryMock(
-        rowsAffected: number,
-        errorMsg: string,
-        getRows: (values?: any) => Array<any>,
+    static queryMock({
+        errorMsg,
+        expected,
+        getRows,
+        rowsAffected,
+    }: {
+        errorMsg: string
         expected?: boolean
-    ): jest.Mock {
+        getRows: (values?: any) => Array<any>
+        rowsAffected: number
+    }): jest.Mock {
         return jest
             .fn()
             .mockImplementation(
@@ -52,14 +57,14 @@ export class TestHelperPostgres {
                     if (expected === undefined) 
                         throw errorMsg
 
-                    useResults(this.queryResultsMock(getRows(values)))
+                    useResults(this.queryResultsMock({ rows: getRows(values) }))
                     return Promise.resolve(rowsAffected)
                 }
             )
     }
     /* eslint-ensable no-unused-vars */
 
-    static queryResultsMock(rows: Array<any>): QueryResult {
+    static queryResultsMock({ rows }: { rows: Array<any> }): QueryResult {
         return {
             command: "",
             fields: [],

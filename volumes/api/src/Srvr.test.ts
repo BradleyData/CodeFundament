@@ -100,9 +100,9 @@ describe(Srvr.name, () => {
             const endpointName = "EndpointName"
             const endpointVersion = TestHelperData.randomInt()
             const urlParameters = "endpoint/parameters"
-            const convertedParameters = Convert.urlParametersToObject(
-                urlParameters
-            )
+            const convertedParameters = Convert.urlParametersToObject({
+                urlParameters,
+            })
             const rowsAffected = TestHelperData.randomInt()
             const response = `{Version: ${endpointVersion}}`
             const statusCode = TestHelperData.randomInt()
@@ -171,24 +171,24 @@ describe(Srvr.name, () => {
         const onExit = jest.fn()
 
         test("cleanly", () => {
-            srvr.shutdown(msg, onExit)
+            srvr.shutdown({ msg, onExit })
 
             expect(mockInfo).toBeCalledWith(
                 expect.stringContaining(msg),
                 expect.anything()
             )
             expect(mockError).not.toBeCalled()
-            expect(onExit).toBeCalledWith(0)
+            expect(onExit).toBeCalledWith({ exitCode: 0 })
         })
 
         test("has error", () => {
             const err = new Error()
             closeError = err
 
-            srvr.shutdown(msg, onExit)
+            srvr.shutdown({ msg, onExit })
 
             expect(mockError).toBeCalledWith(err)
-            expect(onExit).toBeCalledWith(1)
+            expect(onExit).toBeCalledWith({ exitCode: 1 })
         })
     })
 
@@ -210,7 +210,9 @@ describe(Srvr.name, () => {
 
     describe("given URL", () => {
         const urlParameters = "para/mete/rs"
-        const convertedParameters = Convert.urlParametersToObject(urlParameters)
+        const convertedParameters = Convert.urlParametersToObject({
+            urlParameters,
+        })
 
         describe("with valid endpoint", () => {
             test("but no version", () => {
@@ -365,7 +367,7 @@ describe(Srvr.name, () => {
                 expect.any(String),
                 expect.any(Number),
                 expect.any(String),
-                Convert.urlParametersToObject("vv1")
+                Convert.urlParametersToObject({ urlParameters: "vv1" })
             )
         })
 
@@ -379,7 +381,7 @@ describe(Srvr.name, () => {
                 expect.any(String),
                 expect.any(Number),
                 expect.any(String),
-                Convert.urlParametersToObject("v1v")
+                Convert.urlParametersToObject({ urlParameters: "v1v" })
             )
         })
     })

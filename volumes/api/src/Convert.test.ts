@@ -7,7 +7,9 @@ describe(Convert.name, () => {
         ["one", { 0: "one" }],
         ["one=a", { one: "a" }],
     ])("'%s'", (input: string, output: object) => {
-        const convertedValue = Convert.urlParametersToObject(input)
+        const convertedValue = Convert.urlParametersToObject({
+            urlParameters: input,
+        })
 
         expect(convertedValue).toStrictEqual(output)
     })

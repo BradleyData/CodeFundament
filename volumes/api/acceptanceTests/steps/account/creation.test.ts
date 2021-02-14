@@ -7,7 +7,10 @@ let endpoint: Endpoint
 
 When("a person attempts to create an account", async () => {
     const srvr = new Srvr()
-    endpoint = await srvr.createEndpoint("post", "account/Create")
+    endpoint = await srvr.createEndpoint({
+        action: "post",
+        url: "account/Create",
+    })
 })
 
 Then("an account is created", () => {

@@ -7,7 +7,9 @@ describe(Endpoint.name, () => {
     const response = "response"
     const name = "name"
     const version = TestHelperData.randomInt()
-    const parameters = Convert.urlParametersToObject("parameters")
+    const parameters = Convert.urlParametersToObject({
+        urlParameters: "parameters",
+    })
     class AllActions extends Endpoint {
         private setup(): void {
             this.rowsAffected = rowsAffected

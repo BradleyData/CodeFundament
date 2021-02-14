@@ -16,14 +16,14 @@ describe(TestPostgres.name, () => {
         async (hasPostgres?: boolean) => {
             const rowsAffected = TestHelperData.randomInt()
             const errorMsg = "errorMsg"
-            Postgres.query = TestHelperPostgres.queryMock(
-                rowsAffected,
+            Postgres.query = TestHelperPostgres.queryMock({
                 errorMsg,
-                (values?: any) => {
+                expected: hasPostgres,
+                getRows: (values?: any) => {
                     return [{ message: hasPostgres === false ? "" : values[0] }]
                 },
-                hasPostgres
-            )
+                rowsAffected,
+            })
 
             const testPostgres = new TestPostgres("", 1, "get", {})
             await testPostgres.init()

@@ -1,7 +1,9 @@
 export class Convert {
-    static urlParametersToObject(
+    static urlParametersToObject({
+        urlParameters,
+    }: {
         urlParameters: string
-    ): { [key: string]: string } {
+    }): { [key: string]: string } {
         const noParameters: { [key: string]: string } = {}
         const trimmedParameters =
             urlParameters.slice(0, 1) === "/"
