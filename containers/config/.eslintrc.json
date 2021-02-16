@@ -114,6 +114,7 @@
         // ECMAScript 6
         "arrow-parens": "error",
         "no-confusing-arrow": "error",
+        "no-dupe-class-members": "off",
         "no-duplicate-imports": "error",
         "no-useless-computed-key": "error",
         "no-useless-constructor": "error",

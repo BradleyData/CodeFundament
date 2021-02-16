@@ -1,10 +1,9 @@
 export class TestHelperData {
-    static randomInt(): number {
-        const max = 100
-        return this.randomIntWithMax({ max })
-    }
-
-    static randomIntWithMax({ max }: { max: number }): number {
+    static randomInt(): number
+    // eslint-disable-next-line no-unused-vars
+    static randomInt({ max }: { max: number }): number
+    // eslint-disable-next-line no-magic-numbers
+    static randomInt({ max = 100 }: { max?: number } = {}): number {
         return Math.floor(Math.random() * max)
     }
 
@@ -19,9 +18,7 @@ export class TestHelperData {
                 const charOther = " '\"!@#$%^&*()-_=+~\\|;:{}[],.<>/?`"
                 const allChar = charUpper + charLower + charDigit + charOther
 
-                return allChar.charAt(
-                    this.randomIntWithMax({ max: allChar.length })
-                )
+                return allChar.charAt(this.randomInt({ max: allChar.length }))
             })
             .join()
     }
