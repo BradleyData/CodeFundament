@@ -2,7 +2,7 @@ import { Postgres } from "./wrapper/Postgres"
 import { Srvr } from "./Srvr"
 
 const srvr = new Srvr()
-srvr.listen(process.env.PORT)
+srvr.listen({ port: process.env.PORT })
 
 process.on("SIGINT", () =>
     srvr.shutdown({ msg: "Got SIGINT (aka ctrl-c in docker).", onExit })

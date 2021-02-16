@@ -11,7 +11,10 @@ export class Srvr {
         this.server = Http.createServer()
     }
 
-    listen(port: string = "3000"): void {
+    listen(): void
+    // eslint-disable-next-line no-unused-vars
+    listen({ port }: { port?: string }): void
+    listen({ port = "3000" }: { port?: string } = {}): void {
         this.server.on(
             "request",
             async (

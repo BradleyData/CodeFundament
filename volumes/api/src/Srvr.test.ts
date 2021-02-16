@@ -160,7 +160,7 @@ describe(Srvr.name, () => {
         test("given port", () => {
             const port = TestHelperData.randomInt().toString()
 
-            srvr.listen(port)
+            srvr.listen({ port })
 
             expect(srvr["server"].listen).toBeCalledWith(port)
         })

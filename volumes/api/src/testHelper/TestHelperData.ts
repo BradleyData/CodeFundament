@@ -1,7 +1,7 @@
 export class TestHelperData {
     static randomInt(): number
     // eslint-disable-next-line no-unused-vars
-    static randomInt({ max }: { max: number }): number
+    static randomInt({ max }: { max?: number }): number
     // eslint-disable-next-line no-magic-numbers
     static randomInt({ max = 100 }: { max?: number } = {}): number {
         return Math.floor(Math.random() * max)
