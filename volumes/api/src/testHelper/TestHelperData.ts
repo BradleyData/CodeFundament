@@ -7,16 +7,52 @@ export class TestHelperData {
         return Math.floor(Math.random() * max)
     }
 
-    static randomString(): string {
-        const length = 10
+    static randomString(): string
+    static randomString({
+        /* eslint-disable no-unused-vars */
+        includeDigit,
+        includeLower,
+        includeOther,
+        includeUpper,
+        length,
+    }: /* eslint-enable no-unused-vars */
+    {
+        includeDigit?: boolean
+        includeLower?: boolean
+        includeOther?: boolean
+        includeUpper?: boolean
+        length?: number
+    }): string
+    static randomString({
+        includeDigit = true,
+        includeLower = true,
+        includeOther = true,
+        includeUpper = true,
+        length,
+    }: {
+        includeDigit?: boolean
+        includeLower?: boolean
+        includeOther?: boolean
+        includeUpper?: boolean
+        length?: number
+    } = {}): string {
+        const min = 3
+        const max = 10
+        const stringLength = length ?? min + this.randomInt({ max: max - min })
 
-        return [...Array(length)]
+        return [...Array(stringLength)]
             .map(() => {
-                const charUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                const charLower = "abcdefghijklmnopqrstuvwxyz"
-                const charDigit = "0123456789"
-                const charOther = " '\"!@#$%^&*()-_=+~\\|;:{}[],.<>/?`"
-                const allChar = charUpper + charLower + charDigit + charOther
+                const charUpper = includeUpper
+                    ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    : ""
+                const charLower = includeLower
+                    ? "abcdefghijklmnopqrstuvwxyz"
+                    : ""
+                const charDigit = includeDigit ? "0123456789" : ""
+                const charOther = includeOther
+                    ? " '\"!@#$%^&*()-_=+~\\|;:{}[],.<>/?`"
+                    : ""
+                const allChar = `${charUpper}${charLower}${charDigit}${charOther}`
 
                 return allChar.charAt(this.randomInt({ max: allChar.length }))
             })

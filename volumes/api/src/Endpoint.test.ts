@@ -4,8 +4,8 @@ import { TestHelperData } from "./testHelper/TestHelperData"
 
 describe(Endpoint.name, () => {
     const rowsAffected = TestHelperData.randomInt()
-    const response = "response"
-    const name = "name"
+    const response = TestHelperData.randomString()
+    const name = TestHelperData.randomString()
     const version = TestHelperData.randomInt()
     const parameters = Convert.urlParametersToObject({
         urlParameters: "parameters",

@@ -1,11 +1,12 @@
 import { Invalid as Endpoint } from "./Invalid"
+import { TestHelperData } from "../testHelper/TestHelperData"
 
 describe(Endpoint.name, () => {
     test.each([["delete"], ["get"], ["post"]])("%s", async (action: string) => {
         const highVersion = 500
         const endpoint = new Endpoint({
             action,
-            name: "",
+            name: TestHelperData.randomString(),
             parameters: {},
             version: highVersion,
         })

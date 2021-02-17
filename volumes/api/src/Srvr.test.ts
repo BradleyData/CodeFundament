@@ -5,9 +5,11 @@ import { Srvr } from "./Srvr"
 import { TestHelperData } from "./testHelper/TestHelperData"
 
 const mockPath = `${process.cwd()}/app/src/endpoint`
-const mockDirectory = "Directory"
-const mockDirectories = "Director/ies"
-const mockEndpoint = "Endpoint"
+const mockDirectory = TestHelperData.randomString({ includeOther: false })
+const mockDirectories = `${TestHelperData.randomString({
+    includeOther: false,
+})}/${TestHelperData.randomString({ includeOther: false })}`
+const mockEndpoint = TestHelperData.randomString({ includeOther: false })
 const mockPathWithDirectory = `${mockPath}/${mockDirectory}`
 const mockPathWithDirectories = `${mockPath}/${mockDirectories}`
 const mockMinVersion = 1
@@ -97,16 +99,18 @@ describe(Srvr.name, () => {
 
     describe("listens on", () => {
         test("default port", async () => {
-            const endpointName = "EndpointName"
+            const endpointName = TestHelperData.randomString()
             const endpointVersion = TestHelperData.randomInt()
-            const urlParameters = "endpoint/parameters"
+            const urlParameters = `${TestHelperData.randomString({
+                includeOther: false,
+            })}/${TestHelperData.randomString({ includeOther: false })}`
             const convertedParameters = Convert.urlParametersToObject({
                 urlParameters,
             })
             const rowsAffected = TestHelperData.randomInt()
             const response = `{Version: ${endpointVersion}}`
             const statusCode = TestHelperData.randomInt()
-            const action = "action"
+            const action = TestHelperData.randomString()
             const endpoint = {
                 getAction: jest.fn().mockReturnValue(action),
                 getName: jest.fn().mockReturnValue(endpointName),
@@ -167,7 +171,7 @@ describe(Srvr.name, () => {
     })
 
     describe("shuts down", () => {
-        const msg = "test message"
+        const msg = TestHelperData.randomString()
         const onExit = jest.fn()
 
         test("cleanly", () => {
@@ -210,6 +214,8 @@ describe(Srvr.name, () => {
 
     describe("given URL", () => {
         const urlParameters = "para/mete/rs"
+        // eslint-disable-next-line max-len
+        // const urlParameters = `${TestHelperData.randomString({includeOther: false})}/${TestHelperData.randomString({includeOther: false})}/${TestHelperData.randomString({includeOther: false})}`
         const convertedParameters = Convert.urlParametersToObject({
             urlParameters,
         })

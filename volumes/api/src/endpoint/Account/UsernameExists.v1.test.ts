@@ -1,4 +1,5 @@
 import { Postgres } from "../../wrapper/Postgres"
+import { TestHelperData } from "../../testHelper/TestHelperData"
 import { TestHelperPostgres } from "../../testHelper/TestHelperPostgres"
 import { UsernameExists } from "./UsernameExists.v1"
 
@@ -14,8 +15,8 @@ describe(UsernameExists.name, () => {
         "post: username existence is %p",
         async (result?: boolean) => {
             const rowsAffected = result === true ? 1 : 0
-            const errorMsg = "errorMsg"
-            const username = "newUser85"
+            const errorMsg = TestHelperData.randomString()
+            const username = TestHelperData.randomString()
             Postgres.query = TestHelperPostgres.queryMock({
                 errorMsg,
                 expected: result,

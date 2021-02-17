@@ -15,7 +15,7 @@ describe(TestPostgres.name, () => {
         "get: postgres is %p",
         async (hasPostgres?: boolean) => {
             const rowsAffected = TestHelperData.randomInt()
-            const errorMsg = "errorMsg"
+            const errorMsg = TestHelperData.randomString()
             Postgres.query = TestHelperPostgres.queryMock({
                 errorMsg,
                 expected: hasPostgres,
@@ -27,9 +27,9 @@ describe(TestPostgres.name, () => {
 
             const testPostgres = new TestPostgres({
                 action: "get",
-                name: "",
+                name: TestHelperData.randomString(),
                 parameters: {},
-                version: 1,
+                version: TestHelperData.randomInt(),
             })
             await testPostgres.init()
 

@@ -2,6 +2,7 @@ import { Default as DefaultEndpoint } from "./endpoint/Default.v1"
 import { Endpoint } from "./Endpoint"
 import { EndpointFactory } from "./EndpointFactory"
 import { Invalid as InvalidEndpoint } from "./endpoint/Invalid"
+import { TestHelperData } from "./testHelper/TestHelperData"
 import { mocked } from "ts-jest/utils"
 
 jest.mock("./Endpoint")
@@ -13,7 +14,7 @@ describe(EndpointFactory.name, () => {
         expect.assertions(1)
         try {
             await EndpointFactory.createEndpoint({
-                action: "",
+                action: TestHelperData.randomString(),
                 name: "Default",
                 parameters: {},
                 version: 1,
@@ -34,7 +35,7 @@ describe(EndpointFactory.name, () => {
             defaultEndpoint.prototype = endpoint.prototype
 
             await EndpointFactory.createEndpoint({
-                action: "",
+                action: TestHelperData.randomString(),
                 name: "Default",
                 parameters: {},
                 version: 1,
@@ -49,7 +50,7 @@ describe(EndpointFactory.name, () => {
             invalidEndpoint.prototype = endpoint.prototype
 
             await EndpointFactory.createEndpoint({
-                action: "",
+                action: TestHelperData.randomString(),
                 name: "Default",
                 parameters: {},
                 version: -1,
