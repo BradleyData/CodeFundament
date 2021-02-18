@@ -213,9 +213,10 @@ describe(Srvr.name, () => {
     })
 
     describe("given URL", () => {
-        const urlParameters = "para/mete/rs"
-        // eslint-disable-next-line max-len
-        // const urlParameters = `${TestHelperData.randomString({includeOther: false})}/${TestHelperData.randomString({includeOther: false})}/${TestHelperData.randomString({includeOther: false})}`
+        const p1 = TestHelperData.randomString({ includeOther: false })
+        const p2 = TestHelperData.randomString({ includeOther: false })
+        const p3 = TestHelperData.randomString({ includeOther: false })
+        const urlParameters = `${p1}/${p2}/${p3}`
         const convertedParameters = Convert.urlParametersToObject({
             urlParameters,
         })
