@@ -3,12 +3,12 @@ import { TestHelperData } from "../testHelper/TestHelperData"
 
 describe(Endpoint.name, () => {
     test.each([["delete"], ["get"], ["post"]])("%s", async (action: string) => {
-        const highVersion = 500
+        const version = TestHelperData.randomInt()
         const endpoint = new Endpoint({
             action,
             name: TestHelperData.randomString(),
             parameters: {},
-            version: highVersion,
+            version,
         })
 
         await endpoint.init()
