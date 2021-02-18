@@ -56,6 +56,6 @@ export class TestHelperData {
 
                 return allChar.charAt(this.randomInt({ max: allChar.length }))
             })
-            .join()
+            .join("")
     }
 }
