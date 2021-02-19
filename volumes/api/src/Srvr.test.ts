@@ -5,11 +5,11 @@ import { Srvr } from "./Srvr"
 import { TestHelperData } from "./testHelper/TestHelperData"
 
 const mockPath = `${process.cwd()}/app/src/endpoint`
-const mockDirectory = TestHelperData.randomString({ includeOther: false })
+const mockDirectory = TestHelperData.randomString({ includeSymbols: false })
 const mockDirectories = `${TestHelperData.randomString({
-    includeOther: false,
-})}/${TestHelperData.randomString({ includeOther: false })}`
-const mockEndpoint = TestHelperData.randomString({ includeOther: false })
+    includeSymbols: false,
+})}/${TestHelperData.randomString({ includeSymbols: false })}`
+const mockEndpoint = TestHelperData.randomString({ includeSymbols: false })
 const mockPathWithDirectory = `${mockPath}/${mockDirectory}`
 const mockPathWithDirectories = `${mockPath}/${mockDirectories}`
 const mockMinVersion = 1
@@ -102,8 +102,8 @@ describe(Srvr.name, () => {
             const endpointName = TestHelperData.randomString()
             const endpointVersion = TestHelperData.randomInt()
             const urlParameters = `${TestHelperData.randomString({
-                includeOther: false,
-            })}/${TestHelperData.randomString({ includeOther: false })}`
+                includeSymbols: false,
+            })}/${TestHelperData.randomString({ includeSymbols: false })}`
             const convertedParameters = Convert.urlParametersToObject({
                 urlParameters,
             })
@@ -213,9 +213,9 @@ describe(Srvr.name, () => {
     })
 
     describe("given URL", () => {
-        const p1 = TestHelperData.randomString({ includeOther: false })
-        const p2 = TestHelperData.randomString({ includeOther: false })
-        const p3 = TestHelperData.randomString({ includeOther: false })
+        const p1 = TestHelperData.randomString({ includeSymbols: false })
+        const p2 = TestHelperData.randomString({ includeSymbols: false })
+        const p3 = TestHelperData.randomString({ includeSymbols: false })
         const urlParameters = `${p1}/${p2}/${p3}`
         const convertedParameters = Convert.urlParametersToObject({
             urlParameters,
