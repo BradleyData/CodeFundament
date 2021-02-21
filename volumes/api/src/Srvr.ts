@@ -115,9 +115,9 @@ export class Srvr {
 
             endpoint = await EndpointFactory.createEndpoint({
                 action,
+                apiVersion,
                 name: `${endpointPath}${endpointName}`,
                 parameters,
-                apiVersion,
             })
 
             function getFirstParameterPosition(): number {
@@ -200,9 +200,9 @@ export class Srvr {
             const invalidVersion = -1
             endpoint = await EndpointFactory.createEndpoint({
                 action,
+                apiVersion: invalidVersion,
                 name: "",
                 parameters: {},
-                apiVersion: invalidVersion,
             })
         }
 

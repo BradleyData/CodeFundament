@@ -9,14 +9,14 @@ class Endpoint {
 
     constructor({
         action,
+        apiVersion,
         name,
         parameters,
-        apiVersion,
     }: {
         action: string
+        apiVersion: number
         name: string
         parameters: { [key: string]: string }
-        apiVersion: number
     }) {
         this.name = name
         this.apiVersion = apiVersion

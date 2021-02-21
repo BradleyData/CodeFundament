@@ -113,12 +113,12 @@ describe(Srvr.name, () => {
             const action = TestHelperData.randomString()
             const endpoint = {
                 getAction: jest.fn().mockReturnValue(action),
+                getApiVersion: jest.fn().mockReturnValue(endpointVersion),
                 getName: jest.fn().mockReturnValue(endpointName),
                 getParameters: jest.fn().mockReturnValue(convertedParameters),
                 getResponse: jest.fn().mockReturnValue(response),
                 getRowsAffected: jest.fn().mockReturnValue(rowsAffected),
                 getStatusCode: jest.fn().mockReturnValue(statusCode),
-                getApiVersion: jest.fn().mockReturnValue(endpointVersion),
             }
             EndpointFactory.createEndpoint = jest
                 .fn()
@@ -130,9 +130,9 @@ describe(Srvr.name, () => {
             expect(onEventName).toBe("request")
             expect(EndpointFactory.createEndpoint).toBeCalledWith({
                 action: "get",
+                apiVersion: mockDefaultVersion,
                 name: mockDefaultEndpoint,
                 parameters: {},
-                apiVersion: mockDefaultVersion,
             })
             expect(mockRes.statusCode).toBe(statusCode)
             expect(mockRes.setHeader).toBeCalledWith(
@@ -205,9 +205,9 @@ describe(Srvr.name, () => {
 
             expect(EndpointFactory.createEndpoint).toBeCalledWith({
                 action: "get",
+                apiVersion: expect.anything(),
                 name: expect.anything(),
                 parameters: expect.anything(),
-                apiVersion: expect.anything(),
             })
         })
     })
@@ -229,9 +229,9 @@ describe(Srvr.name, () => {
 
                 expect(EndpointFactory.createEndpoint).toBeCalledWith({
                     action: expect.any(String),
+                    apiVersion: mockMainVersion,
                     name: mockEndpoint,
                     parameters: convertedParameters,
-                    apiVersion: mockMainVersion,
                 })
             })
 
@@ -242,9 +242,9 @@ describe(Srvr.name, () => {
 
                 expect(EndpointFactory.createEndpoint).toBeCalledWith({
                     action: expect.any(String),
+                    apiVersion: mockMainVersion,
                     name: mockEndpoint,
                     parameters: {},
-                    apiVersion: mockMainVersion,
                 })
             })
 
@@ -264,9 +264,9 @@ describe(Srvr.name, () => {
                 )
                 expect(EndpointFactory.createEndpoint).toBeCalledWith({
                     action: expect.any(String),
+                    apiVersion: mockMinVersion,
                     name: mockEndpoint,
                     parameters: convertedParameters,
-                    apiVersion: mockMinVersion,
                 })
             })
 
@@ -280,9 +280,9 @@ describe(Srvr.name, () => {
 
                 expect(EndpointFactory.createEndpoint).toBeCalledWith({
                     action: expect.any(String),
+                    apiVersion: mockMainVersion,
                     name: mockEndpoint,
                     parameters: convertedParameters,
-                    apiVersion: mockMainVersion,
                 })
             })
 
@@ -295,9 +295,9 @@ describe(Srvr.name, () => {
 
                 expect(EndpointFactory.createEndpoint).toBeCalledWith({
                     action: expect.any(String),
+                    apiVersion: invalidVersion,
                     name: "",
                     parameters: {},
-                    apiVersion: invalidVersion,
                 })
                 expect(mockLog).toBeCalledWith(`action: ${mockReq.method}`)
                 expect(mockLog).toBeCalledWith(`url: ${mockReq.url}`)
@@ -336,9 +336,9 @@ describe(Srvr.name, () => {
                 )
                 expect(EndpointFactory.createEndpoint).toBeCalledWith({
                     action: expect.any(String),
+                    apiVersion: mockMinVersionWithDirectory,
                     name: `${mockDirectory}/${mockEndpoint}`,
                     parameters: convertedParameters,
-                    apiVersion: mockMinVersionWithDirectory,
                 })
             })
 
@@ -355,9 +355,9 @@ describe(Srvr.name, () => {
                 )
                 expect(EndpointFactory.createEndpoint).toBeCalledWith({
                     action: expect.any(String),
+                    apiVersion: mockMinVersionWithDirectory,
                     name: `${mockDirectories}/${mockEndpoint}`,
                     parameters: convertedParameters,
-                    apiVersion: mockMinVersionWithDirectory,
                 })
             })
         })
@@ -372,11 +372,11 @@ describe(Srvr.name, () => {
 
             expect(EndpointFactory.createEndpoint).toBeCalledWith({
                 action: expect.any(String),
+                apiVersion: expect.any(Number),
                 name: expect.any(String),
                 parameters: Convert.urlParametersToObject({
                     urlParameters: "vv1",
                 }),
-                apiVersion: expect.any(Number),
             })
         })
 
@@ -388,11 +388,11 @@ describe(Srvr.name, () => {
 
             expect(EndpointFactory.createEndpoint).toBeCalledWith({
                 action: expect.any(String),
+                apiVersion: expect.any(Number),
                 name: expect.any(String),
                 parameters: Convert.urlParametersToObject({
                     urlParameters: "v1v",
                 }),
-                apiVersion: expect.any(Number),
             })
         })
     })

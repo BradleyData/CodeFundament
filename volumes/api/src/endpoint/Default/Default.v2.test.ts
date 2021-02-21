@@ -5,9 +5,9 @@ describe(Endpoint.name, () => {
     test.each([["delete"], ["get"], ["post"]])("%s", async (action: string) => {
         const endpoint = new Endpoint({
             action,
+            apiVersion: TestHelperData.randomInt(),
             name: TestHelperData.randomString(),
             parameters: {},
-            apiVersion: TestHelperData.randomInt(),
         })
 
         await endpoint.init()

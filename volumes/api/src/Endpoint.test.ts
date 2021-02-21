@@ -39,9 +39,9 @@ describe(Endpoint.name, () => {
         test("with actions defined", async () => {
             const endpoint = new AllActions({
                 action,
+                apiVersion,
                 name,
                 parameters,
-                apiVersion,
             })
 
             await endpoint.init()
@@ -55,9 +55,9 @@ describe(Endpoint.name, () => {
         test("without actions defined", async () => {
             const endpoint = new NoActions({
                 action,
+                apiVersion,
                 name,
                 parameters,
-                apiVersion,
             })
 
             await endpoint.init()
@@ -72,9 +72,9 @@ describe(Endpoint.name, () => {
     test("invalid action", async () => {
         const endpoint = new AllActions({
             action: "invalid action",
+            apiVersion,
             name,
             parameters,
-            apiVersion,
         })
 
         await endpoint.init()
@@ -88,9 +88,9 @@ describe(Endpoint.name, () => {
     test("default response", async () => {
         const endpoint = new TestDefaultResponse({
             action: "get",
+            apiVersion,
             name,
             parameters,
-            apiVersion,
         })
 
         await endpoint.init()

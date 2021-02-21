@@ -27,9 +27,9 @@ describe(TestPostgres.name, () => {
 
             const testPostgres = new TestPostgres({
                 action: "get",
+                apiVersion: TestHelperData.randomInt(),
                 name: TestHelperData.randomString(),
                 parameters: {},
-                apiVersion: TestHelperData.randomInt(),
             })
             await testPostgres.init()
 

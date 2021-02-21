@@ -28,11 +28,11 @@ describe(UsernameExists.name, () => {
 
             const usernameExists = new UsernameExists({
                 action: "get",
+                apiVersion: TestHelperData.randomInt(),
                 name: TestHelperData.randomString(),
                 parameters: {
                     username,
                 },
-                apiVersion: TestHelperData.randomInt(),
             })
             await usernameExists.init()
 

@@ -6,9 +6,9 @@ describe(Endpoint.name, () => {
         const apiVersion = TestHelperData.randomInt()
         const endpoint = new Endpoint({
             action,
+            apiVersion,
             name: TestHelperData.randomString(),
             parameters: {},
-            apiVersion,
         })
 
         await endpoint.init()

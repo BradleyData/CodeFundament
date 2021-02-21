@@ -15,9 +15,9 @@ describe(EndpointFactory.name, () => {
         try {
             await EndpointFactory.createEndpoint({
                 action: TestHelperData.randomString(),
+                apiVersion: 1,
                 name: "Default",
                 parameters: {},
-                apiVersion: 1,
             })
         } catch (err) {
             expect(err.message).toBe("Invalid endpoint.")
@@ -36,9 +36,9 @@ describe(EndpointFactory.name, () => {
 
             await EndpointFactory.createEndpoint({
                 action: TestHelperData.randomString(),
+                apiVersion: 1,
                 name: "Default",
                 parameters: {},
-                apiVersion: 1,
             })
         })
 
@@ -51,9 +51,9 @@ describe(EndpointFactory.name, () => {
 
             await EndpointFactory.createEndpoint({
                 action: TestHelperData.randomString(),
+                apiVersion: -1,
                 name: "Default",
                 parameters: {},
-                apiVersion: -1,
             })
         })
     })
