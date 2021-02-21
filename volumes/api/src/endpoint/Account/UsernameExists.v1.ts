@@ -5,8 +5,6 @@ import { QueryResult } from "pg"
 class UsernameExists extends Endpoint {
     protected async get(): Promise<void> {
         try {
-            const parameters = this.getParameters()
-
             this.rowsAffected = await Postgres.query({
                 sql: "SELECT username FROM login WHERE username = $1::text",
                 useResults: ({
@@ -17,11 +15,11 @@ class UsernameExists extends Endpoint {
                     this.response = JSON.stringify({
                         usernameExists: this.parseResult({
                             queryResult,
-                            username: parameters.username,
+                            username: this.parameters.username,
                         }),
                     })
                 },
-                values: [parameters.username],
+                values: [this.parameters.username],
             })
         } catch (error) {
             this.returnError({ error, output: { usernameExists: true } })
