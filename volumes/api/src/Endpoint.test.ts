@@ -6,7 +6,7 @@ describe(Endpoint.name, () => {
     const rowsAffected = TestHelperData.randomInt()
     const response = TestHelperData.randomString()
     const name = TestHelperData.randomString()
-    const version = TestHelperData.randomInt()
+    const apiVersion = TestHelperData.randomInt()
     const parameters = Convert.urlParametersToObject({
         urlParameters: "parameters",
     })
@@ -41,7 +41,7 @@ describe(Endpoint.name, () => {
                 action,
                 name,
                 parameters,
-                version,
+                apiVersion,
             })
 
             await endpoint.init()
@@ -57,7 +57,7 @@ describe(Endpoint.name, () => {
                 action,
                 name,
                 parameters,
-                version,
+                apiVersion,
             })
 
             await endpoint.init()
@@ -74,7 +74,7 @@ describe(Endpoint.name, () => {
             action: "invalid action",
             name,
             parameters,
-            version,
+            apiVersion,
         })
 
         await endpoint.init()
@@ -90,7 +90,7 @@ describe(Endpoint.name, () => {
             action: "get",
             name,
             parameters,
-            version,
+            apiVersion,
         })
 
         await endpoint.init()

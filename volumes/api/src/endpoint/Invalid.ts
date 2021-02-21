@@ -3,7 +3,7 @@ import { Endpoint } from "../Endpoint"
 class Invalid extends Endpoint {
     private execute(): void {
         this.name = "Invalid"
-        this.version = 1
+        this.apiVersion = 1
         super.get()
     }
     protected async delete(): Promise<void> {

@@ -118,7 +118,7 @@ describe(Srvr.name, () => {
                 getResponse: jest.fn().mockReturnValue(response),
                 getRowsAffected: jest.fn().mockReturnValue(rowsAffected),
                 getStatusCode: jest.fn().mockReturnValue(statusCode),
-                getVersion: jest.fn().mockReturnValue(endpointVersion),
+                getApiVersion: jest.fn().mockReturnValue(endpointVersion),
             }
             EndpointFactory.createEndpoint = jest
                 .fn()
@@ -132,7 +132,7 @@ describe(Srvr.name, () => {
                 action: "get",
                 name: mockDefaultEndpoint,
                 parameters: {},
-                version: mockDefaultVersion,
+                apiVersion: mockDefaultVersion,
             })
             expect(mockRes.statusCode).toBe(statusCode)
             expect(mockRes.setHeader).toBeCalledWith(
@@ -207,7 +207,7 @@ describe(Srvr.name, () => {
                 action: "get",
                 name: expect.anything(),
                 parameters: expect.anything(),
-                version: expect.anything(),
+                apiVersion: expect.anything(),
             })
         })
     })
@@ -231,7 +231,7 @@ describe(Srvr.name, () => {
                     action: expect.any(String),
                     name: mockEndpoint,
                     parameters: convertedParameters,
-                    version: mockMainVersion,
+                    apiVersion: mockMainVersion,
                 })
             })
 
@@ -244,7 +244,7 @@ describe(Srvr.name, () => {
                     action: expect.any(String),
                     name: mockEndpoint,
                     parameters: {},
-                    version: mockMainVersion,
+                    apiVersion: mockMainVersion,
                 })
             })
 
@@ -266,7 +266,7 @@ describe(Srvr.name, () => {
                     action: expect.any(String),
                     name: mockEndpoint,
                     parameters: convertedParameters,
-                    version: mockMinVersion,
+                    apiVersion: mockMinVersion,
                 })
             })
 
@@ -282,7 +282,7 @@ describe(Srvr.name, () => {
                     action: expect.any(String),
                     name: mockEndpoint,
                     parameters: convertedParameters,
-                    version: mockMainVersion,
+                    apiVersion: mockMainVersion,
                 })
             })
 
@@ -297,7 +297,7 @@ describe(Srvr.name, () => {
                     action: expect.any(String),
                     name: "",
                     parameters: {},
-                    version: invalidVersion,
+                    apiVersion: invalidVersion,
                 })
                 expect(mockLog).toBeCalledWith(`action: ${mockReq.method}`)
                 expect(mockLog).toBeCalledWith(`url: ${mockReq.url}`)
@@ -338,7 +338,7 @@ describe(Srvr.name, () => {
                     action: expect.any(String),
                     name: `${mockDirectory}/${mockEndpoint}`,
                     parameters: convertedParameters,
-                    version: mockMinVersionWithDirectory,
+                    apiVersion: mockMinVersionWithDirectory,
                 })
             })
 
@@ -357,7 +357,7 @@ describe(Srvr.name, () => {
                     action: expect.any(String),
                     name: `${mockDirectories}/${mockEndpoint}`,
                     parameters: convertedParameters,
-                    version: mockMinVersionWithDirectory,
+                    apiVersion: mockMinVersionWithDirectory,
                 })
             })
         })
@@ -376,7 +376,7 @@ describe(Srvr.name, () => {
                 parameters: Convert.urlParametersToObject({
                     urlParameters: "vv1",
                 }),
-                version: expect.any(Number),
+                apiVersion: expect.any(Number),
             })
         })
 
@@ -392,7 +392,7 @@ describe(Srvr.name, () => {
                 parameters: Convert.urlParametersToObject({
                     urlParameters: "v1v",
                 }),
-                version: expect.any(Number),
+                apiVersion: expect.any(Number),
             })
         })
     })

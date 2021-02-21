@@ -3,26 +3,26 @@ import { Endpoint } from "./Endpoint"
 export class EndpointFactory {
     static async createEndpoint({
         name,
-        version,
+        apiVersion,
         action,
         parameters,
     }: {
         name: string
-        version: number
+        apiVersion: number
         action: string
         parameters: { [key: string]: string }
     }): Promise<Endpoint> {
         const invalidVersion = -1
         const path =
-            version === invalidVersion
+            apiVersion === invalidVersion
                 ? "./endpoint/Invalid"
-                : `./endpoint/${name}.v${version}`
+                : `./endpoint/${name}.v${apiVersion}`
         const SpecificEndpoint = require(path).Endpoint
         const endpoint = new SpecificEndpoint({
             action,
             name,
             parameters,
-            version,
+            apiVersion,
         })
 
         if (!(endpoint instanceof Endpoint))

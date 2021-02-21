@@ -17,7 +17,7 @@ describe(EndpointFactory.name, () => {
                 action: TestHelperData.randomString(),
                 name: "Default",
                 parameters: {},
-                version: 1,
+                apiVersion: 1,
             })
         } catch (err) {
             expect(err.message).toBe("Invalid endpoint.")
@@ -38,7 +38,7 @@ describe(EndpointFactory.name, () => {
                 action: TestHelperData.randomString(),
                 name: "Default",
                 parameters: {},
-                version: 1,
+                apiVersion: 1,
             })
         })
 
@@ -53,7 +53,7 @@ describe(EndpointFactory.name, () => {
                 action: TestHelperData.randomString(),
                 name: "Default",
                 parameters: {},
-                version: -1,
+                apiVersion: -1,
             })
         })
     })

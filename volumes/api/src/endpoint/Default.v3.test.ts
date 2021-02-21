@@ -7,7 +7,7 @@ describe(Endpoint.name, () => {
             action,
             name: TestHelperData.randomString(),
             parameters: {},
-            version: TestHelperData.randomInt(),
+            apiVersion: TestHelperData.randomInt(),
         })
 
         await endpoint.init()

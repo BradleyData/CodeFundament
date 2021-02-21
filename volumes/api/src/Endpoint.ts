@@ -1,6 +1,6 @@
 class Endpoint {
     protected name: string
-    protected version: number
+    protected apiVersion: number
     protected readonly action: string
     protected readonly parameters: { [key: string]: string }
     protected rowsAffected = 0
@@ -11,15 +11,15 @@ class Endpoint {
         action,
         name,
         parameters,
-        version,
+        apiVersion,
     }: {
         action: string
         name: string
         parameters: { [key: string]: string }
-        version: number
+        apiVersion: number
     }) {
         this.name = name
-        this.version = version
+        this.apiVersion = apiVersion
         this.action = action.toUpperCase()
         this.parameters = parameters
         this.statusCode = 0
@@ -100,8 +100,8 @@ class Endpoint {
         return this.statusCode
     }
 
-    public getVersion(): number {
-        return this.version
+    public getApiVersion(): number {
+        return this.apiVersion
     }
 }
 

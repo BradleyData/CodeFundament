@@ -32,7 +32,7 @@ export class Srvr {
                         "application/json; charset=utf-8"
                     )
                     res.setHeader("Endpoint-Name", endpoint.getName())
-                    res.setHeader("Endpoint-Version", endpoint.getVersion())
+                    res.setHeader("Endpoint-Version", endpoint.getApiVersion())
                     res.setHeader("Requested-Action", endpoint.getAction())
                     res.setHeader(
                         "Parameters-Sent",
@@ -109,15 +109,15 @@ export class Srvr {
                     .join("/"),
             })
 
-            const version = getVersion()
-            if (version === 0) 
+            const apiVersion = getVersion()
+            if (apiVersion === 0) 
                 throw new Error("Endpoint version undefined.")
 
             endpoint = await EndpointFactory.createEndpoint({
                 action,
                 name: `${endpointPath}${endpointName}`,
                 parameters,
-                version,
+                apiVersion,
             })
 
             function getFirstParameterPosition(): number {
@@ -202,7 +202,7 @@ export class Srvr {
                 action,
                 name: "",
                 parameters: {},
-                version: invalidVersion,
+                apiVersion: invalidVersion,
             })
         }
 
