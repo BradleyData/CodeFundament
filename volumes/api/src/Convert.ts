@@ -1,4 +1,15 @@
 export class Convert {
+    static errorNotAnInteger = new Error("Not a number.")
+
+    static stringToInteger({ inputString }: { inputString: string }): number {
+        const output = Number(inputString)
+
+        if (inputString === "" || !Number.isInteger(output))
+            throw this.errorNotAnInteger
+
+        return output
+    }
+
     static urlParametersToObject({
         urlParameters,
     }: {

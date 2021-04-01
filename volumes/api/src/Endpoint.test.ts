@@ -10,6 +10,8 @@ describe(Endpoint.name, () => {
     const parameters = Convert.urlParametersToObject({
         urlParameters: "parameters",
     })
+    const testError1 = new TypeError(TestHelperData.randomString())
+    const testError2 = TestHelperData.randomString()
     class AllActions extends Endpoint {
         private setup(): void {
             this.rowsAffected = rowsAffected
@@ -29,6 +31,16 @@ describe(Endpoint.name, () => {
     class TestDefaultResponse extends Endpoint {
         // eslint-disable-next-line no-empty-function
         protected async get(): Promise<void> {}
+    }
+    class ThrowError extends Endpoint {
+        /* eslint-disable require-await */
+        protected async get(): Promise<void> {
+            this.returnError({ error: testError1, output: {} })
+        }
+        protected async post(): Promise<void> {
+            this.returnError({ error: testError2, output: {} })
+        }
+        /* eslint-enable require-await */
     }
 
     describe.each([
@@ -97,5 +109,49 @@ describe(Endpoint.name, () => {
 
         expect(endpoint.getRowsAffected()).toBe(0)
         expect(endpoint.getResponse()).toBe("{}")
+    })
+
+    test("return error 1", async () => {
+        const endpoint = new ThrowError({
+            action: "get",
+            apiVersion,
+            name,
+            parameters,
+        })
+        const output = {
+            error: {
+                message: testError1.message,
+                name: testError1.name,
+                stack: testError1.stack,
+            },
+        }
+
+        await endpoint.init()
+
+        expect(endpoint.getStatusCode()).toBe(StatusCode.badRequest)
+        expect(endpoint.getRowsAffected()).toBe(0)
+        expect(endpoint.getResponse()).toBe(JSON.stringify(output))
+    })
+
+    test("return error 2", async () => {
+        const endpoint = new ThrowError({
+            action: "post",
+            apiVersion,
+            name,
+            parameters,
+        })
+        const output = {
+            error: {
+                message: testError2,
+                name: "Non-error Object",
+                stack: [],
+            },
+        }
+
+        await endpoint.init()
+
+        expect(endpoint.getStatusCode()).toBe(StatusCode.badRequest)
+        expect(endpoint.getRowsAffected()).toBe(0)
+        expect(endpoint.getResponse()).toBe(JSON.stringify(output))
     })
 })

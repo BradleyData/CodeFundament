@@ -56,10 +56,14 @@ class Endpoint {
         error,
         output,
     }: {
-        error: Error
+        error: any
         output: { [key: string]: any }
     }): void {
-        output.error = error
+        output.error = {
+            message: error.message ?? error.toString(),
+            name: error.name ?? "Non-error Object",
+            stack: error.stack ?? [],
+        }
         this.response = JSON.stringify(output)
         this.statusCode = StatusCode.badRequest
     }

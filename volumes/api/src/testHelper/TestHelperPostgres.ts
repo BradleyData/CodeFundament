@@ -18,16 +18,28 @@ export class TestHelperPostgres {
 
         expect(endpoint.getStatusCode()).toBe(StatusCode.badRequest)
         expect(endpoint.getRowsAffected()).toBe(0)
-        expect(response.error).toBe(errorMsg)
+        expect(response.error.message).toBe(errorMsg)
         expect(response[responseKey]).toBe(responseValue)
     }
 
-    static expectQueryExists({ queryType }: { queryType: string }): void {
-        expect(Postgres.query).toBeCalledWith({
+    static expectQueryExists({
+        queryType,
+        withValues,
+    }: {
+        queryType: string
+        withValues?: any
+    }): void {
+        const queryParams: Record<string, any> = {
             sql: expect.stringContaining(queryType),
-            useResults: expect.any(Function),
             values: expect.arrayContaining([expect.any(String)]),
-        })
+        }
+        if (queryType === "SELECT")
+            queryParams.useResults = expect.any(Function)
+        // eslint-disable-next-line no-undefined
+        if (withValues !== undefined) 
+            queryParams.values = withValues
+
+        expect(Postgres.query).toBeCalledWith(queryParams)
     }
 
     /* eslint-disable no-unused-vars */
@@ -65,11 +77,14 @@ export class TestHelperPostgres {
                     if (expected === undefined) 
                         throw errorMsg
 
-                    useResults({
-                        queryResult: this.queryResultsMock({
-                            rows: getRows(values),
-                        }),
-                    })
+                    // eslint-disable-next-line no-undefined
+                    if (useResults !== undefined) {
+                        useResults({
+                            queryResult: this.queryResultsMock({
+                                rows: getRows(values),
+                            }),
+                        })
+                    }
                     return Promise.resolve(rowsAffected)
                 }
             )
