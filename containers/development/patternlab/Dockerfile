@@ -1,4 +1,4 @@
-FROM node:15.8.0-buster-slim as base
+FROM node:15.14.0-buster-slim as base
 RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
     apt-get install --no-install-recommends -y \
@@ -30,7 +30,7 @@ COPY --chown=node:node .vscode .vscode/
 ENV NODE_ENV=development
 ENV PATH=/home/node/node_modules/.bin:$PATH
 WORKDIR /home/node
-RUN npm install --only=development && touch ./.watch
+RUN npm install --include=dev && touch ./.watch
 ENTRYPOINT ["/usr/bin/tini", "--"]
 CMD ["npx", "gulp"]
 
