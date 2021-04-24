@@ -15,7 +15,7 @@ Then(
     "the endpoint {string} with version {int} is used",
     (name: string, version: number) => {
         expect(name).toBe(endpoint.getName())
-        expect(version).toBe(endpoint.getVersion())
+        expect(version).toBe(endpoint.getApiVersion())
     }
 )
 

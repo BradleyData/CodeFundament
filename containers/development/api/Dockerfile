@@ -1,4 +1,4 @@
-FROM node:15.8.0-buster-slim as base
+FROM node:15.14.0-buster-slim as base
 USER node
 EXPOSE 3000
 ENV NODE_ENV=production
@@ -25,7 +25,7 @@ COPY --chown=node:node .vscode .vscode/
 ENV NODE_ENV=development
 ENV PATH=/home/node/node_modules/.bin:$PATH
 WORKDIR /home/node
-RUN npm install --only=development && touch ./.watch
+RUN npm install --include=dev && touch ./.watch
 CMD ["ts-node-dev", "--transpile-only", "--project=./config/tsconfig.json", "--watch=./.watch", "app/src/index.ts"]
 
 FROM dev as update
