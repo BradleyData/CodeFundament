@@ -7,16 +7,20 @@ class TestPostgres extends Endpoint {
         try {
             const message = "Postgres is working."
 
-            this.rowsAffected = await Postgres.query(
-                "SELECT $1::text AS message",
-                [message],
-                (queryResult: QueryResult): void => {
+            this.rowsAffected = await Postgres.query({
+                sql: "SELECT $1::text AS message",
+                useResults: ({
+                    queryResult,
+                }: {
+                    queryResult: QueryResult
+                }): void => {
                     const connection = queryResult.rows[0].message === message
                     this.response = JSON.stringify({ postgres: connection })
-                }
-            )
+                },
+                values: [message],
+            })
         } catch (error) {
-            this.response = JSON.stringify({ error: error, postgres: false })
+            this.returnError({ error, output: { postgres: false } })
         }
     }
 }

@@ -1,6 +1,6 @@
 import { Postgres } from "../wrapper/Postgres"
-import { QueryResult } from "pg"
-import { TestHelper } from "../TestHelper"
+import { TestHelperData } from "../testHelper/TestHelperData"
+import { TestHelperPostgres } from "../testHelper/TestHelperPostgres"
 import { TestPostgres } from "./TestPostgres.v1"
 
 jest.mock("../wrapper/Postgres", () => {
@@ -14,43 +14,36 @@ describe(TestPostgres.name, () => {
     test.each([[true], [false], [undefined]])(
         "get: postgres is %p",
         async (hasPostgres?: boolean) => {
-            const rowsAffected = TestHelper.randomInt()
-            const errorMsg = "errorMsg"
-            Postgres.query = jest.fn().mockImplementation(
-                (
-                    sql: string,
-                    values: any,
-                    // eslint-disable-next-line no-unused-vars
-                    useResults: (queryResult: QueryResult) => void
-                ) => {
-                    // eslint-disable-next-line no-param-reassign, no-self-assign
-                    sql = sql
+            const rowsAffected = TestHelperData.randomInt()
+            const errorMsg = TestHelperData.randomString()
+            Postgres.query = TestHelperPostgres.queryMock({
+                errorMsg,
+                expected: hasPostgres,
+                getRows: (values?: any) => {
+                    return [{ message: hasPostgres === false ? "" : values[0] }]
+                },
+                rowsAffected,
+            })
 
-                    // eslint-disable-next-line no-undefined
-                    if (hasPostgres === undefined) 
-                        throw errorMsg
-
-                    useResults(getQueryResult(hasPostgres ? values[0] : ""))
-                    return Promise.resolve(rowsAffected)
-                }
-            )
-
-            const testPostgres = new TestPostgres("", 1, "get", "")
+            const testPostgres = new TestPostgres({
+                action: "get",
+                apiVersion: TestHelperData.randomInt(),
+                name: TestHelperData.randomString(),
+                parameters: {},
+            })
             await testPostgres.init()
 
             // eslint-disable-next-line no-undefined
             if (hasPostgres === undefined) {
-                expect(testPostgres.getRowsAffected()).toBe(0)
-                const response = JSON.parse(testPostgres.getResponse())
-                expect(response.error).toBe(errorMsg)
-                expect(response.postgres).toBe(false)
+                TestHelperPostgres.expectBadRequest({
+                    endpoint: testPostgres,
+                    errorMsg,
+                    responseKey: "postgres",
+                    responseValue: false,
+                })
             } else {
                 expect(testPostgres.getRowsAffected()).toBe(rowsAffected)
-                expect(Postgres.query).toBeCalledWith(
-                    expect.stringContaining("SELECT"),
-                    expect.arrayContaining([expect.any(String)]),
-                    expect.any(Function)
-                )
+                TestHelperPostgres.expectQueryExists({ queryType: "SELECT" })
                 expect(testPostgres.getResponse()).toBe(
                     JSON.stringify({ postgres: hasPostgres })
                 )
@@ -58,17 +51,3 @@ describe(TestPostgres.name, () => {
         }
     )
 })
-
-function getQueryResult(message: string): QueryResult {
-    return {
-        command: "",
-        fields: [],
-        oid: 0,
-        rowCount: 0,
-        rows: [
-            {
-                message: message,
-            },
-        ],
-    }
-}

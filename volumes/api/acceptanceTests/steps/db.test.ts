@@ -7,10 +7,9 @@ let endpoint: Endpoint
 
 When("the API attempts to connect to postgres", async () => {
     const srvr = new Srvr()
-    endpoint = await srvr.createEndpoint("get", "TestPostgres")
+    endpoint = await srvr.createEndpoint({ action: "get", url: "TestPostgres" })
 })
 
 Then("the postgres connection is successful", () => {
-    console.log(endpoint)
     expect(endpoint.getResponse()).toBe(JSON.stringify({ postgres: true }))
 })

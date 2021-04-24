@@ -1,4 +1,5 @@
 import { Then, When } from "@cucumber/cucumber"
+import { Convert } from "../../src/Convert"
 import { Endpoint } from "../../src/Endpoint"
 import { Srvr } from "../../src/Srvr"
 import expect from "expect"
@@ -7,7 +8,7 @@ let endpoint: Endpoint
 
 When("{word} is attempted on {string}", async (action: string, url: string) => {
     const srvr = new Srvr()
-    endpoint = await srvr.createEndpoint(action, url)
+    endpoint = await srvr.createEndpoint({ action, url })
 })
 
 Then(
@@ -18,8 +19,9 @@ Then(
     }
 )
 
-Then("is passed parameters {string}", (parameters: string) => {
-    expect(parameters).toBe(endpoint.getParameters())
+Then("is passed parameters {string}", (urlParameters: string) => {
+    const convertedParameters = Convert.urlParametersToObject({ urlParameters })
+    expect(convertedParameters).toStrictEqual(endpoint.getParameters())
 })
 
 Then("it provides an HTTP status code of {int}", (status: number) => {

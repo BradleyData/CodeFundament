@@ -10,17 +10,21 @@ export class Postgres {
         user: "postgres",
     })
 
-    static async query(
-        sql: string,
-        values: any,
+    static async query({
+        sql,
+        useResults,
+        values,
+    }: {
+        sql: string
         // eslint-disable-next-line no-unused-vars
-        useResults?: (queryResult: QueryResult) => void
-    ): Promise<number> {
+        useResults?: ({ queryResult }: { queryResult: QueryResult }) => void
+        values: any
+    }): Promise<number> {
         const client = await this.pool.connect()
         const queryResult = await client.query(sql, values)
         // eslint-disable-next-line no-undefined
         if (useResults !== undefined) 
-            useResults(queryResult)
+            useResults({ queryResult })
         client.release()
         return queryResult.rowCount
     }

@@ -59,5 +59,6 @@
         "jest.config.js": true,
         "package-lock.json": true,
         "tsconfig.json": true
-    }
+    },
+    "npm.scriptExplorerAction": "run"
 }

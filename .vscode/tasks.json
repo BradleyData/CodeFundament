@@ -33,6 +33,13 @@
             "problemMatcher": []
         },
         {
+            "label": "Show logs",
+            "type": "shell",
+            "group": "none",
+            "command": "docker-compose logs --follow ${input:containerName}",
+            "problemMatcher": []
+        },
+        {
             "label": "Start all containers",
             "type": "shell",
             "group": "none",

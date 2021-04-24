@@ -1,5 +1,6 @@
 import * as Fs from "fs"
 import * as Http from "http"
+import { Convert } from "./Convert"
 import { Endpoint } from "./Endpoint"
 import { EndpointFactory } from "./EndpointFactory"
 
@@ -10,7 +11,10 @@ export class Srvr {
         this.server = Http.createServer()
     }
 
-    listen(port: string = "3000"): void {
+    listen(): void
+    // eslint-disable-next-line no-unused-vars
+    listen({ port }: { port?: string }): void
+    listen({ port = "3000" }: { port?: string } = {}): void {
         this.server.on(
             "request",
             async (
@@ -21,20 +25,23 @@ export class Srvr {
                 const url = req.url ?? ""
 
                 try {
-                    const endpoint = await this.createEndpoint(action, url)
+                    const endpoint = await this.createEndpoint({ action, url })
                     res.statusCode = endpoint.getStatusCode()
                     res.setHeader(
                         "Content-Type",
                         "application/json; charset=utf-8"
                     )
                     res.setHeader("Endpoint-Name", endpoint.getName())
-                    res.setHeader("Endpoint-Version", endpoint.getVersion())
+                    res.setHeader("Endpoint-Version", endpoint.getApiVersion())
                     res.setHeader("Requested-Action", endpoint.getAction())
-                    res.setHeader("Parameters-Sent", endpoint.getParameters())
+                    res.setHeader(
+                        "Parameters-Sent",
+                        JSON.stringify(endpoint.getParameters())
+                    )
                     res.setHeader("Rows-Affected", endpoint.getRowsAffected())
                     res.write(endpoint.getResponse())
                 } catch (error) {
-                    this.logError(error, action, url)
+                    this.logError({ action, error, url })
                 }
                 res.end()
             }
@@ -42,8 +49,14 @@ export class Srvr {
         this.server.listen(port)
     }
 
-    // eslint-disable-next-line no-unused-vars
-    shutdown(msg: string, onExit: (exitCode: number) => void): void {
+    shutdown({
+        msg,
+        onExit,
+    }: {
+        msg: string
+        // eslint-disable-next-line no-unused-vars
+        onExit: ({ exitCode }: { exitCode: number }) => void
+    }): void {
         let exitCode = 0
 
         console.info(`${msg} Graceful shutdown `, new Date().toISOString())
@@ -52,11 +65,17 @@ export class Srvr {
                 console.error(error)
                 exitCode = 1
             }
-            onExit(exitCode)
+            onExit({ exitCode })
         })
     }
 
-    async createEndpoint(action: string, url: string): Promise<Endpoint> {
+    async createEndpoint({
+        action,
+        url,
+    }: {
+        action: string
+        url: string
+    }): Promise<Endpoint> {
         let endpoint: Endpoint
 
         try {
@@ -84,20 +103,22 @@ export class Srvr {
                     ? "Default"
                     : sansVersion[firstParameterPosition - 1]
 
-            const parameters = sansVersion
-                .slice(firstParameterPosition)
-                .join("/")
+            const parameters = Convert.urlParametersToObject({
+                urlParameters: sansVersion
+                    .slice(firstParameterPosition)
+                    .join("/"),
+            })
 
-            const version = getVersion()
-            if (version === 0) 
+            const apiVersion = getVersion()
+            if (apiVersion === 0) 
                 throw new Error("Endpoint version undefined.")
 
-            endpoint = await EndpointFactory.createEndpoint(
-                `${endpointPath}${endpointName}`,
-                version,
+            endpoint = await EndpointFactory.createEndpoint({
                 action,
-                parameters
-            )
+                apiVersion,
+                name: `${endpointPath}${endpointName}`,
+                parameters,
+            })
 
             function getFirstParameterPosition(): number {
                 for (
@@ -106,20 +127,23 @@ export class Srvr {
                     position--
                 ) {
                     if (
-                        fileExists(
-                            sansVersion.slice(0, position).join("/"),
-                            sansVersion[position]
-                        )
+                        fileExists({
+                            filename: sansVersion[position],
+                            filepath: sansVersion.slice(0, position).join("/"),
+                        })
                     )
                         return position + 1
                 }
 
                 return 0
 
-                function fileExists(
-                    filepath: string,
+                function fileExists({
+                    filename,
+                    filepath,
+                }: {
                     filename: string
-                ): boolean {
+                    filepath: string
+                }): boolean {
                     try {
                         const files = Fs.readdirSync(
                             `${process.cwd()}/app/src/endpoint/${filepath}`
@@ -171,21 +195,29 @@ export class Srvr {
                 return allVersions[requestedVersionIndex - 1] ?? 0
             }
         } catch (error) {
-            this.logError(error, action, url)
+            this.logError({ action, error, url })
 
             const invalidVersion = -1
-            endpoint = await EndpointFactory.createEndpoint(
-                "",
-                invalidVersion,
+            endpoint = await EndpointFactory.createEndpoint({
                 action,
-                ""
-            )
+                apiVersion: invalidVersion,
+                name: "",
+                parameters: {},
+            })
         }
 
         return endpoint
     }
 
-    private logError(error: Error, action: string, url: string): void {
+    private logError({
+        action,
+        error,
+        url,
+    }: {
+        action: string
+        error: Error
+        url: string
+    }): void {
         console.log(`action: ${action}`)
         console.log(`url: ${url}`)
         console.log(

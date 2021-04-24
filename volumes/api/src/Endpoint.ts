@@ -1,20 +1,25 @@
 class Endpoint {
     protected name: string
-    protected version: number
+    protected apiVersion: number
     protected readonly action: string
-    protected readonly parameters: string
+    protected readonly parameters: { [key: string]: string }
     protected rowsAffected = 0
     protected response = "{}"
     private statusCode: StatusCode
 
-    constructor(
-        name: string,
-        version: number,
-        action: string,
-        parameters: string
-    ) {
+    constructor({
+        action,
+        apiVersion,
+        name,
+        parameters,
+    }: {
+        action: string
+        apiVersion: number
+        name: string
+        parameters: { [key: string]: string }
+    }) {
         this.name = name
-        this.version = version
+        this.apiVersion = apiVersion
         this.action = action.toUpperCase()
         this.parameters = parameters
         this.statusCode = 0
@@ -47,6 +52,22 @@ class Endpoint {
         this.response = "{}"
     }
 
+    protected returnError({
+        error,
+        output,
+    }: {
+        error: any
+        output: { [key: string]: any }
+    }): void {
+        output.error = {
+            message: error.message ?? error.toString(),
+            name: error.name ?? "Non-error Object",
+            stack: error.stack ?? [],
+        }
+        this.response = JSON.stringify(output)
+        this.statusCode = StatusCode.badRequest
+    }
+
     protected async delete(): Promise<void> {
         await this.invalidAction()
     }
@@ -67,7 +88,7 @@ class Endpoint {
         return this.name
     }
 
-    public getParameters(): string {
+    public getParameters(): { [key: string]: string } {
         return this.parameters
     }
 
@@ -83,8 +104,8 @@ class Endpoint {
         return this.statusCode
     }
 
-    public getVersion(): number {
-        return this.version
+    public getApiVersion(): number {
+        return this.apiVersion
     }
 }
 

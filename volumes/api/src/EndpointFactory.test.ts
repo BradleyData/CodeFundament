@@ -2,6 +2,7 @@ import { Default as DefaultEndpoint } from "./endpoint/Default.v1"
 import { Endpoint } from "./Endpoint"
 import { EndpointFactory } from "./EndpointFactory"
 import { Invalid as InvalidEndpoint } from "./endpoint/Invalid"
+import { TestHelperData } from "./testHelper/TestHelperData"
 import { mocked } from "ts-jest/utils"
 
 jest.mock("./Endpoint")
@@ -12,7 +13,12 @@ describe(EndpointFactory.name, () => {
     test("with invalid instanceof", async () => {
         expect.assertions(1)
         try {
-            await EndpointFactory.createEndpoint("Default", 1, "", "")
+            await EndpointFactory.createEndpoint({
+                action: TestHelperData.randomString(),
+                apiVersion: 1,
+                name: "Default",
+                parameters: {},
+            })
         } catch (err) {
             expect(err.message).toBe("Invalid endpoint.")
         }
@@ -28,7 +34,12 @@ describe(EndpointFactory.name, () => {
             )
             defaultEndpoint.prototype = endpoint.prototype
 
-            await EndpointFactory.createEndpoint("Default", 1, "", "")
+            await EndpointFactory.createEndpoint({
+                action: TestHelperData.randomString(),
+                apiVersion: 1,
+                name: "Default",
+                parameters: {},
+            })
         })
 
         test("with invalid version", async () => {
@@ -38,7 +49,12 @@ describe(EndpointFactory.name, () => {
             )
             invalidEndpoint.prototype = endpoint.prototype
 
-            await EndpointFactory.createEndpoint("Default", -1, "", "")
+            await EndpointFactory.createEndpoint({
+                action: TestHelperData.randomString(),
+                apiVersion: -1,
+                name: "Default",
+                parameters: {},
+            })
         })
     })
 })
