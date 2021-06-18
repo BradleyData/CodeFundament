@@ -1,18 +1,21 @@
 {
     "extends": "/home/node/config/shared/.eslintrc.json",
     "env": {
-        "jest": true,
+        "browser": false,
+        "mocha": true,
         "node": true
     },
     "overrides": [{
         "files": ["*.test.ts"],
         "rules": {
-            "dot-notation": "off"
+            "dot-notation": "off",
+            "no-unused-expressions": "off"
         }
     }],
     "rules": {
         "camelcase": "error",
         "no-unused-expressions": "error",
+        "no-unused-vars": ["error", {"argsIgnorePattern": "^(of)|(returns)$"}],
 
         "import/unambiguous": "error"
     }

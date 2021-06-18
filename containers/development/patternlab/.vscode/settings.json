@@ -35,9 +35,7 @@
         ".watch": true,
         "cucumber.js": true,
         "dependencyGraph.json": true,
-        "jest.config.js": true,
-        "package-lock.json": true,
-        "tsconfig.json": true
+        "package-lock.json": true
     },
     "files.watcherExclude": {
         ".cache/**": true,
@@ -56,8 +54,7 @@
         ".screenrc": true,
         "cucumber.js": true,
         "dependencyGraph.json": true,
-        "jest.config.js": true,
-        "package-lock.json": true,
-        "tsconfig.json": true
-    }
+        "package-lock.json": true
+    },
+    "npm.scriptExplorerAction": "run"
 }
