@@ -1,0 +1,18 @@
+{
+    "exclude": [
+        "config",
+        "app/src/index.ts",
+        "app/src/testHelper",
+        "app/src/wrapper",
+        "**/*.test.ts"
+    ],
+    "include": [
+        "app/src/**/*.ts"
+    ],
+    "reporter": [
+        "clover",
+        "html",
+        "text-summary"
+    ],
+    "report-dir": "/home/node/app/output/coverage"
+}

@@ -1,12 +1,18 @@
 {
     "extends": "/home/node/config/shared/tsconfig.json",
     "compilerOptions": {
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": ["ES2019", "esnext.asynciterable"],
         "outDir": "/home/node/app/www/",
         "target": "ES2019",
-
+        
         "types": [
-            "jest",
+            "mocha",
             "node"
         ]
-    }
+    },
+    "exclude": [
+        "/home/node/app/src/**/*.test.ts"
+    ]
 }

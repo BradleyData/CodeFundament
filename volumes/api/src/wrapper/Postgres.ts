@@ -20,7 +20,14 @@ export class Postgres {
         useResults?: ({ queryResult }: { queryResult: QueryResult }) => void
         values: any
     }): Promise<number> {
-        const client = await this.pool.connect()
+        let client
+        try {
+            client = await this.pool.connect()
+        } catch (error) {
+            console.log("Unable to connect to database.")
+            console.log(error)
+            return 0
+        }
         const queryResult = await client.query(sql, values)
         // eslint-disable-next-line no-undefined
         if (useResults !== undefined) 

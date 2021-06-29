@@ -25,6 +25,7 @@
         ".cache": true,
         ".config": true,
         ".npm": true,
+        ".nyc_output": true,
         ".stryker-tmp": true,
         ".vscode-server": true,
         ".bash_history": true,
@@ -35,7 +36,6 @@
         ".watch": true,
         "cucumber.js": true,
         "dependencyGraph.json": true,
-        "jest.config.js": true,
         "package-lock.json": true,
         "tsconfig.json": true
     },
@@ -56,9 +56,9 @@
         ".screenrc": true,
         "cucumber.js": true,
         "dependencyGraph.json": true,
-        "jest.config.js": true,
         "package-lock.json": true,
         "tsconfig.json": true
     },
+    "js/ts.implicitProjectConfig.experimentalDecorators": true,
     "npm.scriptExplorerAction": "run"
 }

@@ -1,15 +1,14 @@
 import { Then, When } from "@cucumber/cucumber"
-import { Endpoint } from "../../src/Endpoint"
-import { Srvr } from "../../src/Srvr"
-import expect from "expect"
+import { Postgres } from "../../src/graphql/resolver/Postgres"
+import { expect } from "chai"
 
-let endpoint: Endpoint
+let postgres: Postgres
 
 When("the API attempts to connect to postgres", async () => {
-    const srvr = new Srvr()
-    endpoint = await srvr.createEndpoint({ action: "get", url: "TestPostgres" })
+    postgres = new Postgres()
+    await postgres.Test()
 })
 
 Then("the postgres connection is successful", () => {
-    expect(endpoint.getResponse()).toBe(JSON.stringify({ postgres: true }))
+    expect(postgres.Postgres().Test).to.be.true
 })
