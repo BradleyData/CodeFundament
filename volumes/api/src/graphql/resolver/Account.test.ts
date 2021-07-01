@@ -9,7 +9,7 @@ import { expect } from "chai"
 
 EnvironmentSetup.initSinonChai()
 
-describe(Account.name, () => {
+describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     const account = new Account()
 
     /* eslint-disable no-unused-vars */
