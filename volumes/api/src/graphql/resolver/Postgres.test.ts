@@ -9,7 +9,7 @@ import { expect } from "chai"
 
 EnvironmentSetup.initSinonChai()
 
-describe(Postgres.name, () => {
+describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     const postgres = new Postgres()
 
     /* eslint-disable no-unused-vars */

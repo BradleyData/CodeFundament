@@ -1,5 +1,5 @@
 {
-    "entryPoints": "app/src",
+    "entryPoints": "/home/node/app/src",
     "exclude": ["**/index.ts", "**/*.test.ts"],
     "out": "/home/node/app/output/docs"
 }
