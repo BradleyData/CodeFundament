@@ -34,13 +34,26 @@ export class Account {
 
         try {
             await Postgres.query({
-                sql: "INSERT INTO login (username, version, salt, password) VALUES ($1::text, $2::int, $3::text, '')",
+                sql: `
+                    INSERT INTO login (username, version, salt, password)
+                    VALUES ($1::text, $2::int, $3::text, '')`,
                 values: [username, version, salt],
             })
         } catch {
             return false
         }
+        return true
+    }
 
+    async Delete({ username }: { username: string }): Promise<boolean> {
+        try {
+            await Postgres.query({
+                sql: "DELETE FROM login WHERE username = $1::text",
+                values: [username],
+            })
+        } catch {
+            return false
+        }
         return true
     }
 

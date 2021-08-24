@@ -90,8 +90,34 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         })
 
         it("cannot create an account", async () => {
+            const username = TestHelperData.randomString()
+
             query.throws()
-            const result = await account.Create("")
+            const result = await account.Create(username)
+
+            expect(result).to.be.false
+        })
+    })
+
+    describe("deletion", () => {
+        it("can delete an account", async () => {
+            const username = TestHelperData.randomString()
+
+            const result = await account.Delete({ username })
+
+            TestHelperPostgres.expectQueryExists({
+                queryStub: query,
+                queryType: "DELETE",
+                withValues: [username],
+            })
+            expect(result).to.be.true
+        })
+
+        it("cannot delete an account", async () => {
+            const username = TestHelperData.randomString()
+
+            query.throws()
+            const result = await account.Delete({ username })
 
             expect(result).to.be.false
         })
