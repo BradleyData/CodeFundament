@@ -41,7 +41,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         const message = /^Postgres .*$/u
         const values = [Sinon.match(message)]
 
-        await postgres.Test()
+        await postgres.IsWorking()
 
         TestHelperPostgres.expectQueryExists({
             queryStub: query,
@@ -51,7 +51,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     })
 
     it("returns true when messages match", async () => {
-        await postgres.Test()
+        await postgres.IsWorking()
         const message = query.firstCall.args[0].values[0]
 
         const result = await checkMessage({ message })
@@ -77,6 +77,6 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         })
 
         query.yieldsTo("useResults", { queryResult })
-        return await postgres.Test()
+        return await postgres.IsWorking()
     }
 })

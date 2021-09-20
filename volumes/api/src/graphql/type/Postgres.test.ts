@@ -6,6 +6,6 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     it("has a single boolean with a default", () => {
         const postgres = new Postgres()
 
-        expect(postgres.Test).to.be.false
+        expect(postgres.IsWorking).to.be.false
     })
 })

@@ -1,5 +1,6 @@
 import { Arg, Mutation, Query, Resolver } from "type-graphql"
 import { Crypto } from "../../wrapper/Crypto"
+import { DefaultFalse } from "../../type/DefaultFalse"
 import { Postgres } from "../../wrapper/Postgres"
 import { QueryResult } from "pg"
 
@@ -7,7 +8,7 @@ import { QueryResult } from "pg"
 export class Account {
     @Query((returns) => Boolean)
     async UsernameExists(@Arg("username") username: string): Promise<boolean> {
-        let exists = false
+        const exists = new DefaultFalse()
 
         await Postgres.query({
             sql: "SELECT username FROM login WHERE username = $1::text",
@@ -16,7 +17,7 @@ export class Account {
             }: {
                 queryResult: QueryResult
             }): void => {
-                exists = this.parseResult({
+                exists.value = this.parseResult({
                     queryResult,
                     username,
                 })
@@ -24,7 +25,7 @@ export class Account {
             values: [username],
         })
 
-        return exists
+        return exists.value
     }
 
     @Mutation((returns) => Boolean)
