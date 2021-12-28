@@ -6,9 +6,9 @@ let postgres: Postgres
 
 When("the API attempts to connect to postgres", async () => {
     postgres = new Postgres()
-    await postgres.Test()
+    await postgres.IsWorking()
 })
 
 Then("the postgres connection is successful", () => {
-    expect(postgres.Postgres().Test).to.be.true
+    expect(postgres.Postgres().IsWorking).to.be.true
 })

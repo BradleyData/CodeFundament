@@ -17,7 +17,7 @@ export class Postgres implements ResolverInterface<PostgresType> {
     }
 
     @FieldResolver()
-    async Test(): Promise<boolean> {
+    async IsWorking(): Promise<boolean> {
         const message = "Postgres is working."
 
         try {
@@ -28,13 +28,13 @@ export class Postgres implements ResolverInterface<PostgresType> {
                 }: {
                     queryResult: QueryResult
                 }): void => {
-                    this.postgresType.Test =
+                    this.postgresType.IsWorking =
                         queryResult.rows[0].message === message
                 },
                 values: [message],
             })
         } catch (error) {} // eslint-disable-line no-empty
 
-        return this.postgresType.Test
+        return this.postgresType.IsWorking
     }
 }
