@@ -144,6 +144,7 @@
         "import/no-self-import": "error",
         "import/no-unassigned-import": "error",
         "import/no-unresolved": "off",
-        "import/no-unused-modules": "error"
+        "import/no-unused-modules": "error",
+        "import/no-named-as-default-member": "off"
     }
 }

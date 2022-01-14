@@ -1,5 +1,6 @@
 .env
 *.swp
+zzzzz.txt
 
 secrets/
 
