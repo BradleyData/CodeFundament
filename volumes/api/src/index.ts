@@ -11,6 +11,10 @@ runServer()
 
 async function runServer() {
     const schema = await buildSchema({
+        emitSchemaFile: {
+            commentDescriptions: true,
+            path: `${__dirname}/schema.gql`,
+        },
         resolvers: [`${__dirname}/graphql/resolver/!(*.test).ts`],
     })
 

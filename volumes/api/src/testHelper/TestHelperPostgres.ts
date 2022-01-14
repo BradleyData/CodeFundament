@@ -23,11 +23,13 @@ export class TestHelperPostgres {
 
         function getRegex(): RegExp {
             if (queryType === "SELECT") 
-                return /^SELECT.*$/u
+                return /^\s*SELECT[\s\S]*$/mu
             if (queryType === "INSERT") 
-                return /^INSERT.*$/u
+                return /^\s*INSERT[\s\S]*$/mu
             if (queryType === "UPDATE") 
-                return /^UPDATE.*$/u
+                return /^\s*UPDATE[\s\S]*$/mu
+            if (queryType === "DELETE") 
+                return /^\s*DELETE[\s\S]*$/mu
 
             return /^$/u
         }
