@@ -1,5 +1,6 @@
 {
     "entryPoints": "/home/node/app/src",
+    "entryPointStrategy": "expand",
     "exclude": ["**/index.ts", "**/*.test.ts"],
     "out": "/home/node/app/output/docs"
 }
