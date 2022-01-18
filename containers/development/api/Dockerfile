@@ -4,7 +4,6 @@ EXPOSE 3000
 ENV NODE_ENV=production
 WORKDIR /home/node
 COPY --chown=node:node package*.json ./
-COPY --chown=node:node config config/
 RUN npm config list && \
     npm ci && \
     npm cache clean --force && \
