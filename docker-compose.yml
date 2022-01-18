@@ -30,6 +30,7 @@ services:
         secrets:
             - source: POSTGRES_PASSWORD
         volumes:
+            - ./containers/development/api/config/:/home/node/config
             - ./containers/config:/home/node/config/shared
             - ./volumes/api:/home/node/app
     info:
@@ -48,6 +49,7 @@ services:
         networks:
             - traefik
         volumes:
+            - ./containers/development/patternlab/config/:/home/node/config
             - ./containers/config:/home/node/config/shared
             - ./volumes/patternlab:/home/node/app
             - ../${ASSETS_PATH}:/home/node/app/src/assets

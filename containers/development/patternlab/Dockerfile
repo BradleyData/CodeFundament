@@ -12,7 +12,6 @@ ENV NODE_ENV=production
 WORKDIR /home/node
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node gulpfile.js ./
-COPY --chown=node:node config config/
 RUN npm config list && \
     npm ci && \
     npm cache clean --force && \
