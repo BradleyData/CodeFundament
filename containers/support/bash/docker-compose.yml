@@ -5,4 +5,4 @@ services:
         build: .
         command: ["bash", "/root/checkVersions.sh"]
         volumes:
-            - ../../..:/root/framework
+            - ../../..:/root/foundation

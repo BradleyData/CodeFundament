@@ -7,13 +7,13 @@
 - **Linux:** Also install [Docker Compose](https://docs.docker.com/compose/install/).
 - **Windows:** Also install [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 ### DNS Proxy
-- This framework will make all containers available on the domain "local.test". To simplify development, you should configure a DNS proxy to redirect all requests for "local.test" to 127.0.0.1 (your computer). This should not cause conflicts because the [test TLD is reserved](https://en.wikipedia.org/wiki/.test) for these purposes. If you already have a DNS proxy on your intranet, you can adjust its configuration and not install one on your computer.
+- This foundation will make all containers available on the domain "local.test". To simplify development, you should configure a DNS proxy to redirect all requests for "local.test" to 127.0.0.1 (your computer). This should not cause conflicts because the [test TLD is reserved](https://en.wikipedia.org/wiki/.test) for these purposes. If you already have a DNS proxy on your intranet, you can adjust its configuration and not install one on your computer.
 - **Any system:** [Pi-hole](https://pi-hole.net/) can be installed on a Raspberry Pi on your network or in a Docker container on your computer. In addition to working as DNS proxy, it will block internet ads for you.
 - **Linux:** [Dnsmasq](http://www.thekelleys.org.uk/dnsmasq/doc.html)
 - **Mac:** TBD
 - **Windows:** [Acrylic](https://mayakron.altervista.org/support/acrylic/Home.htm)
 ### Visual Studio Code
-- [VSCode](https://code.visualstudio.com/Download) is optional, but highly recommended. The goal is to make this framework function just fine with any toolchain, but there are environment settings and helper scripts defined to make things simpler in VSCode.
+- [VSCode](https://code.visualstudio.com/Download) is optional, but highly recommended. The goal is to make this foundation function just fine with any toolchain, but there are environment settings and helper scripts defined to make things simpler in VSCode.
 - Make sure the following extensions are installed:
   - Docker by Microsoft
   - GitHub Pull Requests and Issues by GitHub (Optional. If you aren't using GitHub then you won't need this.)
