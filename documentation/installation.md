@@ -31,6 +31,7 @@
   - Make any other configuration changes you want. The goal is to get you started quickly, not chain you to the provided code. Use as much or as little as you like.
 ### Prepare your local copy (once per computer per project)
 - Copy .env.template to .env and make any changes needed.
+- Copy any secrets/*.template files and make any changes needed.
 - Configure git with your username and email.
   - git config user.name "Your Name"
   - git config user.email "your@email.com" If you are using GitHub and have your email address set to be private, then you **must** use the email address they provide "SomethingRandom@users.noreply.github.com".
@@ -47,5 +48,6 @@ If you are not using VSCode, you can refer to **.vscode/tasks.json** to see the 
 - Click on **Terminal** and then **Run task...**
 - You should see a list of pre-programmed scripts available.
 - Select **Start all containers** to bring up the development stack.
+- The postgres container will automatically shutdown if it doesn't find its data. Run **Initialize postgres database** to resolve this and rerun **Start all containers**.
 - Go to the Remote Explorer in the left side-bar and click on the icon for **Attach to Container** next to the API container. A new VSCode window will open and the Explorer will have a button **Open Folder**. The default path should be "/home/node". On subsequent runs, attaching to the container should automatically open this folder.
     - **Windows:** If you are using the Run on Save extension then you will need to install it in the container.
