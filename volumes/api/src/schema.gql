@@ -4,14 +4,14 @@
 # -----------------------------------------------
 
 type Mutation {
-  Create(username: String!): Boolean!
+    Create(username: String!): Boolean!
 }
 
 type Postgres {
-  IsWorking: Boolean!
+    IsWorking: Boolean!
 }
 
 type Query {
-  Postgres: Postgres!
-  UsernameExists(username: String!): Boolean!
+    Postgres: Postgres!
+    UsernameExists(username: String!): Boolean!
 }
