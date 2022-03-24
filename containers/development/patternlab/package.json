@@ -20,11 +20,11 @@
         "eslint-plugin-import": "2.25.4",
         "prettier": "2.6.0",
 
-        "@pattern-lab/cli": "5.15.5",
-        "@pattern-lab/core": "5.15.5",
-        "@pattern-lab/engine-handlebars": "5.15.1",
-        "@pattern-lab/plugin-tab": "5.15.1",
-        "@pattern-lab/uikit-workshop": "5.15.7",
+        "@pattern-lab/cli": "5.16.2",
+        "@pattern-lab/core": "5.16.2",
+        "@pattern-lab/engine-handlebars": "5.16.1",
+        "@pattern-lab/plugin-tab": "5.16.1",
+        "@pattern-lab/uikit-workshop": "5.16.2",
 
         "node-sass": "7.0.1",
 
