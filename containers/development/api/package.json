@@ -19,11 +19,11 @@
 
         "typedoc": "0.22.10",
 
-        "@typescript-eslint/eslint-plugin": "5.9.1",
-        "@typescript-eslint/parser": "5.9.1",
-        "eslint": "8.6.0",
+        "@typescript-eslint/eslint-plugin": "5.16.0",
+        "@typescript-eslint/parser": "5.16.0",
+        "eslint": "8.11.0",
         "eslint-plugin-import": "2.25.4",
-        "prettier": "2.5.1",
+        "prettier": "2.6.0",
 
         "graphql": "15.7.2",
         "type-graphql": "1.1.1",
