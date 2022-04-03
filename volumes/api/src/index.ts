@@ -1,22 +1,20 @@
 import "reflect-metadata" // eslint-disable-line import/no-unassigned-import
 import Express from "express"
 import { Postgres } from "./wrapper/Postgres"
-import { buildSchema } from "type-graphql"
+import { Schema } from "./Schema"
 import compression from "compression"
 import { graphqlHTTP } from "express-graphql"
+import { printSchema } from "graphql"
+import { writeFile } from "fs"
 
 const defaultPort = 3000
 
 runServer()
 
-async function runServer() {
-    const schema = await buildSchema({
-        emitSchemaFile: {
-            commentDescriptions: true,
-            path: `${__dirname}/schema.gql`,
-        },
-        resolvers: [`${__dirname}/graphql/resolver/!(*.test).ts`],
-    })
+function runServer() {
+    const schema = new Schema().generate()
+    if (process.env.NODE_ENV === "development")
+        writeFile("app/src/schema2.gql", printSchema(schema), () => {}) // eslint-disable-line no-empty-function
 
     const express = Express()
     express.use(compression())
