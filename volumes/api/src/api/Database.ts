@@ -3,7 +3,7 @@ import { QueryResult } from "pg"
 
 export class Database {
     async isWorking(): Promise<boolean> {
-        const message = "Postgres is working."
+        const message = "The database is working."
 
         let output = false
 
