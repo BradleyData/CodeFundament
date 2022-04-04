@@ -1,3 +1,4 @@
+import { DefaultFalse } from "../type/DefaultFalse"
 import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
 
@@ -5,7 +6,7 @@ export class Database {
     async isWorking(): Promise<boolean> {
         const message = "The database is working."
 
-        let output = false
+        let output = new DefaultFalse().value
 
         try {
             await Postgres.query({
