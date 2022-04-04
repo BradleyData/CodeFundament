@@ -1,9 +1,10 @@
+import { DefaultFalse } from "../type/DefaultFalse"
 import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
 
 export class Account {
     async usernameExists({ username }: { username: string }): Promise<boolean> {
-        let exists = false
+        let exists = new DefaultFalse().value
 
         await Postgres.query({
             sql: "SELECT username FROM login WHERE username = $1::text",
