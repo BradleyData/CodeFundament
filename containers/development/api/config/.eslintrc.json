@@ -5,17 +5,25 @@
         "mocha": true,
         "node": true
     },
-    "overrides": [{
-        "files": ["*.test.ts"],
-        "rules": {
-            "dot-notation": "off",
-            "no-unused-expressions": "off"
+    "overrides": [
+        {
+            "files": ["*.test.ts"],
+            "rules": {
+                "dot-notation": "off",
+                "no-unused-expressions": "off"
+            }
+        },
+        {
+            "files": ["**/**/testHelper/mock/*.ts"],
+            "rules": {
+                "no-undefined": "off"
+            }
         }
-    }],
+    ],
     "rules": {
         "camelcase": "error",
         "no-unused-expressions": "error",
-        "no-unused-vars": ["error", {"argsIgnorePattern": "^(of)|(returns)$"}],
+        "no-unused-vars": ["error", {"argsIgnorePattern": "^_$"}],
 
         "import/unambiguous": "error"
     }

@@ -1,14 +1,11 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql"
-import { Crypto } from "../../wrapper/Crypto"
-import { DefaultFalse } from "../../type/DefaultFalse"
-import { Postgres } from "../../wrapper/Postgres"
+import { Crypto } from "../wrapper/Crypto"
+import { DefaultFalse } from "../type/DefaultFalse"
+import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
 
-@Resolver()
 export class Account {
-    @Query((returns) => Boolean)
-    async UsernameExists(@Arg("username") username: string): Promise<boolean> {
-        const exists = new DefaultFalse()
+    async usernameExists({ username }: { username: string }): Promise<boolean> {
+        let exists = new DefaultFalse().value
 
         await Postgres.query({
             sql: "SELECT username FROM login WHERE username = $1::text",
@@ -17,7 +14,7 @@ export class Account {
             }: {
                 queryResult: QueryResult
             }): void => {
-                exists.value = this.parseResult({
+                exists = this.parseResult({
                     queryResult,
                     username,
                 })
@@ -25,11 +22,10 @@ export class Account {
             values: [username],
         })
 
-        return exists.value
+        return exists
     }
 
-    @Mutation((returns) => Boolean)
-    async Create(@Arg("username") username: string): Promise<boolean> {
+    async create({ username }: { username: string }): Promise<boolean> {
         const version = this.currentLoginVersion()
         const salt = Crypto.getSalt()
 
@@ -46,7 +42,7 @@ export class Account {
         return true
     }
 
-    async Delete({ username }: { username: string }): Promise<boolean> {
+    async delete({ username }: { username: string }): Promise<boolean> {
         try {
             await Postgres.query({
                 sql: "DELETE FROM login WHERE username = $1::text",

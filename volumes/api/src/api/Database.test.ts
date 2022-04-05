@@ -1,16 +1,16 @@
-import { EnvironmentSetup } from "../../testHelper/EnvironmentSetup"
-import { Postgres as Pg } from "../../wrapper/Postgres"
-import { Postgres } from "./Postgres"
+import { Database } from "./Database"
+import { EnvironmentSetup } from "../testHelper/EnvironmentSetup"
+import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
 import Sinon from "sinon"
-import { TestHelperData } from "../../testHelper/TestHelperData"
-import { TestHelperPostgres } from "../../testHelper/TestHelperPostgres"
+import { TestHelperData } from "../testHelper/TestHelperData"
+import { TestHelperPostgres } from "../testHelper/TestHelperPostgres"
 import { expect } from "chai"
 
 EnvironmentSetup.initSinonChai()
 
 describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
-    const postgres = new Postgres()
+    const database = new Database()
 
     /* eslint-disable no-unused-vars */
     let query: Sinon.SinonStub<
@@ -30,7 +30,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     /* eslint-enable no-unused-vars */
 
     beforeEach(() => {
-        query = Sinon.stub(Pg, "query")
+        query = Sinon.stub(Postgres, "query")
     })
 
     afterEach(() => {
@@ -38,10 +38,10 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     })
 
     it("queries the database", async () => {
-        const message = /^Postgres .*$/u
+        const message = /^The database.*$/u
         const values = [Sinon.match(message)]
 
-        await postgres.IsWorking()
+        await database.isWorking()
 
         TestHelperPostgres.expectQueryExists({
             queryStub: query,
@@ -51,7 +51,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     })
 
     it("returns true when messages match", async () => {
-        await postgres.IsWorking()
+        await database.isWorking()
         const message = query.firstCall.args[0].values[0]
 
         const result = await checkMessage({ message })
@@ -77,6 +77,6 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         })
 
         query.yieldsTo("useResults", { queryResult })
-        return await postgres.IsWorking()
+        return await database.isWorking()
     }
 })

@@ -1,14 +1,15 @@
 import { Then, When } from "@cucumber/cucumber"
-import { Postgres } from "../../src/graphql/resolver/Postgres"
+import { Database } from "../../src/api/Database"
 import { expect } from "chai"
 
-let postgres: Postgres
+let database: Database
+let result: boolean
 
-When("the API attempts to connect to postgres", async () => {
-    postgres = new Postgres()
-    await postgres.IsWorking()
+When("the API attempts to connect to the database", async () => {
+    database = new Database()
+    result = await database.isWorking()
 })
 
-Then("the postgres connection is successful", () => {
-    expect(postgres.Postgres().IsWorking).to.be.true
+Then("the database connection is successful", () => {
+    expect(result).to.be.true
 })

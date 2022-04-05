@@ -1,11 +1,11 @@
 import { Account } from "./Account"
-import { Crypto } from "../../wrapper/Crypto"
-import { EnvironmentSetup } from "../../testHelper/EnvironmentSetup"
-import { Postgres } from "../../wrapper/Postgres"
+import { Crypto } from "../wrapper/Crypto"
+import { EnvironmentSetup } from "../testHelper/EnvironmentSetup"
+import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
 import Sinon from "sinon"
-import { TestHelperData } from "../../testHelper/TestHelperData"
-import { TestHelperPostgres } from "../../testHelper/TestHelperPostgres"
+import { TestHelperData } from "../testHelper/TestHelperData"
+import { TestHelperPostgres } from "../testHelper/TestHelperPostgres"
 import { expect } from "chai"
 
 EnvironmentSetup.initSinonChai()
@@ -47,7 +47,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         it("queries the database", async () => {
             const username = TestHelperData.randomString()
 
-            await account.UsernameExists(username)
+            await account.usernameExists({ username })
 
             TestHelperPostgres.expectQueryExists({
                 queryStub: query,
@@ -79,7 +79,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         it("can create an account", async () => {
             const username = TestHelperData.randomString()
 
-            const result = await account.Create(username)
+            const result = await account.create({ username })
 
             TestHelperPostgres.expectQueryExists({
                 queryStub: query,
@@ -93,7 +93,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             const username = TestHelperData.randomString()
 
             query.throws()
-            const result = await account.Create(username)
+            const result = await account.create({ username })
 
             expect(result).to.be.false
         })
@@ -103,7 +103,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         it("can delete an account", async () => {
             const username = TestHelperData.randomString()
 
-            const result = await account.Delete({ username })
+            const result = await account.delete({ username })
 
             TestHelperPostgres.expectQueryExists({
                 queryStub: query,
@@ -117,7 +117,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             const username = TestHelperData.randomString()
 
             query.throws()
-            const result = await account.Delete({ username })
+            const result = await account.delete({ username })
 
             expect(result).to.be.false
         })
@@ -135,6 +135,6 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         })
 
         query.yieldsTo("useResults", { queryResult })
-        return await account.UsernameExists(username)
+        return await account.usernameExists({ username })
     }
 })

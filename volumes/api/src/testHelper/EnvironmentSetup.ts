@@ -1,4 +1,5 @@
 import Chai from "chai"
+import Sinon from "sinon"
 import SinonChai from "sinon-chai"
 
 export class EnvironmentSetup {
@@ -8,5 +9,19 @@ export class EnvironmentSetup {
 
     static initSinonChai() {
         Chai.use(SinonChai)
+    }
+
+    static mockClass({
+        className,
+        fileName,
+        overrides,
+    }: {
+        className: string
+        fileName: string
+        overrides: object
+    }) {
+        const MockedFile = require(`../${fileName}`)
+        const stub = Sinon.createStubInstance(MockedFile[className], overrides)
+        Sinon.stub(MockedFile, className).returns(stub)
     }
 }
