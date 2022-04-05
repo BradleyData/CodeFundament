@@ -1,5 +1,5 @@
 import { Given, Then, When } from "@cucumber/cucumber"
-import { Account } from "../../src/graphql/resolver/Account"
+import { Account } from "../../src/api/Account"
 import { expect } from "chai"
 
 let account: Account
@@ -12,22 +12,22 @@ Given("the username is available", async () => {
     account = new Account()
     username = "UsernameForTestingAccountCreationWithAvailableUsername"
 
-    if (await account.UsernameExists(username) === true)
-        await account.Delete({ username })
+    if (await account.usernameExists({ username }) === true)
+        await account.delete({ username })
 })
 
 Given("the username is unavailable", async () => {
     account = new Account()
     username = "UsernameForTestingAccountCreationWithUnavailableUsername"
 
-    if (await account.UsernameExists(username) === false)
-        await account.Create(username)
+    if (await account.usernameExists({ username }) === false)
+        await account.create({ username })
 })
 
 When("a person attempts to create an account", async () => {
-    existsBeforeCreate = await account.UsernameExists(username)
-    createSucceeds = await account.Create(username)
-    existsAfterCreate = await account.UsernameExists(username)
+    existsBeforeCreate = await account.usernameExists({ username })
+    createSucceeds = await account.create({ username })
+    existsAfterCreate = await account.usernameExists({ username })
 })
 
 Then("the username is created", () => {
