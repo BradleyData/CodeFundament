@@ -1,5 +1,5 @@
 import { Account } from "./Account"
-// import { Crypto } from "../wrapper/Crypto"
+import { Crypto } from "../wrapper/Crypto"
 import { EnvironmentSetup } from "../testHelper/EnvironmentSetup"
 import { Postgres } from "../wrapper/Postgres"
 import { QueryResult } from "pg"
@@ -12,11 +12,11 @@ EnvironmentSetup.initSinonChai()
 
 describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     const account = new Account()
-    // const salt = Sinon.replace(
-    //     Crypto,
-    //     "getSalt",
-    //     Sinon.fake.returns(TestHelperData.randomString())
-    // )
+    const salt = Sinon.replace(
+        Crypto,
+        "getSalt",
+        Sinon.fake.returns(TestHelperData.randomString())
+    )
 
     /* eslint-disable no-unused-vars */
     let query: Sinon.SinonStub<
@@ -75,6 +75,54 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         })
     })
 
+    describe("creation", () => {
+        it("can create an account", async () => {
+            const username = TestHelperData.randomString()
+
+            const result = await account.create({ username })
+
+            TestHelperPostgres.expectQueryExists({
+                queryStub: query,
+                queryType: "INSERT",
+                withValues: [username, Sinon.match.number, salt()],
+            })
+            expect(result).to.be.true
+        })
+
+        it("cannot create an account", async () => {
+            const username = TestHelperData.randomString()
+
+            query.throws()
+            const result = await account.create({ username })
+
+            expect(result).to.be.false
+        })
+    })
+
+    describe("deletion", () => {
+        it("can delete an account", async () => {
+            const username = TestHelperData.randomString()
+
+            const result = await account.delete({ username })
+
+            TestHelperPostgres.expectQueryExists({
+                queryStub: query,
+                queryType: "DELETE",
+                withValues: [username],
+            })
+            expect(result).to.be.true
+        })
+
+        it("cannot delete an account", async () => {
+            const username = TestHelperData.randomString()
+
+            query.throws()
+            const result = await account.delete({ username })
+
+            expect(result).to.be.false
+        })
+    })
+
     async function checkUsername({
         isValid,
         username,
@@ -90,51 +138,3 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         return await account.usernameExists({ username })
     }
 })
-
-//     describe("creation", () => {
-//         it("can create an account", async () => {
-//             const username = TestHelperData.randomString()
-
-//             const result = await account.Create(username)
-
-//             TestHelperPostgres.expectQueryExists({
-//                 queryStub: query,
-//                 queryType: "INSERT",
-//                 withValues: [username, Sinon.match.number, salt()],
-//             })
-//             expect(result).to.be.true
-//         })
-
-//         it("cannot create an account", async () => {
-//             const username = TestHelperData.randomString()
-
-//             query.throws()
-//             const result = await account.Create(username)
-
-//             expect(result).to.be.false
-//         })
-//     })
-
-//     describe("deletion", () => {
-//         it("can delete an account", async () => {
-//             const username = TestHelperData.randomString()
-
-//             const result = await account.Delete({ username })
-
-//             TestHelperPostgres.expectQueryExists({
-//                 queryStub: query,
-//                 queryType: "DELETE",
-//                 withValues: [username],
-//             })
-//             expect(result).to.be.true
-//         })
-
-//         it("cannot delete an account", async () => {
-//             const username = TestHelperData.randomString()
-
-//             query.throws()
-//             const result = await account.Delete({ username })
-
-//             expect(result).to.be.false
-//         })
-//     })

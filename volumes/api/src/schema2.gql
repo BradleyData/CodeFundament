@@ -1,8 +1,0 @@
-type Query {
-  Postgres: Postgres
-  UsernameExists(username: String): Boolean
-}
-
-type Postgres {
-  IsWorking: Boolean
-}

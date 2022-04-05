@@ -1,5 +1,5 @@
+import * as Graphql from "graphql"
 import { EnvironmentSetup } from "../testHelper/EnvironmentSetup"
-import { GraphQLBoolean } from "graphql"
 import { Postgres } from "./Postgres"
 import Sinon from "sinon"
 import { expect } from "chai"
@@ -13,7 +13,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             fileName: "schema/Postgres/IsWorking",
             overrides: {
                 generate: {
-                    type: GraphQLBoolean,
+                    type: Graphql.GraphQLBoolean,
                 },
             },
         })

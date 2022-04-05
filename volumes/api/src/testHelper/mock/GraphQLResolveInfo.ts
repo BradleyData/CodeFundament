@@ -1,11 +1,6 @@
-import {
-    GraphQLBoolean,
-    GraphQLDirective,
-    GraphQLObjectType,
-    GraphQLResolveInfo,
-} from "graphql"
+import * as Graphql from "graphql"
 
-const mockGraphQLResolveInfo: GraphQLResolveInfo = {
+const mockGraphQLResolveInfo: Graphql.GraphQLResolveInfo = {
     fieldName: "",
     fieldNodes: [],
     fragments: {},
@@ -17,7 +12,7 @@ const mockGraphQLResolveInfo: GraphQLResolveInfo = {
             selections: [],
         },
     },
-    parentType: new GraphQLObjectType({
+    parentType: new Graphql.GraphQLObjectType({
         fields: {},
         name: "",
     }),
@@ -26,7 +21,7 @@ const mockGraphQLResolveInfo: GraphQLResolveInfo = {
         prev: undefined,
         typename: "",
     },
-    returnType: GraphQLBoolean,
+    returnType: Graphql.GraphQLBoolean,
     rootValue: undefined,
     schema: {
         astNode: undefined,
@@ -34,7 +29,7 @@ const mockGraphQLResolveInfo: GraphQLResolveInfo = {
         extensionASTNodes: undefined,
         extensions: undefined,
         getDirective: () => {
-            return new GraphQLDirective({
+            return new Graphql.GraphQLDirective({
                 locations: [],
                 name: "",
             })
@@ -49,7 +44,7 @@ const mockGraphQLResolveInfo: GraphQLResolveInfo = {
             }
         },
         getMutationType: () => {
-            return new GraphQLObjectType({
+            return new Graphql.GraphQLObjectType({
                 fields: {},
                 name: "",
             })
@@ -58,19 +53,19 @@ const mockGraphQLResolveInfo: GraphQLResolveInfo = {
             return []
         },
         getQueryType: () => {
-            return new GraphQLObjectType({
+            return new Graphql.GraphQLObjectType({
                 fields: {},
                 name: "",
             })
         },
         getSubscriptionType: () => {
-            return new GraphQLObjectType({
+            return new Graphql.GraphQLObjectType({
                 fields: {},
                 name: "",
             })
         },
         getType: () => {
-            return new GraphQLObjectType({
+            return new Graphql.GraphQLObjectType({
                 fields: {},
                 name: "",
             })

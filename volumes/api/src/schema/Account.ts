@@ -1,19 +1,22 @@
 import * as Graphql from "graphql"
+import { Create } from "./Account/Create"
+import { Delete } from "./Account/Delete"
 import { Generator } from "../Generator"
-import { IsWorking } from "./Postgres/IsWorking"
 
-export class Postgres extends Generator {
+export class Account extends Generator {
     constructor() {
         super()
+
         super.type = this.newType()
     }
 
     newType(): Graphql.GraphQLObjectType {
         return new Graphql.GraphQLObjectType({
             fields: {
-                IsWorking: new IsWorking().generate(),
+                Create: new Create().generate(),
+                Delete: new Delete().generate(),
             },
-            name: "Postgres",
+            name: "Account",
         })
     }
 }

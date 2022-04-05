@@ -1,5 +1,5 @@
+import * as Graphql from "graphql"
 import { EnvironmentSetup } from "./testHelper/EnvironmentSetup"
-import { GraphQLBoolean } from "graphql"
 import { Schema } from "./Schema"
 import Sinon from "sinon"
 import { expect } from "chai"
@@ -12,9 +12,15 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     before(() => {
         const overrides = {
             generate: {
-                type: GraphQLBoolean,
+                type: Graphql.GraphQLBoolean,
             },
         }
+
+        EnvironmentSetup.mockClass({
+            className: "Account",
+            fileName: "schema/Account",
+            overrides,
+        })
 
         EnvironmentSetup.mockClass({
             className: "Postgres",
@@ -36,11 +42,21 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     it("generates a GraphQL schema", () => {
         const result = schema.generate()
 
-        const query = result.getQueryType()
-        const queryFields =
-            query === null || query === undefined ? {} : query.getFields() // eslint-disable-line no-undefined
-
         expect(result).to.be.a("GraphQLSchema")
-        expect(queryFields).to.not.be.empty
+        expect(getFields({ objectType: result.getMutationType() })).to.not.be
+            .empty
+        expect(getFields({ objectType: result.getQueryType() })).to.not.be.empty
     })
+
+    function getFields({
+        objectType,
+    }: {
+        objectType: null | undefined | Graphql.GraphQLObjectType
+    }): Graphql.GraphQLFieldMap<any, any> {
+        /* eslint-disable no-undefined */
+        if (objectType === null || objectType === undefined) 
+            return {}
+        /* eslint-enable no-undefined */
+        return objectType.getFields()
+    }
 })

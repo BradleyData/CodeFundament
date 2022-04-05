@@ -1,8 +1,8 @@
 import * as Graphql from "graphql"
-import { Account } from "../api/Account"
-import { Generator } from "../Generator"
+import { Account } from "../../api/Account"
+import { Generator } from "../../Generator"
 
-export class UsernameExists extends Generator {
+export class Delete extends Generator {
     constructor() {
         super()
 
@@ -15,7 +15,7 @@ export class UsernameExists extends Generator {
         }
 
         super.resolve = (_: any, { username }: any): Promise<boolean> => {
-            return new Account().usernameExists({ username })
+            return new Account().delete({ username })
         }
     }
 }

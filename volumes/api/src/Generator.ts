@@ -1,15 +1,9 @@
-import {
-    GraphQLBoolean,
-    GraphQLFieldConfig,
-    GraphQLFieldConfigArgumentMap,
-    GraphQLFieldResolver,
-    GraphQLOutputType,
-} from "graphql"
+import * as Graphql from "graphql"
 
 export class Generator {
-    protected type: GraphQLOutputType = GraphQLBoolean
+    protected type: Graphql.GraphQLOutputType = Graphql.GraphQLBoolean
 
-    protected resolve: GraphQLFieldResolver<
+    protected resolve: Graphql.GraphQLFieldResolver<
         string,
         string,
         { [argName: string]: any }
@@ -17,9 +11,9 @@ export class Generator {
             return false
         }
 
-    protected args?: GraphQLFieldConfigArgumentMap
+    protected args?: Graphql.GraphQLFieldConfigArgumentMap
 
-    generate(): GraphQLFieldConfig<string, string> {
+    generate(): Graphql.GraphQLFieldConfig<string, string> {
         return {
             args: this.args,
             resolve: this.resolve,
