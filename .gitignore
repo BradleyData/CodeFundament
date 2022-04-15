@@ -7,6 +7,9 @@ secrets/
 volumes/api/output
 volumes/api/www
 
+volumes/dbmigration/app/output
+volumes/dbmigration/app/www
+
 volumes/patternlab/pattern_exports
 volumes/patternlab/www
 

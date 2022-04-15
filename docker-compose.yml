@@ -33,6 +33,24 @@ services:
             - ./containers/development/typescript/config/:/home/node/config
             - ./containers/config:/home/node/config/shared
             - ./volumes/api:/home/node/app
+            - ./volumes/typescript/testHelper:/home/node/app/src/testHelper
+            - ./volumes/typescript/wrapper:/home/node/app/src/wrapper
+    dbmigration:
+        build:
+            context: ./containers/development/typescript
+            target: dev
+        networks:
+            - traefik
+        secrets:
+            - source: POSTGRES_PASSWORD
+        volumes:
+            - ./containers/development/typescript/config/:/home/node/config
+            - ./containers/config:/home/node/config/shared
+            - ./volumes/dbmigration/app:/home/node/app
+            - ./volumes/typescript/testHelper:/home/node/app/src/testHelper
+            - ./volumes/typescript/wrapper:/home/node/app/src/wrapper
+            - ./volumes/dbmigration/migrations:/home/node/migrations
+            - .git/HEAD:/home/node/.HEAD
     info:
         build:
             context: ./containers/support/info
@@ -42,6 +60,7 @@ services:
             - traefik
         volumes:
             - ./volumes/api/output:/usr/local/apache2/htdocs/api
+            - ./volumes/dbmigration/app/output:/usr/local/apache2/htdocs/dbmigration
     patternlab:
         build:
             context: ./containers/development/patternlab
