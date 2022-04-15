@@ -23,14 +23,14 @@ services:
         volumes: *docker-volume
     api:
         build:
-            context: ./containers/development/api
+            context: ./containers/development/typescript
             target: dev
         networks:
             - traefik
         secrets:
             - source: POSTGRES_PASSWORD
         volumes:
-            - ./containers/development/api/config/:/home/node/config
+            - ./containers/development/typescript/config/:/home/node/config
             - ./containers/config:/home/node/config/shared
             - ./volumes/api:/home/node/app
     info:

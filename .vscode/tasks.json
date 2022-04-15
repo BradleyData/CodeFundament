@@ -79,10 +79,10 @@
             "id": "devContainerName",
             "description": "Which docker container?",
             "type": "pickString",
-            "default": "api",
+            "default": "typescript",
             "options": [
-                "api",
-                "patternlab"
+                "patternlab",
+                "typescript"
             ]
         }
     ]
