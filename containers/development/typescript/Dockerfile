@@ -26,6 +26,7 @@ ENV PATH=/home/node/node_modules/.bin:$PATH
 WORKDIR /home/node
 RUN npm install --include=dev && touch ./.watch
 CMD nodemon --ext "ts" --watch "app/src/*" --watch ".watch" --ignore "*.test.ts"  -- --project=./config/tsconfig.json app/src/index.ts
+
 FROM dev as update
 WORKDIR /home/node
 CMD ["/bin/bash", "config/shared/update.sh"]
