@@ -20,7 +20,9 @@ RUN apt-get update && \
         openssh-client openssh-server && \
     mkdir /run/sshd
 USER node
-RUN echo "shell '/bin/bash'" > /home/node/.screenrc
+RUN echo "shell '/bin/bash'" > /home/node/.screenrc && \
+    echo "" >> /home/node/.bashrc && \
+    echo "alias ssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'" >> /home/node/.bashrc
 # Done installing things.
 COPY --chown=node:node .vscode .vscode/
 COPY --chown=node:node .ssh .ssh/
