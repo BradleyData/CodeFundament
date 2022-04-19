@@ -16,16 +16,19 @@ USER root
 RUN apt-get update && \
     apt-get install --yes --no-install-recommends \
         screen vim \
-        procps
+        procps \
+        openssh-client openssh-server && \
+    mkdir /run/sshd
 USER node
 RUN echo "shell '/bin/bash'" > /home/node/.screenrc
 # Done installing things.
 COPY --chown=node:node .vscode .vscode/
+COPY --chown=node:node .ssh .ssh/
 ENV NODE_ENV=development
 ENV PATH=/home/node/node_modules/.bin:$PATH
 WORKDIR /home/node
 RUN npm install --include=dev && touch ./.watch
-CMD nodemon --ext "ts" --watch "app/src/*" --watch ".watch" --ignore "*.test.ts"  -- --project=./config/tsconfig.json app/src/index.ts
+CMD /usr/sbin/sshd -f /home/node/.ssh/sshd_config; nodemon --ext "ts" --watch "app/src/*" --watch ".watch" --ignore "*.test.ts"  -- --project=./config/tsconfig.json app/src/index.ts
 
 FROM dev as update
 WORKDIR /home/node
