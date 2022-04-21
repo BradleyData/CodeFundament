@@ -28,7 +28,7 @@
     "!app/src/**/*.test.ts",
     "!app/src/index.ts",
     "!app/src/testHelper/**/*.ts",
-    "!app/src/wrapper/**/*.ts"
+    "!app/src/wrapper*/**/*.ts"
   ],
   "thresholds": {
       "high": 100,

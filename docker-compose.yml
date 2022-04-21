@@ -38,7 +38,7 @@ services:
     dbmigration:
         build:
             context: ./containers/development/typescript
-            target: dev
+            target: withgit
         networks:
             - traefik
         secrets:
@@ -50,7 +50,7 @@ services:
             - ./volumes/typescript/testHelper:/home/node/app/src/testHelper
             - ./volumes/typescript/wrapper:/home/node/app/src/wrapper
             - ./volumes/dbmigration/migrations:/home/node/migrations
-            - .git/HEAD:/home/node/.HEAD
+            - ./:/home/node/gitRepo
     info:
         build:
             context: ./containers/support/info

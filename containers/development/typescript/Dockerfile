@@ -37,3 +37,9 @@ CMD /usr/sbin/sshd -f /home/node/.ssh/sshd_config; nodemon --ext "ts" --watch "a
 FROM dev as update
 WORKDIR /home/node
 CMD ["/bin/bash", "config/shared/update.sh"]
+
+FROM dev as withgit
+USER root
+RUN apt-get install --yes --no-install-recommends \
+        git
+USER node
