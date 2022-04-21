@@ -61,5 +61,8 @@
         "tsconfig.json": true
     },
     "js/ts.implicitProjectConfig.experimentalDecorators": true,
+    "npm.exclude": [
+        "**/gitRepo/**"
+    ],
     "npm.scriptExplorerAction": "run"
 }
