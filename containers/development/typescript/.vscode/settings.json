@@ -60,6 +60,7 @@
         "package-lock.json": true,
         "tsconfig.json": true
     },
+    "git.enabled": false,
     "js/ts.implicitProjectConfig.experimentalDecorators": true,
     "npm.exclude": [
         "**/gitRepo/**"
