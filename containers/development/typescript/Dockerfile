@@ -29,7 +29,9 @@ COPY --chown=node:node .ssh .ssh/
 ENV NODE_ENV=development
 ENV PATH=/home/node/node_modules/.bin:$PATH
 WORKDIR /home/node
-RUN npm install --include=dev && touch ./.watch
+RUN npm install --include=dev && \
+    touch ./.watch && \
+    chmod -R 0700 /home/node/.ssh
 CMD /usr/sbin/sshd -f /home/node/.ssh/sshd_config; nodemon --ext "ts" --watch "app/src/*" --watch ".watch" --ignore "*.test.ts"  -- --project=./config/tsconfig.json app/src/index.ts
 
 FROM dev as update
