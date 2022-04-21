@@ -50,7 +50,7 @@ services:
             - ./volumes/typescript/testHelper:/home/node/app/src/testHelper
             - ./volumes/typescript/wrapper:/home/node/app/src/wrapper
             - ./volumes/dbmigration/migrations:/home/node/migrations
-            - ./:/home/node/gitRepo
+            - ./:/home/node/gitRepo:ro
     info:
         build:
             context: ./containers/support/info
