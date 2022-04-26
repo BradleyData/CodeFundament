@@ -21,20 +21,20 @@ export class Git {
 
     private static retrieveP({pType, branch}: {pType: string, branch: string}): void {
         updateGit()
-        addTree()
+        addWorktree()
         retrieveFiles()
-        removeTree()
+        removeWorktree()
 
         function updateGit(): void {
             execSync(`${Git.cmd} fetch --all`)
         }
 
-        function addTree(): void {
-            removeTree()
+        function addWorktree(): void {
+            removeWorktree()
             execSync(`${Git.cmd} worktree add /home/node/gitRepos/${pType} ${branch}`)
         }
 
-        function removeTree(): void {
+        function removeWorktree(): void {
             execSync(`${Git.cmd} worktree remove --force /home/node/gitRepos/${pType} 2>/dev/null || true`)
         }
 
