@@ -58,13 +58,15 @@
         ".screenrc": true,
         "cucumber.js": true,
         "dependencyGraph.json": true,
+        "gitRepos/**": true,
         "package-lock.json": true,
-        "tsconfig.json": true
+        "tsconfig.json": true,
+        "volumes/**": true
     },
     "git.enabled": false,
     "js/ts.implicitProjectConfig.experimentalDecorators": true,
     "npm.exclude": [
-        "**/gitRepo/**"
+        "**/gitRepos/**"
     ],
     "npm.scriptExplorerAction": "run"
 }

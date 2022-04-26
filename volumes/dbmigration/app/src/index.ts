@@ -11,6 +11,8 @@ function runServer() {
     const express = Express()
     express.use(compression())
     express.get("/", (req, res) => {
+        Git.retrievePrime()
+        Git.retrieveProduction()
         res.send(Git.getBranchName())
     })
     const server = express.listen(process.env.PORT ?? defaultPort)

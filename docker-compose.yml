@@ -35,6 +35,11 @@ services:
             - ./volumes/api:/home/node/app
             - ./volumes/typescript/testHelper:/home/node/app/src/testHelper
             - ./volumes/typescript/wrapper:/home/node/app/src/wrapper
+    apiprime:
+        extends:
+            service: api
+        volumes:
+            - ./volumes/apiprime:/home/node/app
     dbmigration:
         build:
             context: ./containers/development/typescript
@@ -50,7 +55,10 @@ services:
             - ./volumes/typescript/testHelper:/home/node/app/src/testHelper
             - ./volumes/typescript/wrapper:/home/node/app/src/wrapper
             - ./volumes/dbmigration/migrations:/home/node/migrations
-            - ./:/home/node/gitRepo:ro
+            - ./volumes/dbmigration/gitRepos:/home/node/gitRepos
+            - ./:/home/node/gitRepos/current
+            - ./volumes/apiprime:/home/node/volumes/apiprime
+            - ./volumes/apiproduction:/home/node/volumes/apiproduction
     info:
         build:
             context: ./containers/support/info

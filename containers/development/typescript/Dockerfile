@@ -41,5 +41,5 @@ CMD ["/bin/bash", "config/shared/update.sh"]
 FROM dev as withgit
 USER root
 RUN apt-get install --yes --no-install-recommends \
-        git
+        git apt-transport-https ca-certificates
 USER node
