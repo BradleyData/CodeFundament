@@ -40,6 +40,11 @@ services:
             service: api
         volumes:
             - ./volumes/apiprime:/home/node/app
+    apiproduction:
+        extends:
+            service: api
+        volumes:
+            - ./volumes/apiproduction:/home/node/app
     dbmigration:
         build:
             context: ./containers/development/typescript
