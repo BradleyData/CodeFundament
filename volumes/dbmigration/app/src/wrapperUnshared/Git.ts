@@ -1,6 +1,8 @@
 import { execSync } from "child_process"
 
+/* eslint-disable import/export */
 export class Git {
+    /* eslint-enable import/export */
     private static workTree = "/home/node/gitRepos/current"
     private static gitDir = `${Git.workTree}/.git`
     private static cmd = `git --work-tree=${Git.workTree} --git-dir=${Git.gitDir}`
@@ -10,16 +12,29 @@ export class Git {
     }
 
     static getBranchParent(): string {
-        return execSync(`${Git.cmd} show-branch --merge-base ${Git.getDefaultBranch()}`).toString()
+        return execSync(
+            `${Git.cmd} show-branch --merge-base ${Git.getDefaultBranch()}`
+        ).toString()
     }
 
     static getDefaultBranch(): string {
-        const path = 'refs/remotes/origin/'
+        const path = "refs/remotes/origin/"
 
-        return execSync(`${Git.cmd} symbolic-ref ${path}HEAD | sed 's@^${path}@@'`).toString()
+        return execSync(
+            `${Git.cmd} symbolic-ref ${path}HEAD | sed 's@^${path}@@'`
+        ).toString()
     }
 
-    private static retrieveP({pType, branch}: {pType: string, branch: string}): void {
+    static retrieveBranch({
+        branchType,
+    }: {
+        branchType: Git.branchType
+    }): void {
+        const branch = {
+            [Git.branchType.prime]: Git.getBranchParent(),
+            [Git.branchType.production]: Git.getDefaultBranch(),
+        }[branchType]
+
         updateGit()
         addWorktree()
         retrieveFiles()
@@ -31,26 +46,38 @@ export class Git {
 
         function addWorktree(): void {
             removeWorktree()
-            execSync(`${Git.cmd} worktree add /home/node/gitRepos/${pType} ${branch}`)
+            execSync(
+                `${Git.cmd} worktree add /home/node/gitRepos/${branchType} ${branch}`
+            )
         }
 
         function removeWorktree(): void {
-            execSync(`${Git.cmd} worktree remove --force /home/node/gitRepos/${pType} 2>/dev/null || true`)
+            execSync(
+                `${Git.cmd} worktree remove --force /home/node/gitRepos/${branchType} 2>/dev/null || true`
+            )
         }
 
         function retrieveFiles(): void {
-            execSync(`rm -rf /home/node/volumes/api${pType}/*`)
-            execSync(`mv /home/node/gitRepos/${pType}/volumes/api/* /home/node/volumes/api${pType}/`)
-            execSync(`touch /home/node/volumes/api${pType}/src/.gitkeep`)
-            execSync(`mv /home/node/gitRepos/${pType}/volumes/dbmigration/migrations/schema.sql /home/node/migrations/schema${pType}.sql || touch /home/node/migrations/schema${pType}.sql`)
+            execSync(`rm -rf /home/node/volumes/api${branchType}/*`)
+            execSync(
+                `mv /home/node/gitRepos/${branchType}/volumes/api/* /home/node/volumes/api${branchType}/`
+            )
+            execSync(`touch /home/node/volumes/api${branchType}/src/.gitkeep`)
+
+            const fromSchema = `/home/node/gitRepos/${branchType}/volumes/dbmigration/migrations/schema.sql`
+            const toSchema = `/home/node/migrations/schema${branchType}.sql`
+            execSync(`mv ${fromSchema} ${toSchema} || touch ${toSchema}`)
         }
     }
+}
 
-    static retrievePrime(): void {
-        Git.retrieveP({pType: 'prime', branch: Git.getBranchParent()})
+/* eslint-disable import/export, no-redeclare */
+export namespace Git {
+    /* eslint-enable import/export, no-redeclare */
+    /* eslint-disable no-shadow, no-unused-vars */
+    export enum branchType {
+        prime = "prime",
+        production = "production",
     }
-
-    static retrieveProduction(): void {
-        Git.retrieveP({pType: 'production', branch: Git.getDefaultBranch()})
-    }
+    /* eslint-enable no-shadow, no-unused-vars */
 }
