@@ -69,6 +69,43 @@ export class Git {
             execSync(`mv ${fromSchema} ${toSchema} || touch ${toSchema}`)
         }
     }
+
+    static runAcceptanceTests(): { output: string; successful: boolean }
+    static runAcceptanceTests({
+        /* eslint-disable no-unused-vars */
+        branchType,
+    }: /* eslint-enable no-unused-vars */
+    {
+        branchType?: Git.branchType | ""
+    }): { output: string; successful: boolean }
+    static runAcceptanceTests({
+        branchType = "",
+    }: { branchType?: Git.branchType | "" } = {}): {
+        output: string
+        successful: boolean
+    } {
+        const result = {
+            output: "",
+            successful: false,
+        }
+
+        try {
+            const ignoreKnownHosts =
+                "-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+            const containerName = `api${branchType}`
+            result.output = execSync(
+                `ssh ${ignoreKnownHosts} ${containerName} npm run acceptanceTests 2>&1`
+            ).toString()
+            result.successful = true
+        } catch (error) {
+            if (error instanceof Error) 
+                result.output += error.stack ?? ""
+            else 
+                throw error
+        }
+
+        return result
+    }
 }
 
 /* eslint-disable import/export, no-redeclare */

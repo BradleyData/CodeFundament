@@ -2,7 +2,7 @@ import { Client } from "pg"
 import { Postgres as Pg } from "../wrapper/Postgres"
 
 export class Postgres {
-    static async recreate(): Promise<boolean> {
+    static async truncateDb(): Promise<boolean> {
         let result = true
         const tempdbName = "todeletefrom"
 
@@ -11,11 +11,11 @@ export class Postgres {
             await Pg.end()
         } catch {} // eslint-disable-line no-empty
 
-        await dropCreate({
+        await dropThenCreate({
             client: new Client(connectionInfo),
             dbName: tempdbName,
         })
-        await dropCreate({
+        await dropThenCreate({
             client: new Client({
                 ...connectionInfo,
                 database: tempdbName,
@@ -26,7 +26,7 @@ export class Postgres {
 
         return result
 
-        async function dropCreate({
+        async function dropThenCreate({
             client,
             dbName,
         }: {

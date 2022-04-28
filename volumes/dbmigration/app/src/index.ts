@@ -1,7 +1,6 @@
+import { Branch } from "./Branch"
 import Express from "express"
-import { Git } from "./wrapperUnshared/Git"
 import { Postgres } from "./wrapper/Postgres"
-import { Rebuild } from "./Rebuild"
 import compression from "compression"
 
 const defaultPort = 3000
@@ -11,9 +10,8 @@ runServer()
 function runServer() {
     const express = Express()
     express.use(compression())
-    express.get("/", (req, res) => {
-        Rebuild.updateDb()
-        res.send(Git.getBranchName())
+    express.get("/", async (req, res) => {
+        res.send(await Branch.runTests())
     })
     const server = express.listen(process.env.PORT ?? defaultPort)
 
