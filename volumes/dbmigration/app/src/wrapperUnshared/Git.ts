@@ -93,15 +93,26 @@ export class Git {
             const ignoreKnownHosts =
                 "-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
             const containerName = `api${branchType}`
+
             result.output = execSync(
                 `ssh ${ignoreKnownHosts} ${containerName} npm run acceptanceTests 2>&1`
             ).toString()
             result.successful = true
         } catch (error) {
-            if (error instanceof Error) 
-                result.output += error.stack ?? ""
-            else 
-                throw error
+            result.output += getOutputAndError(error as ExecSyncError)
+
+            function getOutputAndError(execSyncError: ExecSyncError): string {
+                return (
+                    `${execSyncError.stdout.toString() 
+                    }<br><br>${ 
+                        execSyncError.stderr.toString()}`
+                )
+            }
+
+            class ExecSyncError {
+                stdout: Buffer = Buffer.from("")
+                stderr: Buffer = Buffer.from("")
+            }
         }
 
         return result

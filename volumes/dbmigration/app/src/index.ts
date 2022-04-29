@@ -1,5 +1,6 @@
 import { Branch } from "./Branch"
 import Express from "express"
+import { Git } from "./wrapperUnshared/Git"
 import { Postgres } from "./wrapper/Postgres"
 import compression from "compression"
 
@@ -11,7 +12,10 @@ function runServer() {
     const express = Express()
     express.use(compression())
     express.get("/", async (req, res) => {
-        res.send(await Branch.runTests())
+        res.send(
+            await Branch.runTests({ branchType: Git.branchType.production }) +
+                await Branch.runTests()
+        )
     })
     const server = express.listen(process.env.PORT ?? defaultPort)
 
