@@ -21,7 +21,9 @@
   "tsconfigFile": "/home/node/config/tsconfig.json",
   "ignorePatterns": [
     "/app/**",
-    "!/app/src/**/*.ts"
+    "!/app/src/**/*.ts",
+    "/.*",
+    "/!(app|config)"
   ],
   "mutate": [
     "app/src/**/*.ts",
