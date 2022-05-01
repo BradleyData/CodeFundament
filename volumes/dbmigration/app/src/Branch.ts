@@ -1,7 +1,7 @@
+import { Fs } from "./wrapper/Fs"
 import { Git } from "./wrapperUnshared/Git"
 import { Postgres as Pg1 } from "./wrapper/Postgres"
 import { Postgres as Pg2 } from "./wrapperUnshared/Postgres"
-import { readFileSync } from "fs"
 
 export class Branch {
     static runTests(): Promise<string>
@@ -23,12 +23,12 @@ export class Branch {
             results += `Retrieved ${branchName}.<br>`
         }
 
-        await Pg2.truncateDb()
+        if (! await Pg2.truncateDb())
+            return results + `Unable to drop/create db for ${branchName}.<br>`
         await Pg1.query({
-            sql: readFileSync(
-                `/home/node/migrations/schema${branchType}.sql`,
-                "utf8"
-            ),
+            sql: Fs.readFileSync({
+                file: `/home/node/migrations/schema${branchType}.sql`
+            }),
             values: [],
         })
         results += "Rebuilt database.<br>"
