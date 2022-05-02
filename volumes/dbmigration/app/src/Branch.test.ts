@@ -11,14 +11,20 @@ import { expect } from "chai"
 EnvironmentSetup.initSinonChai()
 
 describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
+    let readFileSync: Sinon.SinonStub<[{ file: string }], string>
+
     function replaceDependencies({
+        dbError,
         testsReturn,
         truncationReturn,
     }: {
+        dbError: boolean
         testsReturn: boolean
         truncationReturn: boolean
     }): void {
-        Sinon.replace(Fs, "readFileSync", Sinon.fake())
+        readFileSync = Sinon.stub(Fs, "readFileSync").returns("")
+        if (dbError) 
+            readFileSync.throws()
         Sinon.replace(Git, "retrieveBranch", Sinon.fake())
         Sinon.replace(
             Git,
@@ -34,7 +40,11 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     })
 
     it("works for current with all successes", async () => {
-        replaceDependencies({ testsReturn: true, truncationReturn: true })
+        replaceDependencies({
+            dbError: false,
+            testsReturn: true,
+            truncationReturn: true,
+        })
         const result = await Branch.runTests()
 
         const resultString = result.toString()
@@ -44,10 +54,14 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         expect(resultString).to.include("current")
         expect(resultString).to.include("<pre>")
         expect(resultString).to.include("succeeded")
+        expect(readFileSync).to.be.calledOnce.and.calledWith({
+            file: Sinon.match("home"),
+        })
     })
 
-    it("works for production with all successes", async () => {
+    it("works for production", async () => {
         replaceDependencies({
+            dbError: TestHelperData.randomBool(),
             testsReturn: TestHelperData.randomBool(),
             truncationReturn: TestHelperData.randomBool(),
         })
@@ -63,6 +77,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
 
     it("works for current with truncation failure", async () => {
         replaceDependencies({
+            dbError: TestHelperData.randomBool(),
             testsReturn: TestHelperData.randomBool(),
             truncationReturn: false,
         })
@@ -73,8 +88,25 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         expect(resultString).to.include("Unable")
     })
 
+    it("works for current with db error", async () => {
+        replaceDependencies({
+            dbError: true,
+            testsReturn: TestHelperData.randomBool(),
+            truncationReturn: true,
+        })
+        const result = await Branch.runTests()
+
+        const resultString = result.toString()
+
+        expect(resultString).to.include("Schema")
+    })
+
     it("works for current with test failure", async () => {
-        replaceDependencies({ testsReturn: false, truncationReturn: true })
+        replaceDependencies({
+            dbError: false,
+            testsReturn: false,
+            truncationReturn: true,
+        })
         const result = await Branch.runTests()
 
         const resultString = result.toString()
