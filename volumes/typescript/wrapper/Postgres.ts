@@ -15,12 +15,12 @@ export class Postgres {
     static async query({
         sql,
         useResults,
-        values,
+        values = [],
     }: {
         sql: string
         // eslint-disable-next-line no-unused-vars
         useResults?: ({ queryResult }: { queryResult: QueryResult }) => void
-        values: any
+        values?: any
     }): Promise<number> {
         let client
         try {

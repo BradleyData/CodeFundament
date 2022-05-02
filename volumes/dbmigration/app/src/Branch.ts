@@ -30,7 +30,6 @@ export class Branch {
                 sql: Fs.readFileSync({
                     file: `/home/node/migrations/schema${branchType}.sql`,
                 }),
-                values: [],
             })
             results.push("Rebuilt database.")
         } catch {
