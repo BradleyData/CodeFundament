@@ -12,10 +12,18 @@ function runServer() {
     const express = Express()
     express.use(compression())
     express.get("/", async (req, res) => {
-        res.send(
-            await Branch.runTests({ branchType: Git.branchType.production }) +
-                await Branch.runTests()
+        // eslint-disable-next-line no-array-constructor
+        const content = new Array<string>().concat(
+            await Branch.runTests({ branchType: Git.branchType.production }),
+            await Branch.runTests()
         )
+        res.send(contentToString())
+
+        function contentToString(): string {
+            return content.reduce((current, addend) => {
+                return `${current}<br>${addend}`
+            }, "")
+        }
     })
     const server = express.listen(process.env.PORT ?? defaultPort)
 

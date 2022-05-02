@@ -47,7 +47,7 @@ export class Git {
         function addWorktree(): void {
             removeWorktree()
             execSync(
-                `${Git.cmd} worktree add /home/node/gitRepos/${branchType} ${branch}`
+                `${Git.cmd} worktree add -f -f /home/node/gitRepos/${branchType} ${branch}`
             )
         }
 
@@ -70,17 +70,11 @@ export class Git {
         }
     }
 
-    static runAcceptanceTests(): { output: string; successful: boolean }
     static runAcceptanceTests({
-        /* eslint-disable no-unused-vars */
         branchType,
-    }: /* eslint-enable no-unused-vars */
-    {
-        branchType?: Git.branchType | ""
-    }): { output: string; successful: boolean }
-    static runAcceptanceTests({
-        branchType = "",
-    }: { branchType?: Git.branchType | "" } = {}): {
+    }: {
+        branchType: Git.branchType | ""
+    }): {
         output: string
         successful: boolean
     } {
@@ -102,11 +96,7 @@ export class Git {
             result.output += getOutputAndError(error as ExecSyncError)
 
             function getOutputAndError(execSyncError: ExecSyncError): string {
-                return (
-                    `${execSyncError.stdout.toString() 
-                    }<br><br>${ 
-                        execSyncError.stderr.toString()}`
-                )
+                return `${execSyncError.stdout.toString()}<br><br>${execSyncError.stderr.toString()}`
             }
 
             class ExecSyncError {

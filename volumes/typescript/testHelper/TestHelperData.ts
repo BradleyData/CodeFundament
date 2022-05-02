@@ -1,4 +1,9 @@
 export class TestHelperData {
+    static randomBool(): boolean {
+        const half = 0.5
+        return Math.random() < half
+    }
+
     static randomInt(): number
     static randomInt({
         /* eslint-disable no-unused-vars */
