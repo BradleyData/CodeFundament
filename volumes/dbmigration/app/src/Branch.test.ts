@@ -45,11 +45,10 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             testsReturn: true,
             truncationReturn: true,
         })
-        const result = await Branch.runTests()
 
+        const result = await Branch.runTests()
         const resultString = result.toString()
 
-        expect(result[0]).to.be.not.empty
         expect(result[0]).to.include("Rebuilt")
         expect(resultString).to.include("current")
         expect(resultString).to.include("<pre>")
@@ -65,10 +64,10 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             testsReturn: TestHelperData.randomBool(),
             truncationReturn: TestHelperData.randomBool(),
         })
+
         const result = await Branch.runTests({
             branchType: Git.branchType.production,
         })
-
         const resultString = result.toString()
 
         expect(resultString).to.include("Retrieved")
@@ -81,8 +80,8 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             testsReturn: TestHelperData.randomBool(),
             truncationReturn: false,
         })
-        const result = await Branch.runTests()
 
+        const result = await Branch.runTests()
         const resultString = result.toString()
 
         expect(resultString).to.include("Unable")
@@ -94,8 +93,8 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             testsReturn: TestHelperData.randomBool(),
             truncationReturn: true,
         })
-        const result = await Branch.runTests()
 
+        const result = await Branch.runTests()
         const resultString = result.toString()
 
         expect(resultString).to.include("Schema")
@@ -107,8 +106,8 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             testsReturn: false,
             truncationReturn: true,
         })
-        const result = await Branch.runTests()
 
+        const result = await Branch.runTests()
         const resultString = result.toString()
 
         expect(resultString).to.include("failed")
