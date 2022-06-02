@@ -1,6 +1,6 @@
 import { expect } from "chai"
 
-export class TestHelperAsync {
+export class Async {
     static async expectThrow({
         fn,
         message,

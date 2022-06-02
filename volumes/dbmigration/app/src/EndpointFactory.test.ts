@@ -1,7 +1,7 @@
+import { Async } from "./testHelper/Async"
 import { EndpointFactory } from "./EndpointFactory"
 import { EnvironmentSetup } from "./testHelper/EnvironmentSetup"
 import Sinon from "sinon"
-import { TestHelperAsync } from "./testHelper/TestHelperAsync"
 import { TestHelperData } from "./testHelper/TestHelperData"
 import { expect } from "chai"
 
@@ -39,7 +39,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             overrides: {},
         })
 
-        await TestHelperAsync.expectThrow({
+        await Async.expectThrow({
             fn: () => EndpointFactory.createEndpoint(endpointSettings),
             message: "Invalid",
         })
