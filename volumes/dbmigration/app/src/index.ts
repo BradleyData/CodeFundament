@@ -1,45 +1,41 @@
-import { Branch } from "./Branch"
-import Express from "express"
-import { Git } from "./wrapperUnshared/Git"
+// import { Branch } from "./Branch"
+// import { Git } from "./wrapperUnshared/Git"
 import { Postgres } from "./wrapper/Postgres"
-import compression from "compression"
+import { Srvr } from "./Srvr"
 
-const defaultPort = 3000
+// express.get("/", async (req, res) => {
+//     // eslint-disable-next-line no-array-constructor
+//     const content = new Array<string>().concat(
+//         await Branch.runTests({ branchType: Git.branchType.production }),
+//         await Branch.runTests()
+//     )
+//     res.send(contentToString())
 
-runServer()
+//     function contentToString(): string {
+//         return content.reduce((current, addend) => {
+//             return `${current}<br>${addend}`
+//         }, "")
+//     }
+// })
 
-function runServer() {
-    const express = Express()
-    express.use(compression())
-    express.get("/", async (req, res) => {
-        // eslint-disable-next-line no-array-constructor
-        const content = new Array<string>().concat(
-            await Branch.runTests({ branchType: Git.branchType.production }),
-            await Branch.runTests()
-        )
-        res.send(contentToString())
+const srvr = new Srvr()
+srvr.listen({ port: process.env.PORT })
 
-        function contentToString(): string {
-            return content.reduce((current, addend) => {
-                return `${current}<br>${addend}`
-            }, "")
-        }
-    })
-    const server = express.listen(process.env.PORT ?? defaultPort)
-
-    process.on("SIGINT", () =>
-        onExit({ msg: "Got SIGINT (aka ctrl-c in docker)." })
-    )
-    process.on("SIGTERM", () =>
-        onExit({ msg: "Got SIGTERM (docker container stop)." })
-    )
-
-    async function onExit({ msg }: { msg: string }): Promise<void> {
-        await server.close(() => {
-            console.info(`${msg} Graceful shutdown `, new Date().toISOString())
-        })
-        await Postgres.end()
-        process.exitCode = 0
-        process.exit()
-    }
+const onExit = async ({ exitCode }: { exitCode: number }): Promise<void> => {
+    await Postgres.end()
+    process.exitCode = exitCode
+    process.exit()
 }
+
+process.on("SIGINT", () =>
+    srvr.shutdown({
+        msg: "Got SIGINT (aka ctrl-c in docker).",
+        onExit,
+    })
+)
+process.on("SIGTERM", () =>
+    srvr.shutdown({
+        msg: "Got SIGTERM (docker container stop).",
+        onExit,
+    })
+)
