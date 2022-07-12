@@ -1,4 +1,5 @@
-import Http from "http"
+import { Http } from "../wrapper/Http"
+import { Event as ServerEvent } from "./Event"
 
 export class Srvr {
     private readonly server: Http.Server
@@ -14,18 +15,11 @@ export class Srvr {
     listen({ port = "3000" }: { port?: string } = {}): void {
         this.server.on(
             "request",
-            (req: Http.IncomingMessage, res: Http.ServerResponse): void => {
-                try {
-                    res.statusCode = 200
-                    res.write("server working")
-                } catch (error) {
-                    const e = error as Error
-                    console.log(
-                        e.stack ?? `${e.name}: ${e.message} (stack missing)`
-                    )
-                }
-                res.end()
-            }
+            async (
+                req: Http.IncomingMessage,
+                res: Http.ServerResponse
+            ): Promise<void> =>
+                await ServerEvent.onRequest({ request: req, response: res })
         )
         this.server.listen(port)
     }

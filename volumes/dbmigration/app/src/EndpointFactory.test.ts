@@ -15,7 +15,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     }
 
     before(() => {
-        EnvironmentSetup.mockClass({
+        EnvironmentSetup.stubClass({
             className: "Default",
             fileName: "endpoint/Default",
             overrides: {},
@@ -33,7 +33,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     })
 
     it("throws exception with invalid instanceof", async () => {
-        EnvironmentSetup.mockClass({
+        EnvironmentSetup.stubClass({
             className: "Endpoint",
             fileName: "Endpoint",
             overrides: {},
