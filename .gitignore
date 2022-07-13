@@ -7,6 +7,14 @@ secrets/
 volumes/api/output
 volumes/api/www
 
+volumes/apiprime
+
+volumes/apiproduction
+
+volumes/dbmigration/app/output
+volumes/dbmigration/app/www
+volumes/dbmigration/migrations/schemap*.sql
+
 volumes/patternlab/pattern_exports
 volumes/patternlab/www
 

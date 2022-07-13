@@ -11,7 +11,7 @@ export class EnvironmentSetup {
         Chai.use(SinonChai)
     }
 
-    static mockClass({
+    static stubClass({
         className,
         fileName,
         overrides,
@@ -19,9 +19,9 @@ export class EnvironmentSetup {
         className: string
         fileName: string
         overrides: object
-    }) {
-        const MockedFile = require(`../${fileName}`)
-        const stub = Sinon.createStubInstance(MockedFile[className], overrides)
-        Sinon.stub(MockedFile, className).returns(stub)
+    }): Sinon.SinonStub {
+        const StubbedFile = require(`../${fileName}`)
+        const stub = Sinon.createStubInstance(StubbedFile[className], overrides)
+        return Sinon.stub(StubbedFile, className).returns(stub)
     }
 }

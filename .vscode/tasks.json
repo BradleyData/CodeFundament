@@ -33,6 +33,13 @@
             "problemMatcher": []
         },
         {
+            "label": "Run tests: Acceptance",
+            "type": "shell",
+            "group": "test",
+            "command": "docker-compose run --rm ${input:testContainerName} npm run acceptanceTests",
+            "problemMatcher": []
+        },
+        {
             "label": "Show logs",
             "type": "shell",
             "group": "none",
@@ -69,6 +76,7 @@
             "default": "api",
             "options": [
                 "api",
+                "dbmigration",
                 "info",
                 "patternlab",
                 "postgres",
@@ -83,6 +91,16 @@
             "options": [
                 "patternlab",
                 "typescript"
+            ]
+        },
+        {
+            "id": "testContainerName",
+            "description": "Whice docker container?",
+            "type": "pickString",
+            "default": "api",
+            "options": [
+                "api",
+                "dbmigration"
             ]
         }
     ]

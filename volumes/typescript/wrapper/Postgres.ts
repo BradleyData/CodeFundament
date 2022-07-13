@@ -2,7 +2,7 @@ import * as Fs from "fs"
 import { Pool, QueryResult } from "pg"
 
 export class Postgres {
-    private static pool = new Pool({
+    static connectionInfo = Object.freeze({
         database: "postgres",
         host: "postgres",
         password: Fs.readFileSync("/run/secrets/POSTGRES_PASSWORD", "utf-8"),
@@ -10,15 +10,17 @@ export class Postgres {
         user: "postgres",
     })
 
+    private static pool = new Pool(Postgres.connectionInfo)
+
     static async query({
         sql,
         useResults,
-        values,
+        values = [],
     }: {
         sql: string
         // eslint-disable-next-line no-unused-vars
         useResults?: ({ queryResult }: { queryResult: QueryResult }) => void
-        values: any
+        values?: any
     }): Promise<number> {
         let client
         try {
@@ -38,5 +40,12 @@ export class Postgres {
 
     static async end(): Promise<void> {
         await this.pool.end()
+    }
+
+    static async resetPool(): Promise<void> {
+        try {
+            await Postgres.pool.end()
+        } catch {} // eslint-disable-line no-empty
+        Postgres.pool = new Pool(Postgres.connectionInfo)
     }
 }

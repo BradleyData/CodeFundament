@@ -7,7 +7,7 @@ EnvironmentSetup.initSinonChai()
 
 describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     before(() => {
-        EnvironmentSetup.mockClass({
+        EnvironmentSetup.stubClass({
             className: "Account",
             fileName: "api/Account",
             overrides: {

@@ -21,15 +21,18 @@
   "tsconfigFile": "/home/node/config/tsconfig.json",
   "ignorePatterns": [
     "/app/**",
-    "!/app/src/**/*.ts"
+    "!/app/src/**/*.ts",
+    "/.*",
+    "/!(app|config)"
   ],
   "mutate": [
     "app/src/**/*.ts",
     "!app/src/**/*.test.ts",
     "!app/src/index.ts",
     "!app/src/testHelper/**/*.ts",
-    "!app/src/wrapper/**/*.ts"
+    "!app/src/wrapper*/**/*.ts"
   ],
+  "symlinkNodeModules": false,
   "thresholds": {
       "high": 100,
       "low": 100,

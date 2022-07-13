@@ -31,9 +31,9 @@
         ".bash_history": true,
         ".bash_logout": true,
         ".bashrc": true,
-        ".HEAD": true,
         ".profile": true,
         ".screenrc": true,
+        ".ssh": true,
         ".watch": true,
         "cucumber.js": true,
         "dependencyGraph.json": true,
@@ -44,6 +44,7 @@
         ".cache/**": true,
         ".config/**": true,
         ".npm/**": true,
+        ".ssh/**": true,
         ".stryker-tmp/**": true,
         ".vscode/**": true,
         ".vscode-server/**": true,
@@ -57,9 +58,15 @@
         ".screenrc": true,
         "cucumber.js": true,
         "dependencyGraph.json": true,
+        "gitRepos/**": true,
         "package-lock.json": true,
-        "tsconfig.json": true
+        "tsconfig.json": true,
+        "volumes/**": true
     },
+    "git.enabled": false,
     "js/ts.implicitProjectConfig.experimentalDecorators": true,
+    "npm.exclude": [
+        "**/gitRepos/**"
+    ],
     "npm.scriptExplorerAction": "run"
 }

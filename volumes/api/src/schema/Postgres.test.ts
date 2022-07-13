@@ -8,7 +8,7 @@ EnvironmentSetup.initSinonChai()
 
 describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     before(() => {
-        EnvironmentSetup.mockClass({
+        EnvironmentSetup.stubClass({
             className: "IsWorking",
             fileName: "schema/Postgres/IsWorking",
             overrides: {

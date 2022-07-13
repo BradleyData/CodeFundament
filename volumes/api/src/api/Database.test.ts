@@ -22,7 +22,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
                 }: {
                     queryResult: QueryResult<any>
                 }) => void
-                values: any
+                values?: any
             }
         ],
         Promise<number>
