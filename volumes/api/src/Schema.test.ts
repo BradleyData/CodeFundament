@@ -16,19 +16,19 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             },
         }
 
-        EnvironmentSetup.mockClass({
+        EnvironmentSetup.stubClass({
             className: "Account",
             fileName: "schema/Account",
             overrides,
         })
 
-        EnvironmentSetup.mockClass({
+        EnvironmentSetup.stubClass({
             className: "Postgres",
             fileName: "schema/Postgres",
             overrides,
         })
 
-        EnvironmentSetup.mockClass({
+        EnvironmentSetup.stubClass({
             className: "UsernameExists",
             fileName: "schema/UsernameExists",
             overrides,

@@ -14,13 +14,13 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             },
         }
 
-        EnvironmentSetup.mockClass({
+        EnvironmentSetup.stubClass({
             className: "Create",
             fileName: "schema/Account/Create",
             overrides,
         })
 
-        EnvironmentSetup.mockClass({
+        EnvironmentSetup.stubClass({
             className: "Delete",
             fileName: "schema/Account/Delete",
             overrides,
