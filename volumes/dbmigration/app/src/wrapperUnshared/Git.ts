@@ -1,8 +1,6 @@
 import { execSync } from "child_process"
 
-/* eslint-disable import/export */
 export class Git {
-    /* eslint-enable import/export */
     private static workTree = "/home/node/gitRepos/current"
     private static gitDir = `${Git.workTree}/.git`
     private static cmd = `git --work-tree=${Git.workTree} --git-dir=${Git.gitDir}`
@@ -109,9 +107,9 @@ export class Git {
     }
 }
 
-/* eslint-disable import/export, no-redeclare */
+/* eslint-disable no-redeclare */
 export namespace Git {
-    /* eslint-enable import/export, no-redeclare */
+    /* eslint-enable no-redeclare */
     /* eslint-disable no-shadow, no-unused-vars */
     export enum branchType {
         prime = "prime",
