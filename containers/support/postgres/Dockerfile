@@ -1,4 +1,4 @@
-FROM postgres:14.2-alpine3.15 as base
+FROM postgres:14.4-alpine3.16 as base
 ENV POSTGRES_PASSWORD_FILE /run/secrets/POSTGRES_PASSWORD
 ENV PGDATA /var/lib/postgresql/data/pgdata
 
