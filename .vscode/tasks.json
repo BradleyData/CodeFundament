@@ -5,14 +5,14 @@
             "label": "Check versions",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose --file containers${pathSeparator}support${pathSeparator}bash${pathSeparator}docker-compose.yml up --build check_versions",
+            "command": "docker compose --file containers${pathSeparator}support${pathSeparator}bash${pathSeparator}docker-compose.yml up --build check_versions",
             "problemMatcher": []
         },
         {
             "label": "Initialize postgres database",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose --file containers${pathSeparator}support${pathSeparator}postgres${pathSeparator}docker-compose.yml run --rm initialize",
+            "command": "docker compose --file containers${pathSeparator}support${pathSeparator}postgres${pathSeparator}docker-compose.yml run --rm initialize",
             "problemMatcher": []
         },
         {
@@ -22,49 +22,49 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "command": "docker-compose up --detach --build --force-recreate ${input:containerName}",
+            "command": "docker compose up --detach --build --force-recreate ${input:containerName}",
             "problemMatcher": []
         },
         {
             "label": "Rebuild all containers",
             "type": "shell",
             "group": "build",
-            "command": "docker-compose up --detach --remove-orphans --build --force-recreate",
+            "command": "docker compose up --detach --remove-orphans --build --force-recreate",
             "problemMatcher": []
         },
         {
             "label": "Run tests: Acceptance",
             "type": "shell",
             "group": "test",
-            "command": "docker-compose run --rm ${input:testContainerName} npm run acceptanceTests",
+            "command": "docker compose run --rm ${input:testContainerName} npm run acceptanceTests",
             "problemMatcher": []
         },
         {
             "label": "Show logs",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose logs --follow ${input:containerName}",
+            "command": "docker compose logs --follow ${input:containerName}",
             "problemMatcher": []
         },
         {
             "label": "Start all containers",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose up --detach --remove-orphans",
+            "command": "docker compose up --detach --remove-orphans",
             "problemMatcher": []
         },
         {
             "label": "Stop all containers",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose down",
+            "command": "docker compose down",
             "problemMatcher": []
         },
         {
             "label": "Update container package-lock.json",
             "type": "shell",
             "group": "none",
-            "command": "docker-compose --file containers${pathSeparator}development${pathSeparator}${input:devContainerName}${pathSeparator}docker-compose.yml run --rm update",
+            "command": "docker compose --file containers${pathSeparator}development${pathSeparator}${input:devContainerName}${pathSeparator}docker-compose.yml run --rm update",
             "problemMatcher": []
         }
     ],
