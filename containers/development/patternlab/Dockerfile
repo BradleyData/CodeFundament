@@ -1,8 +1,8 @@
-FROM node:17.8.0-buster-slim as base
+FROM node:18.6.0-buster-slim as base
 RUN apt-get update && \
     apt-get upgrade --no-install-recommends -y && \
     apt-get install --no-install-recommends -y \
-        g++ make python2 \
+        g++ make python3 \
         tini && \
     apt-get autoremove --purge -y && \
     apt-get clean -y
