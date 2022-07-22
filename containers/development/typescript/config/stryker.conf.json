@@ -8,7 +8,7 @@
     "progress"
   ],
   "htmlReporter": {
-      "baseDir": "/home/node/app/output/mutation"
+      "fileName": "/home/node/app/output/mutation/index.html"
   },
   "testRunner": "mocha",
   "mochaOptions": {

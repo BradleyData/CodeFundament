@@ -25,14 +25,6 @@ function getVersionLines () {
     eval "$cmd1 $cmd2 $cmd3 >> $3"
 }
 
-echo
-echo "These docker-compose versions should all match:"
-rm -f compose1.txt
-for file in foundation/**/docker-compose.yml; do
-    getVersionLines "$file" '^version: .[0-9.]+.$' compose1.txt
-done
-displayWithColumns compose1.txt
-
 echo "Update the following docker-compose images:"
 rm -f compose2.txt
 for file in foundation/**/docker-compose.yml; do

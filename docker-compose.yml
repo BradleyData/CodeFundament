@@ -1,5 +1,3 @@
-version: '3.9'
-
 x-docker-volume:
     &docker-volume
     - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -10,6 +8,7 @@ services:
         command:
             - "--api.insecure=true"
             - "--entrypoints.web.address=:80"
+            - "--entrypoints.browsersync.address=:3001"
             - "--log.level=WARN"
             - "--providers.docker=true"
             - "--providers.docker.defaultRule=Host(`${TRAEFIK_HOST}.${DOMAIN}`)"
@@ -18,6 +17,7 @@ services:
             - traefik
         ports:
             - "80:80"
+            - "3001:3001"
             - "8080:8080"
         restart: always
         volumes: *docker-volume
@@ -78,6 +78,17 @@ services:
         build:
             context: ./containers/development/patternlab
             target: dev
+            args:
+                domain: ${DOMAIN}
+        labels:
+            - "traefik.http.routers.browsersync-${COMPOSE_PROJECT_NAME_LC}.rule=Host(`patternlab.${DOMAIN}`)"
+            - "traefik.http.routers.browsersync-${COMPOSE_PROJECT_NAME_LC}.entrypoints=browsersync"
+            - "traefik.http.routers.browsersync-${COMPOSE_PROJECT_NAME_LC}.service=browsersync-${COMPOSE_PROJECT_NAME_LC}"
+            - "traefik.http.services.browsersync-${COMPOSE_PROJECT_NAME_LC}.loadbalancer.server.port=3001"
+            - "traefik.http.routers.patternlab-${COMPOSE_PROJECT_NAME_LC}.rule=Host(`patternlab.${DOMAIN}`)"
+            - "traefik.http.routers.patternlab-${COMPOSE_PROJECT_NAME_LC}.entrypoints=web"
+            - "traefik.http.routers.patternlab-${COMPOSE_PROJECT_NAME_LC}.service=patternlab-${COMPOSE_PROJECT_NAME_LC}"
+            - "traefik.http.services.patternlab-${COMPOSE_PROJECT_NAME_LC}.loadbalancer.server.port=3000"
         networks:
             - traefik
         volumes:
