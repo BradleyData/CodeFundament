@@ -45,7 +45,7 @@ exports.default = function() {
             baseDir: "app/www"
         },
         socket: {
-            domain: 'patternlab.local.test'
+            domain: 'patternlab.{{domain}}'
         }
     })
     Gulp.watch(

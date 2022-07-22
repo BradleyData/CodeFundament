@@ -12,10 +12,12 @@ ENV NODE_ENV=production
 WORKDIR /home/node
 COPY --chown=node:node package*.json ./
 COPY --chown=node:node gulpfile.js ./
+ARG domain
 RUN npm config list && \
     npm ci && \
     npm cache clean --force && \
-    mkdir app
+    mkdir app && \
+    sed -i "s/{{domain}}/${domain}/" gulpfile.js
 
 FROM base as dev
 # Install screen and vim for ease of development.
