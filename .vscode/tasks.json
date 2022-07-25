@@ -95,7 +95,7 @@
         },
         {
             "id": "testContainerName",
-            "description": "Whice docker container?",
+            "description": "Which docker container?",
             "type": "pickString",
             "default": "api",
             "options": [
