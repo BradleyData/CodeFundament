@@ -38,6 +38,7 @@
       "low": 100,
       "break": 100
   },
+  "timeoutFactor": 2,
   "disableTypeChecks_comment": "Tell Stryker to look under the app/src/ directory for our files.",
   "disableTypeChecks": "app/src/**/*.{js,ts,jsx,tsx,html,vue}"
 }
