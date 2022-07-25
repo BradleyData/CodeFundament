@@ -23,11 +23,10 @@ export class Git {
         ).toString()
     }
 
-    static retrieveBranch({
-        branchType,
-    }: {
-        branchType: Git.branchType
-    }): void {
+    static retrieveBranch({branchType}: {branchType: Git.branchType}): void {
+        if (branchType === Git.branchType.current)
+            return
+
         const branch = {
             [Git.branchType.prime]: Git.getBranchParent(),
             [Git.branchType.production]: Git.getDefaultBranch(),
@@ -60,6 +59,7 @@ export class Git {
             execSync(
                 `mv /home/node/gitRepos/${branchType}/volumes/api/* /home/node/volumes/api${branchType}/`
             )
+            execSync(`mv /home/node/gitRepos/${branchType}/volumes/typescript/wrapper /home/node/volumes/api${branchType}/src/`)
             execSync(`touch /home/node/volumes/api${branchType}/src/.gitkeep`)
 
             const fromSchema = `/home/node/gitRepos/${branchType}/volumes/dbmigration/migrations/schema.sql`
@@ -68,23 +68,17 @@ export class Git {
         }
     }
 
-    static runAcceptanceTests({
-        branchType,
-    }: {
-        branchType: Git.branchType | ""
-    }): {
-        output: string
-        successful: boolean
-    } {
+    static runAcceptanceTests({branchType}: {branchType: Git.branchType}): {output: string, successful: boolean } {
         const result = {
             output: "",
             successful: false,
         }
+        const branchName = branchType === Git.branchType.current ? "" : branchType
 
         try {
             const ignoreKnownHosts =
                 "-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
-            const containerName = `api${branchType}`
+            const containerName = `api${branchName}`
 
             result.output = execSync(
                 `ssh ${ignoreKnownHosts} ${containerName} npm run acceptanceTests 2>&1`
@@ -112,6 +106,7 @@ export namespace Git {
     /* eslint-enable no-redeclare */
     /* eslint-disable no-shadow, no-unused-vars */
     export enum branchType {
+        current = "current",
         prime = "prime",
         production = "production",
     }
