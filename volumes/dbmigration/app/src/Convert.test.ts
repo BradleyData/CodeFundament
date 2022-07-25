@@ -38,8 +38,8 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     describe("URL Parameters to Object", () => {
         it("empty string", () => testConvert({ input: "", outputExpected: {} }))
         it("/", () => testConvert({ input: "/", outputExpected: {} }))
-        it("one", () =>
-            testConvert({ input: "one", outputExpected: { 0: "one" } }))
+        it("/one", () =>
+            testConvert({ input: "/one", outputExpected: { 0: "one" } }))
         it("one=a", () =>
             testConvert({ input: "one=a", outputExpected: { one: "a" } }))
 

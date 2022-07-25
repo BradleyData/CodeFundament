@@ -6,7 +6,9 @@ import { Postgres as Pg2 } from "./wrapperUnshared/Postgres"
 export class Branch {
     static async runTests({
         branchType,
-    }: { branchType: Git.branchType }): Promise<string[]> {
+    }: {
+        branchType: Git.branchType
+    }): Promise<string[]> {
         const results: string[] = []
 
         Git.retrieveBranch({ branchType })

@@ -122,9 +122,18 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
 
             await testGenerateEndpoint({ name, url, urlParameters })
 
-            expect(stubFs).to.be.calledWith({
-                path: Sinon.match(/\/(?:.*\/){8,}[A-Za-z0-9]*/u),
-            })
+            expect(stubFs).to.be.calledWith(
+                Sinon.match.has(
+                    "path",
+                    Sinon.match(new RegExp(`.*${url}$`, "u"))
+                )
+            )
+            expect(stubFs).to.be.calledWith(
+                Sinon.match.has(
+                    "path",
+                    Sinon.match(new RegExp(`.*${name}$`, "u"))
+                )
+            )
         })
     })
 
@@ -171,6 +180,6 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         await generate.endpoint()
 
         expect(generate.getName()).to.equal(name)
-        expect(stubConvert).to.be.calledWith({ urlParameters: urlParameters })
+        expect(stubConvert).to.be.calledWith({ urlParameters })
     }
 })

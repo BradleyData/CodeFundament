@@ -23,8 +23,12 @@ export class Git {
         ).toString()
     }
 
-    static retrieveBranch({branchType}: {branchType: Git.branchType}): void {
-        if (branchType === Git.branchType.current)
+    static retrieveBranch({
+        branchType,
+    }: {
+        branchType: Git.branchType
+    }): void {
+        if (branchType === Git.branchType.current) 
             return
 
         const branch = {
@@ -59,7 +63,9 @@ export class Git {
             execSync(
                 `mv /home/node/gitRepos/${branchType}/volumes/api/* /home/node/volumes/api${branchType}/`
             )
-            execSync(`mv /home/node/gitRepos/${branchType}/volumes/typescript/wrapper /home/node/volumes/api${branchType}/src/`)
+            execSync(
+                `mv /home/node/gitRepos/${branchType}/volumes/typescript/wrapper /home/node/volumes/api${branchType}/src/`
+            )
             execSync(`touch /home/node/volumes/api${branchType}/src/.gitkeep`)
 
             const fromSchema = `/home/node/gitRepos/${branchType}/volumes/dbmigration/migrations/schema.sql`
@@ -68,12 +74,16 @@ export class Git {
         }
     }
 
-    static runAcceptanceTests({branchType}: {branchType: Git.branchType}): {output: string, successful: boolean } {
+    static runAcceptanceTests({ branchType }: { branchType: Git.branchType }): {
+        output: string
+        successful: boolean
+    } {
         const result = {
             output: "",
             successful: false,
         }
-        const branchName = branchType === Git.branchType.current ? "" : branchType
+        const branchName =
+            branchType === Git.branchType.current ? "" : branchType
 
         try {
             const ignoreKnownHosts =

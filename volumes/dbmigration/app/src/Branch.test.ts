@@ -12,6 +12,7 @@ EnvironmentSetup.initSinonChai()
 
 describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     let readFileSync: Sinon.SinonStub<[{ file: string }], string>
+    const branchType = Git.branchType.current
 
     function replaceDependencies({
         dbError,
@@ -46,10 +47,11 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             truncationReturn: true,
         })
 
-        const result = await Branch.runTests()
+        const result = await Branch.runTests({ branchType })
         const resultString = result.toString()
 
-        expect(result[0]).to.include("Rebuilt")
+        expect(result[0]).to.include("Retrieved")
+        expect(resultString).to.include("Rebuilt")
         expect(resultString).to.include("current")
         expect(resultString).to.include("<pre>")
         expect(resultString).to.include("succeeded")
@@ -81,7 +83,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             truncationReturn: false,
         })
 
-        const result = await Branch.runTests()
+        const result = await Branch.runTests({ branchType })
         const resultString = result.toString()
 
         expect(resultString).to.include("Unable")
@@ -94,7 +96,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             truncationReturn: true,
         })
 
-        const result = await Branch.runTests()
+        const result = await Branch.runTests({ branchType })
         const resultString = result.toString()
 
         expect(resultString).to.include("Schema")
@@ -107,7 +109,7 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
             truncationReturn: true,
         })
 
-        const result = await Branch.runTests()
+        const result = await Branch.runTests({ branchType })
         const resultString = result.toString()
 
         expect(resultString).to.include("failed")
