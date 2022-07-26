@@ -58,6 +58,7 @@ export class Generate {
     }: {
         urlElements: string[]
     }): number {
+        // Stryker disable next-line UpdateOperator: Generates an infinite loop
         for (let position = urlElements.length; position >= 0; position--) {
             if (
                 fileExists({
