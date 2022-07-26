@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 getFiles() {
-    echo $(find "$1" -type f ! -name '*.gql' 2>/dev/null)
+    echo $(find "$1" -type f ! -name '*.gql' ! -name '*.html' 2>/dev/null)
 }
 
 path=$(getFiles 'app/src/')

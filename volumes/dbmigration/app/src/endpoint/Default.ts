@@ -1,4 +1,5 @@
 import { Endpoint } from "../Endpoint"
+import { Fs } from "../wrapper/Fs"
 
 class Default extends Endpoint {
     // eslint-disable-next-line no-empty-function
@@ -6,7 +7,8 @@ class Default extends Endpoint {
 
     /* eslint-disable require-await */
     protected async get(): Promise<void> {
-        this.response = "yup"
+        const file = "/home/node/app/src/html/index.html"
+        this.response = Fs.readFileSync({ file })
     }
     /* eslint-enable require-await */
 
