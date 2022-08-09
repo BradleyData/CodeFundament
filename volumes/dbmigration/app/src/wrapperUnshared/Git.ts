@@ -32,7 +32,7 @@ export class Git {
             return
 
         const branch = {
-            [Git.branchType.prime]: Git.getBranchParent(),
+            [Git.branchType.branchPoint]: Git.getBranchParent(),
             [Git.branchType.production]: Git.getDefaultBranch(),
         }[branchType]
 
@@ -117,7 +117,7 @@ export namespace Git {
     /* eslint-disable no-shadow, no-unused-vars */
     export enum branchType {
         current = "current",
-        prime = "prime",
+        branchPoint = "branchPoint",
         production = "production",
     }
     /* eslint-enable no-shadow, no-unused-vars */
