@@ -35,11 +35,11 @@ services:
             - ./volumes/api:/home/node/app
             - ./volumes/typescript/testHelper:/home/node/app/src/testHelper
             - ./volumes/typescript/wrapper:/home/node/app/src/wrapper
-    apiprime:
+    apibranchpoint:
         extends:
             service: api
         volumes:
-            - ./volumes/apiprime:/home/node/app
+            - ./volumes/apibranchpoint:/home/node/app
     apiproduction:
         extends:
             service: api
@@ -62,7 +62,7 @@ services:
             - ./volumes/dbmigration/migrations:/home/node/migrations
             - ./volumes/dbmigration/gitRepos:/home/node/gitRepos
             - ./:/home/node/gitRepos/current
-            - ./volumes/apiprime:/home/node/volumes/apiprime
+            - ./volumes/apibranchpoint:/home/node/volumes/apibranchpoint
             - ./volumes/apiproduction:/home/node/volumes/apiproduction
     info:
         build:

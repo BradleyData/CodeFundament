@@ -7,7 +7,7 @@ secrets/
 volumes/api/output
 volumes/api/www
 
-volumes/apiprime
+volumes/apibranchpoint
 
 volumes/apiproduction
 
