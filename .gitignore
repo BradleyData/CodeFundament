@@ -13,7 +13,8 @@ volumes/apiproduction
 
 volumes/dbmigration/app/output
 volumes/dbmigration/app/www
-volumes/dbmigration/migrations/schemap*.sql
+volumes/dbmigration/migrations/schemabranchpoint.sql
+volumes/dbmigration/migrations/schemaproduction.sql
 
 volumes/patternlab/pattern_exports
 volumes/patternlab/www
