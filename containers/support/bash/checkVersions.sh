@@ -3,7 +3,7 @@
 shopt -s globstar
 
 function printFile () {
-    echo -n $1 | sed "s|^foundation/||"
+    echo -n $1 | sed "s|^project/||"
 }
 
 function displayWithColumns () {
@@ -27,21 +27,21 @@ function getVersionLines () {
 
 echo "Update the following docker-compose images:"
 rm -f compose2.txt
-for file in foundation/**/docker-compose.yml; do
+for file in project/**/docker-compose.yml; do
     getVersionLines "$file" 'image: .+:' compose2.txt
 done
 displayWithColumns compose2.txt
 
 echo "Update the following Dockerfile versions:"
 rm -f dockerfile.txt
-for file in foundation/containers/**/Dockerfile; do
+for file in project/containers/**/Dockerfile; do
     getVersionLines "$file" 'FROM .+:.*[0-9]' dockerfile.txt
 done
 displayWithColumns dockerfile.txt
 
 echo "Update the following package.json dependencies:"
 rm -f package.txt
-for file in foundation/containers/**/package.json; do
+for file in project/containers/**/package.json; do
     getVersionLines "$file" '[0-9]+",?$' package.txt '"version": "[0-9]'
 done
 displayWithColumns package.txt

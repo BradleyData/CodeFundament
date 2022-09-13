@@ -3,4 +3,9 @@ services:
         build: .
         command: ["bash", "/root/checkVersions.sh"]
         volumes:
-            - ../../..:/root/foundation
+            - ../../..:/root/project
+    init_project:
+        build: .
+        command: ["bash", "/root/initProject.sh"]
+        volumes:
+            - ../../..:/root/project
