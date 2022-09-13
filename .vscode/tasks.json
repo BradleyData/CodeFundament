@@ -16,6 +16,13 @@
             "problemMatcher": []
         },
         {
+            "label": "Initialize project",
+            "type": "shell",
+            "group": "none",
+            "command": "docker compose --file containers${pathSeparator}support${pathSeparator}bash${pathSeparator}docker-compose.yml up --build init_project",
+            "problemMatcher": []
+        },
+        {
             "label": "Rebuild container",
             "type": "shell",
             "group": {
