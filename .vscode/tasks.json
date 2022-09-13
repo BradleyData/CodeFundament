@@ -33,6 +33,14 @@
             "problemMatcher": []
         },
         {
+            "label": "Remove ALL docker entities",
+            "type": "shell",
+            "group": "none",
+            "command": "docker compose stop; docker container kill $(docker container ls --quiet); docker container prune --force; docker image rm --force $(docker image ls --quiet); docker system prune --force"
+            ],
+            "problemMatcher": []
+        },
+        {
             "label": "Run tests: Acceptance",
             "type": "shell",
             "group": "test",
