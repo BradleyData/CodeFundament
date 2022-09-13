@@ -1,22 +1,5 @@
-// import { Branch } from "./Branch"
-// import { Git } from "./wrapperUnshared/Git"
 import { Postgres } from "./wrapper/Postgres"
 import { Srvr } from "./srvr/Srvr"
-
-// express.get("/", async (req, res) => {
-//     // eslint-disable-next-line no-array-constructor
-//     const content = new Array<string>().concat(
-//         await Branch.runTests({ branchType: Git.branchType.production }),
-//         await Branch.runTests()
-//     )
-//     res.send(contentToString())
-
-//     function contentToString(): string {
-//         return content.reduce((current, addend) => {
-//             return `${current}<br>${addend}`
-//         }, "")
-//     }
-// })
 
 const srvr = new Srvr()
 srvr.listen({ port: process.env.PORT })
