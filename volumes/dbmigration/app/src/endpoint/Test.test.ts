@@ -48,7 +48,10 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
         await endpoint.init()
 
         expect(stubBranch).to.be.calledOnceWith(parameters)
-        expect(endpoint.getResponse()).to.contain("<html>").and.contain("<br>").and.contain("</html>")
+        expect(endpoint.getResponse())
+            .to.contain("<html>")
+            .and.contain("<br>")
+            .and.contain("</html>")
     })
 
     it("is passed an invalid branchType", async () => {
@@ -61,6 +64,8 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
 
         await endpoint.init()
 
-        expect(stubBranch).to.be.calledOnceWith({ branchType: Git.branchType.current })
+        expect(stubBranch).to.be.calledOnceWith({
+            branchType: Git.branchType.current,
+        })
     })
 })
