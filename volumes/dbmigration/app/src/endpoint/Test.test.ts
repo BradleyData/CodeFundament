@@ -3,6 +3,7 @@ import { EnvironmentSetup } from "../testHelper/EnvironmentSetup"
 import { Git } from "../wrapperUnshared/Git"
 import Sinon from "sinon"
 import { Test } from "./Test"
+import { TestHelperData } from "../testHelper/TestHelperData"
 import { expect } from "chai"
 
 EnvironmentSetup.initSinonChai()
@@ -10,11 +11,11 @@ EnvironmentSetup.initSinonChai()
 describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
     let stubBranch: Sinon.SinonStub
 
-    before(() => {
+    beforeEach(() => {
         stubBranch = Sinon.stub(Branch, "runTests").resolves(["", ""])
     })
 
-    after(() => {
+    afterEach(() => {
         Sinon.restore()
     })
 
@@ -27,10 +28,13 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
 
         await endpoint.init()
 
+        expect(stubBranch).to.have.callCount(Object.keys(Git.branchType).length)
         expect(stubBranch).to.be.calledWith({
             branchType: Git.branchType.current,
         })
-        expect(endpoint.getResponse()).to.contain("<br>")
+        expect(stubBranch).to.be.calledWith({
+            branchType: Git.branchType.production,
+        })
     })
 
     it("is passed production", async () => {
@@ -43,6 +47,20 @@ describe(EnvironmentSetup.getSuiteName({ __filename }), () => {
 
         await endpoint.init()
 
-        expect(stubBranch).to.be.calledWith(parameters)
+        expect(stubBranch).to.be.calledOnceWith(parameters)
+        expect(endpoint.getResponse()).to.contain("<html>").and.contain("<br>").and.contain("</html>")
+    })
+
+    it("is passed an invalid branchType", async () => {
+        const parameters = { branchType: TestHelperData.randomString() }
+        const endpoint = new Test({
+            action: "get",
+            name: "",
+            parameters,
+        })
+
+        await endpoint.init()
+
+        expect(stubBranch).to.be.calledOnceWith({ branchType: Git.branchType.current })
     })
 })
