@@ -46,7 +46,7 @@
         "@stryker-mutator/mocha-runner": "6.1.2",
         "@stryker-mutator/typescript-checker": "6.1.2",
 
-        "@cucumber/cucumber": "8.5.0",
+        "@cucumber/cucumber": "8.7.0",
 
         "nodemon": "2.0.19",
         "ts-node": "10.9.1",
